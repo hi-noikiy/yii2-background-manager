@@ -1,0 +1,770 @@
+<style>
+    .rf{float:right;}
+</style>
+<body>
+<div class="x-body">
+    <div class="layui-col-xs12 layui-col-xs-offset11 ">
+        <button class="layui-btn " data-type="createGM" id="create">创建跑马灯</button>
+    </div>
+    <div class="layui-tab" style="margin-top:50px;">
+        <ul class="layui-tab-title">
+            <li class="layui-this">全部</li>
+            <li>未播</li>
+            <li>已播</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <table class="layui-table" id="allGMList" lay-filter="table1"></table>
+            </div>
+            <div class="layui-tab-item">
+                <table class="layui-table" id="notPlayedGMList" lay-filter="table2"></table>
+            </div>
+            <div class="layui-tab-item">
+                <table class="layui-table" id="playedGMList" lay-filter="table3"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="barAllGMList">
+    <div class="layer">
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="detailsGMAllBtn">详情</button>
+        <button class="layui-btn layui-btn-sm" lay-event="reviseGMAllBtn">修改</button>
+        <button class="layui-btn layui-btn-sm layui-btn-warm stop changeBtn" lay-event="changeAllBtn" >暂停</button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAllBtn">删除</button>
+    </div>
+</script>
+<script type="text/html" id="barNotPlayedGMList">
+    <div class="layer">
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="detailsGMNotPlayBtn" >详情</button>
+        <button class="layui-btn layui-btn-sm" lay-event="reviseGMNotPlayBtn">修改</button>
+        <button class="layui-btn layui-btn-sm layui-btn-warm stop"  lay-event="changeNotPlayBtn" lay-submit="">暂停</button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delNotPlayBtn">删除</button>
+    </div>
+</script>
+<script type="text/html" id="barPlayedGMList">
+    <div class="layer">
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="detailsGMPlayedBtn">详情</button>
+        <button class="layui-btn layui-btn-sm" lay-event="reviseGMPlayedBtn">修改</button>
+        <button class="layui-btn layui-btn-sm layui-btn-warm stop changeBtn"  lay-event="changePlayedBtn">暂停</button>
+        <!--<button class="layui-btn layui-btn-sm layui-btn-warm"><i class="layui-icon layui-icon-pause"></i></button>-->
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delPlayedBtn">删除</button>
+    </div>
+</script>
+<script>
+    layui.use(['table','element','layer'],function () {
+        var table = layui.table;
+        // var element = layui.element;
+        var layer = layui.layer;
+        var $=layui.jquery;
+        var active = {
+            createGM:function () {
+                layer.open({
+                    type:2
+                    ,title:"跑马灯详情"
+                    ,closeBtn:1
+                    ,area:['90%','90%']
+                    ,id:'LAY_layuipro'
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:'creategm'
+                    ,success:function (layero,index) {
+
+                    }
+                });
+            }
+        };
+        $('#create').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    //全部tab表格
+        table.render({
+            elem:"#allGMList"
+            ,url:"/test/t206"
+            ,page:true
+            // ,id:"rechargeReload"
+            ,cols:[[
+                {type:"order",title:'序号'}
+                ,{field:"number",title:'编号',sort:true}
+                ,{field:"creater",title:'创建人'}
+                ,{field:"creationTime",title:'创建时间'}
+                ,{field:"content",title:'内容'}
+                ,{field:"public",title:'公告'}
+                ,{field:"startTime",title:'开始时间'}
+                ,{field:"terminalTime ",title:'结束时间'}
+                ,{field:'',title:'操作',width:250,toolbar:'#barAllGMList'}
+            ]]
+        });
+    //全部tab下的按钮弹出层
+        table.on('tool(table1)', function(obj){
+            var data = obj.data;
+//全部tab下的详情按钮弹出层
+            if(obj.event === 'detailsGMAllBtn'){
+                // layer.msg('ID：'+ data.number + ' 的查看操作');
+                // var $This = $(this);
+                var id = data.number;
+                console.log($This);
+                layer.open({
+                    type:1
+                    ,title:"跑马灯详情"
+                    ,closeBtn:1
+                    ,area:['50%','55%']
+                    ,id:'LAY_layuipro'
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#GMDetailsAll')
+                    ,success:function (layero,index) {
+                        $.ajax({
+                            url:'',
+                            type:'POST',
+                            data:{
+                                'id': id
+                            },
+                            success:function (data) {
+                                table.render({
+                                    elem:"#GMDetails"
+                                    ,url:"/test/t206"
+                                    ,page:true
+                                    ,cols:[[
+                                        {field:'GMNum',title:'跑马灯编号'}
+                                        ,{field:'operatPer',title:'操作人'}
+                                        ,{field:'modifyContent',title:'修改内容'}
+                                        ,{field:'ModifyTime ',title:'修改时间'}
+                                    ]]
+                                })
+                            },
+                            error:function (data) {
+                                console.log("失败");
+                            }
+                        })
+                    }
+                });
+//全部tab下的修改按钮弹出层
+            } else if(obj.event === 'reviseGMAllBtn'){
+                // var $This = $(this);
+                var originalPublic;
+                data.public==="是"? originalPublic=1:originalPublic=0;
+                var id = data.number;
+                var  originalContent = data.content;
+                var  originalStartTime = data.startTime;
+                var  originalTerminalTime = data.terminalTime;
+                console.log(originalContent,originalStartTime,originalTerminalTime,originalPublic);
+                layer.open({
+                    type:1
+                    ,title:"修改跑马灯"
+                    ,closeBtn:1
+                    ,area:['50%','55%']
+                    ,id:'LAY_layuipro'
+                    ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#reviseGM')
+                    ,success:function (layero,index) {
+                        $('#content').val(originalContent);
+                        $('#startTime').val(originalStartTime);
+                        $('#terminalTime').val(originalTerminalTime);
+                        originalPublic == 1? $('#check').next().addClass('layui-form-checked'):$('#check').next().removeClass('layui-form-checked');
+                        console.log($('#check').next());
+                    }
+                    ,yes:function (index,layero) {
+                        var checked;
+                        $("#check").next().hasClass("layui-form-checked")?checked = 1:checked = 0;
+                        var content = $('#content').val();
+                        // console.log($('#content'));
+                        var startTime = $('#startTime').val();
+                        var terminalTime = $('#terminalTime').val();
+                        $.ajax({
+                            url:'',
+                            type:"POST",
+                            data:{
+                                'content':content,
+                                'startTime':startTime,
+                                'terminalTime':terminalTime,
+                                'checked':checked,
+                                'id':number
+                            }
+                            ,success:function (data) {
+                                console.log("成功");
+                                layer.close(index);
+                            }
+                            ,error:function () {
+                                console.log("失败");
+                            }
+                        });
+                        layer.close(index);
+                    }
+                })
+
+//全部页面下的开启/暂停切换按钮
+            } else if(obj.event === 'changeAllBtn'){
+                //获取点击按钮对于的tr数据的唯一值
+                var id = obj.data.number;
+                //获取点击的按钮
+                var $This = $(this);
+                //声明变量保存
+                var turn;
+
+
+                // 判断是开启还是暂停
+                $This.hasClass("stop")?turn = "start":turn = "stop";
+                //向后端发送数据并修改按钮状态
+                $.ajax({
+                    type: 'get'
+                    , data: {
+                        'id': id
+                        ,'turn': turn
+                    }
+                    , url: ''
+                    //,dataType:'JSON'
+                    , success: function (data) {
+                        console.log("chenggong");
+                        if (turn === "start") {
+                            $This.removeClass('stop');
+                            $This.removeClass('layui-btn-warm');
+                            $This.addClass('start');
+                            $This.html('开启');
+                        } else {
+                            $This.removeClass('start');
+                            $This.addClass('stop');
+                            $This.addClass('layui-btn-warm');
+                            $This.html('暂停');
+                        }
+                    }
+                    ,error:function () {
+
+                    }
+                });
+            }
+//全部tab下的删除按钮弹出层
+            else if (obj.event === 'delAllBtn'){
+                var number = obj.data.number;
+                var id = obj.data.number;
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['30%','25%']
+                    ,id:'LAY_layuipro'
+                    ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#delGMAll')
+                    ,success:function (layero,index) {
+                        //将删除的跑马灯编号显示在提示窗口
+                        $('#num').html(number);
+                    }
+                    ,yes:function (index,layero) {
+                        //向后端发送将要删除的跑马灯ID
+                        $.ajax({
+                            url:'',
+                            type:'POST',
+                            data:{
+                                'id': id
+                            },
+                            success:function (data) {
+                                console.log("成功");
+                                //删除成功后重载表格
+                                table.reload('allGMList', {
+                                    url:'/test/t205',
+                                });
+                            },
+                            error:function () {
+                                console.log("失败");
+
+                            }
+                        });
+                        layer.close(index);
+                    }
+                })
+            }
+        });
+    //全部tab表格排序
+        table.on('sort(table1)', function(obj){
+            table.reload('allGMList', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+
+    //未播tab表格
+        table.render({
+            elem:"#notPlayedGMList"
+            ,url:"/test/t206"
+            ,page:true
+            // ,id:"rechargeReload"
+            ,cols:[[
+                {type:"order",title:'序号'}
+                ,{field:"number",title:'编号',sort:true}
+                ,{field:"creater",title:'创建人'}
+                ,{field:"creationTime",title:'创建时间'}
+                ,{field:"content",title:'内容'}
+                ,{field:"public",title:'公告'}
+                ,{field:"startTime",title:'开始时间'}
+                ,{field:"terminalTime ",title:'结束时间'}
+                ,{field:'',title:'操作',width:250,toolbar:'#barNotPlayedGMList'}
+            ]]
+        });
+    //未播tab下的按钮弹出层
+        table.on('tool(table2)', function(obj){
+            var data = obj.data;
+            switch(obj.event){
+                //详情按钮
+                case 'detailsGMNotPlayBtn':
+                    var id = data.number;
+                    console.log($This);
+                    layer.open({
+                        type:1
+                        ,title:"跑马灯详情"
+                        ,closeBtn:1
+                        ,area:['50%','55%']
+                        ,id:'LAY_layuipro'
+                        // ,btn:['确认','取消']
+                        ,btnAlign:'c'
+                        ,moveType:1
+                        ,content:$('#GMDetailsAll')
+                        ,success:function (layero,index) {
+                            $.ajax({
+                                url:'',
+                                type:'POST',
+                                data:{
+                                    'id': id
+                                },
+                                success:function (data) {
+                                    table.render({
+                                        elem:"#GMDetails"
+                                        ,url:"/test/t206"
+                                        ,page:true
+                                        ,cols:[[
+                                            {field:'GMNum',title:'跑马灯编号'}
+                                            ,{field:'operatPer',title:'操作人'}
+                                            ,{field:'modifyContent',title:'修改内容'}
+                                            ,{field:'ModifyTime ',title:'修改时间'}
+                                        ]]
+                                    })
+                                },
+                                error:function (data) {
+                                    console.log("失败");
+                                }
+                            })
+                        }
+                    });
+                    break;
+                //修改按钮
+                case 'reviseGMNotPlayBtn':
+                    // var $This = $(this);
+                    var originalPublic;
+                    data.public==="是"? originalPublic=1:originalPublic=0;
+                    var id = data.number;
+                    var  originalContent = data.content;
+                    var  originalStartTime = data.startTime;
+                    var  originalTerminalTime = data.terminalTime;
+                    console.log(originalContent,originalStartTime,originalTerminalTime,originalPublic);
+                    layer.open({
+                        type:1
+                        ,title:"修改跑马灯"
+                        ,closeBtn:1
+                        ,area:['50%','55%']
+                        ,id:'LAY_layuipro'
+                        ,btn:['确认','取消']
+                        ,btnAlign:'c'
+                        ,moveType:1
+                        ,content:$('#reviseGM')
+                        ,success:function (layero,index) {
+                            $('#content').val(originalContent);
+                            $('#startTime').val(originalStartTime);
+                            $('#terminalTime').val(originalTerminalTime);
+                            originalPublic == 1? $('#check').next().addClass('layui-form-checked'):$('#check').next().removeClass('layui-form-checked');
+                            console.log($('#check').next());
+                        }
+                        ,yes:function (index,layero) {
+                            var checked;
+                            $("#check").next().hasClass("layui-form-checked")?checked = 1:checked = 0;
+                            var content = $('#content').val();
+                            // console.log($('#content'));
+                            var startTime = $('#startTime').val();
+                            var terminalTime = $('#terminalTime').val();
+                            $.ajax({
+                                url:'',
+                                type:"POST",
+                                data:{
+                                    'content':content,
+                                    'startTime':startTime,
+                                    'terminalTime':terminalTime,
+                                    'checked':checked,
+                                    'id':id
+                                }
+                                ,success:function (data) {
+                                    console.log("成功");
+                                    layer.close(index);
+                                    layer.confirm('修改成功！')
+                                }
+                                ,error:function () {
+                                    console.log("失败");
+                                    layer.confirm('修改失败！')
+                                }
+                            });
+                           // layer.close(index);
+                        }
+                    });
+                    break;
+                //开启/暂停按钮
+                case 'changeNotPlayBtn':
+                    //获取点击按钮对于的tr数据的唯一值
+                    var id = obj.data.number;
+                    //获取点击的按钮
+                    var $This = $(this);
+                    //声明变量保存
+                    var turn;
+
+                    // 判断是开启还是暂停
+                    $This.hasClass("stop")?turn = "start":turn = "stop";
+                    //向后端发送数据并修改按钮状态
+                    $.ajax({
+                        type: 'get'
+                        , data: {
+                            'id': id
+                            ,'turn': turn
+                        }
+                        , url: ''
+                        //,dataType:'JSON'
+                        , success: function (data) {
+                            console.log("chenggong");
+                            if (turn === "start") {
+                                $This.removeClass('stop');
+                                $This.removeClass('layui-btn-warm');
+                                $This.addClass('start');
+                                $This.html('开启');
+                            } else {
+                                $This.removeClass('start');
+                                $This.addClass('stop');
+                                $This.addClass('layui-btn-warm');
+                                $This.html('暂停');
+                            }
+                        }
+                        ,error:function () {
+
+                        }
+                    });
+                    break;
+                //删除按钮
+                case 'delNotPlayBtn':
+                    var number = obj.data.number;
+                    var id = obj.data.number;
+                    layer.open({
+                        type:1
+                        ,title:false
+                        ,closeBtn:1
+                        ,area:['30%','25%']
+                        ,id:'LAY_layuipro'
+                        ,btn:['确认','取消']
+                        ,btnAlign:'c'
+                        ,moveType:1
+                        ,content:$('#delGMAll')
+                        ,success:function (layero,index) {
+                            //将删除的跑马灯编号显示在提示窗口
+                            $('#num').html(number);
+                        }
+                        ,yes:function (index,layero) {
+                            //向后端发送将要删除的跑马灯ID
+                            $.ajax({
+                                url:'',
+                                type:'POST',
+                                data:{
+                                    'id': id
+                                },
+                                success:function (data) {
+                                    console.log("成功");
+                                    //删除成功后重载表格
+                                    table.reload('allGMList', {
+                                        url:'/test/t205',
+                                    });
+                                    layer.close(index);
+                                },
+                                error:function () {
+                                    console.log("失败");
+
+                                }
+                            });
+
+                        }
+                    });
+                    break;
+            }
+        });
+    //未播tab表格排序
+        table.on('sort(table2)', function(obj){
+            table.reload('notPlayedGMList', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+
+    //已播tab表格
+        table.render({
+                elem:"#playedGMList"
+                ,url:"/test/t202"
+                ,page:true
+                // ,id:"rechargeReload"
+                ,cols:[[
+                    {type:"order",title:'序号'}
+                    ,{field:"number",title:'编号' ,sort:true}
+                    ,{field:"creater",title:'创建人'}
+                    ,{field:"creationTime",title:'创建时间'}
+                    ,{field:"content",title:'内容'}
+                    ,{field:"public",title:'公告'}
+                    ,{field:"startTime",title:'开始时间'}
+                    ,{field:"terminalTime ",title:'结束时间'}
+                    ,{field:'',title:'操作',width:250,toolbar:'#barPlayedGMList'}
+                ]]
+            });
+    //已播tab下的按钮弹出层
+        table.on('tool(table3)', function(obj){
+            var data = obj.data;
+            switch(obj.event){
+                case 'detailsGMPlayedBtn':
+                    var id = data.number;
+                    console.log($This);
+                    layer.open({
+                        type:1
+                        ,title:"跑马灯详情"
+                        ,closeBtn:1
+                        ,area:['50%','55%']
+                        ,id:'LAY_layuipro'
+                        // ,btn:['确认','取消']
+                        ,btnAlign:'c'
+                        ,moveType:1
+                        ,content:$('#GMDetailsAll')
+                        ,success:function (layero,index) {
+                            $.ajax({
+                                url:'',
+                                type:'POST',
+                                data:{
+                                    'id': id
+                                },
+                                success:function (data) {
+                                    table.render({
+                                        elem:"#GMDetails"
+                                        ,url:"/test/t206"
+                                        ,page:true
+                                        ,cols:[[
+                                            {field:'GMNum',title:'跑马灯编号'}
+                                            ,{field:'operatPer',title:'操作人'}
+                                            ,{field:'modifyContent',title:'修改内容'}
+                                            ,{field:'ModifyTime ',title:'修改时间'}
+                                        ]]
+                                    })
+                                },
+                                error:function (data) {
+                                    console.log("失败");
+                                }
+                            })
+                        }
+                    });
+                    break;
+                case 'reviseGMPlayedBtn':
+                    // var $This = $(this);
+                    var originalPublic;
+                    data.public==="是"? originalPublic=1:originalPublic=0;
+                    var id = data.number;
+                    var  originalContent = data.content;
+                    var  originalStartTime = data.startTime;
+                    var  originalTerminalTime = data.terminalTime;
+                    console.log(originalContent,originalStartTime,originalTerminalTime,originalPublic);
+                    layer.open({
+                        type:1
+                        ,title:"修改跑马灯"
+                        ,closeBtn:1
+                        ,area:['50%','55%']
+                        ,id:'LAY_layuipro'
+                        ,btn:['确认','取消']
+                        ,btnAlign:'c'
+                        ,moveType:1
+                        ,content:$('#reviseGM')
+                        ,success:function (layero,index) {
+                            $('#content').val(originalContent);
+                            $('#startTime').val(originalStartTime);
+                            $('#terminalTime').val(originalTerminalTime);
+                            originalPublic == 1? $('#check').next().addClass('layui-form-checked'):$('#check').next().removeClass('layui-form-checked');
+                            console.log($('#check').next());
+                        }
+                        ,yes:function (index,layero) {
+                            var checked;
+                            $("#check").next().hasClass("layui-form-checked")?checked = 1:checked = 0;
+                            var content = $('#content').val();
+                            // console.log($('#content'));
+                            var startTime = $('#startTime').val();
+                            var terminalTime = $('#terminalTime').val();
+                            $.ajax({
+                                url:'',
+                                type:"POST",
+                                data:{
+                                    'content':content,
+                                    'startTime':startTime,
+                                    'terminalTime':terminalTime,
+                                    'checked':checked,
+                                    'id':number
+                                }
+                                ,success:function (data) {
+                                    console.log("成功");
+                                    layer.close(index);
+                                }
+                                ,error:function () {
+                                    console.log("失败");
+                                }
+                            });
+                            layer.close(index);
+                        }
+                    });
+                    break;
+                case 'changePlayedBtn':
+                    //获取点击按钮对于的tr数据的唯一值
+                    var id = obj.data.number;
+                    //获取点击的按钮
+                    var $This = $(this);
+                    //声明变量保存
+                    var turn;
+
+
+                    // 判断是开启还是暂停
+                    $This.hasClass("stop")?turn = "start":turn = "stop";
+                    //向后端发送数据并修改按钮状态
+                    $.ajax({
+                        type: 'get'
+                        , data: {
+                            'id': id
+                            ,'turn': turn
+                        }
+                        , url: ''
+                        //,dataType:'JSON'
+                        , success: function (data) {
+                            console.log("chenggong");
+                            if (turn === "start") {
+                                $This.removeClass('stop');
+                                $This.removeClass('layui-btn-warm');
+                                $This.addClass('start');
+                                $This.html('开启');
+                            } else {
+                                $This.removeClass('start');
+                                $This.addClass('stop');
+                                $This.addClass('layui-btn-warm');
+                                $This.html('暂停');
+                            }
+                        }
+                        ,error:function () {
+
+                        }
+                    });
+                    break;
+                case 'delPlayedBtn':
+                    var number = obj.data.number;
+                    var id = obj.data.number;
+                    layer.open({
+                        type:1
+                        ,title:false
+                        ,closeBtn:1
+                        ,area:['30%','25%']
+                        ,id:'LAY_layuipro'
+                        ,btn:['确认','取消']
+                        ,btnAlign:'c'
+                        ,moveType:1
+                        ,content:$('#delGMAll')
+                        ,success:function (layero,index) {
+                            //将删除的跑马灯编号显示在提示窗口
+                            $('#num').html(number);
+                        }
+                        ,yes:function (index,layero) {
+                            //向后端发送将要删除的跑马灯ID
+                            $.ajax({
+                                url:'',
+                                type:'POST',
+                                data:{
+                                    'id': id
+                                },
+                                success:function (data) {
+                                    console.log("成功");
+                                    //删除成功后重载表格
+                                    table.reload('allGMList', {
+                                        url:'/test/t205',
+                                    });
+                                },
+                                error:function () {
+                                    console.log("失败");
+
+                                }
+                            });
+                            layer.close(index);
+                        }
+                    });
+                    break;
+            }
+        });
+    //已播tab表格排序
+        table.on('sort(table3)', function(obj){
+                table.reload('playedGMList', {
+                    url:'/test/t205',
+                    initSort: obj
+                    ,where: {
+                        field: obj.field
+                        ,order: obj.type
+                    }
+                });
+            });
+    })
+</script>
+
+<!--弹出层显示的内容-->
+<!--全部tab下的详情弹出层-->
+<div class="x-body" id="GMDetailsAll" style="display: none;">
+    <table class="layui-table" id="GMDetails"></table>
+</div>
+
+<!--全部tab下的修改按钮弹出层-->
+<div class="x-body" id="reviseGM" style="display: none;">
+    <form action="" class="layui-form">
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">内容</label>
+            <div class="layui-input-inline">
+                <textarea  id="content" cols="80" rows="10"  style="resize:none;" placeholder="50个中文字符，避免出现敏感字符" name="content"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left:67px!important;" >
+            <!--<label for="" class="layui-form-label"></label>-->
+            <input type="checkbox" title="以公告的形式" lay-skin="primary" lay-filter="check" id="check">
+        </div>
+        <div class="layui-form-item" style="margin-left:30px!important;">
+            <label for="" class="layui-form-label" >开始时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="startTime" name="startTime" >
+            </div>
+            <label for="" class="layui-form-label" >结束时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="terminalTime" name="terminalTime">
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use('laydate',function () {
+        var laydate = layui.laydate;
+        laydate.render({elem:"#startTime"});
+        laydate.render({elem:"#terminalTime"})
+    })
+</script>
+
+<!--全部tab下的删除按钮弹出层-->
+<div class="x-body" id="delGMAll"  style="display: none;text-align: center;padding-top:10%;">
+    <h2 class="center">确认删除编号为<span id="num"></span>的跑马灯吗？</h2>
+</div>
+</body>
+
+

@@ -1,0 +1,89 @@
+<body>
+<div class="x-body">
+    <form action="" class="layui-form">
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">用户ID</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input"    name="userID" readonly>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">标题</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input"  lay-verify="required" name="title">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">图片</label>
+            <!--<div class="layui-input-inline">-->
+                <!--<img src="../../web/static/images/login.jpg" height="100" width="100"/>-->
+            <!--</div>-->
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">上传新图</label>
+            <div class="layui-input-inline">
+                <input type="file" name="fileUpload">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">是否跳转</label>
+            <div class="layui-input-inline">
+                <select name="jump" id="">
+                    <option value="0">——跳转——</option>
+                    <option value="1">——不跳转——</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">跳转地址</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="jumpLink">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">过期时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="date" name="date">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:100%;">
+            <div style="position: absolute;left:40%;margin-bottom: 15px;">
+                <button class="layui-btn" lay-submit="" lay-filter="addActive">确认</button>
+                <button class="layui-btn" type="reset">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(['laydate','form','layedit'],function () {
+        var laydate = layui.laydate,layedit = layui.layedit;
+        laydate.render({elem:'#date'});
+        var form = layui.form;
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+        form.on('submit(addActive)',function (data) {
+            //debugger
+            console.log(data.field);
+            $.ajax({
+                type:'post'
+                ,data:{
+                    'userID':data.field.userID
+                    ,'title':data.field.title
+                    ,'fileUpLoad':data.field.fileUpLoad
+                    ,'jump':data.field.jump
+                    ,'jumpLink':data.field.jumpLink
+                }
+                ,url:"/test/t206"
+                ,success:function (data) {
+                    //debugger
+                    console.log(data);
+
+                }
+                ,error:function (data) {
+                    console.log("失败");
+                }
+            })
+        })
+    })
+</script>
+</body>

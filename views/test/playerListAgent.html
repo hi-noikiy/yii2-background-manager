@@ -1,0 +1,92 @@
+
+<body>
+<div class="x-body">
+    <!--过滤条件-->
+    <div  class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="用户ID" id="ID">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="开始日期" id="startTime">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="结束日期" id="endTime">
+            </div>
+            <button class="layui-btn"  data-type="reload" id="search">查询</button>
+        </div>
+    </div>
+    <!--表格数据-->
+    <table class="layui-table " id="logTable" lay-filter="sort"></table>
+</div>
+<script>
+    layui.use(['table','layer','laydate'],function () {
+        //日期查询
+        var laydate = layui.laydate;
+        laydate.render({elem:'#startTime'});
+        laydate.render({elem:'#endTime'});
+        //表格渲染
+        var table = layui.table;
+        table.render({
+            elem:"#logTable"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+                {field:"number",title:'序号',sort:true}
+                ,{field:"currentDate ",title:'当前日期'}
+                ,{field:"playerID",title:'玩家ID'}
+                ,{field:"playerNick",title:'玩家昵称'}
+                ,{field:"superiorAgentID",title:'上级代理ID'}
+                ,{field:"superiorAgentNick",title:'上级代理昵称'}
+                ,{field:"topLevelAgentID",title:'顶级代理ID'}
+                ,{field:"topLevelAgentNick",title:'顶级代理昵称'}
+                ,{field:"currentTreasure",title:'当前元宝'}
+                ,{field:"totalHistoricalConsumption",title:'历史总消耗'}
+                ,{field:"totalHistoricalCharge",title:'历史总充值'}
+                ,{field:"registrationTime",title:'注册时间'}
+                ,{field:"lastLoginTime",title:'最后登录时间'}
+
+            ]]
+            // ,id: 'logReload'
+
+        });
+        //查询
+        var $ = layui.$, active = {
+            reload: function(){
+                var userID = $('#ID');
+                var startTime = $('#startTime');
+                var endTime = $('#endTime');
+
+                //执行重载
+                table.reload('logTable', {
+                    url:'/test/t204'
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        id: userID.val(),
+                        start_time: startTime.val(),
+                        end_time: endTime.val()
+                    }
+                });
+            }
+        };
+        //查询按钮绑定事件
+        $('#search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        table.on('sort(sort)', function(obj){
+            table.reload('logTable', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+    })
+</script>
+</body>

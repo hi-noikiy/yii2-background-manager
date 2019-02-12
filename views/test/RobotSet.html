@@ -1,0 +1,300 @@
+<style>
+    .title{width:180px;margin:0 auto;}
+</style>
+<body>
+<div class="x-body">
+    <div class="list1">
+        <h2 class="title">机器人信息</h2>
+        <form action="" class="layui-form" >
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">机器人开关</label>
+                <div class="layui-input-block" style="padding-top: 5px;" >
+                    <input type="checkbox" class="layui-input" lay-skin="switch" lay-text="ON|OFF" lay-filter="robotSwitch">
+                </div>
+            </div>
+        </form>
+        <table class="layui-table " lay-data="{url:'/test/t206'}" lay-filter="table1">
+            <thead>
+            <tr>
+                <th lay-data="{field:'id', sort: true,edit: 'text'}">机器人性格</th>
+                <th lay-data="{field:'username', sort: true, edit: 'text'}">操作间隔</th>
+                <th lay-data="{field:'email', edit: 'text'}">抢庄4</th>
+                <th lay-data="{field:'sex', edit: 'text'}">抢庄3</th>
+                <th lay-data="{field:'city', edit: 'text'}">抢庄2</th>
+                <th lay-data="{field:'experience', sort: true, edit: 'text'}">抢庄1</th>
+                <th lay-data="{field:'experience', sort: true, edit: 'text'}">压分4</th>
+                <th lay-data="{field:'email', edit: 'text'}">压分3</th>
+                <th lay-data="{field:'sex', edit: 'text'}">压分2</th>
+                <th lay-data="{field:'city', edit: 'text'}">压分1</th>
+                <th lay-data="{field:'experience', sort: true, edit: 'text'}">开牌率</th>
+                <th lay-data="{field:'experience', sort: true, edit: 'text'}">看牌率</th>
+                <th lay-data="{field:'experience', sort: true, edit: 'text'}">加注率</th>
+                <th lay-data="{field:'experience', sort: true, edit: 'text', width:120}">比牌</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+   <div class="title2">
+       <h2 class="title">机器人信息</h2>
+       <div class="layui-row">
+           <div class="layui-col-xs1 layui-col-xs-offset11">
+               <button class="layui-btn" data-type="create" id="create">新增机器人</button>
+           </div>
+       </div>
+       <table class="layui-table" lay-data="{height:332, url:'/test/t206/', page:true}" lay-filter="table2">
+           <thead>
+           <tr>
+               <th lay-data="{field:'id', sort: true,edit: 'text'}">序号</th>
+               <th lay-data="{field:'username', sort: true, edit: 'text'}">机器人ID</th>
+               <th lay-data="{field:'email', edit: 'text'}">名称</th>
+               <th lay-data="{field:'sex', edit: 'text'}">头像ID</th>
+               <th lay-data="{field:'city', edit: 'text'}">机器人IP</th>
+               <th lay-data="{field:'experience', sort: true, edit: 'text'}">携带元宝</th>
+               <th lay-data="{field:'experience', sort: true, edit: 'text'}">当前元宝</th>
+               <th lay-data="{field:'email', edit: 'text'}">补充</th>
+               <th lay-data="{field:'sex', edit: 'text'}">补充总额</th>
+               <th lay-data="{field:'city', edit: 'text'}">游戏场次</th>
+               <th lay-data="{field:'experience', sort: true, edit: 'text'}">赢场次</th>
+               <th lay-data="{field:'experience', sort: true, edit: 'text'}">输场次</th>
+               <th lay-data="{field:'experience', sort: true, edit: 'text'}">输赢比例</th>
+               <th lay-data="{width:178, toolbar: '#barDemo'}">操作</th>
+           </tr>
+           </thead>
+       </table>
+
+       <script type="text/html" id="barDemo">
+           <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+           <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+       </script>
+   </div>
+</div>
+<script>
+    layui.use(['table','form'], function(){
+        var table = layui.table;
+        var form = layui.form;
+        form.on('switch(robotSwitch)',function (data) {
+            $.ajax({
+                url:'/test/t206/',
+                data:{
+                    value:data.elem.checked
+                },
+                success:function () {
+                    console.log(data.elem.checked)
+                }
+            })
+        })
+        table.on('edit(table1)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+            layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+        });
+        var active={
+            //新增机器人
+            create:function () {
+                layer.open({
+                    type:1
+                    ,title:"新建"
+                    ,closeBtn:1
+                    ,area:['80%','65%']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#createlayer')
+                    ,btn:['确认','取消']
+                    ,success:function (layero,index) {
+
+                    }
+                    ,yes:function (index,layero) {
+                        var datas = $("#createlayer input");
+                        $.ajax({
+                            url:'/test/t206',
+                            type:"POST",
+                            data:{
+                                index:datas[0].value,
+                                randomNum:datas[1].value,
+                                userName:datas[2].value,
+                                headerID:datas[3].value,
+                                robotIP:datas[4].value,
+                                hightest:datas[5].value,
+                                XDYB:datas[6].value,
+                                currenYB:datas[7].value,
+                                borrowNum:datas[8].value,
+                                borrowLimit:datas[9].value,
+                                game:datas[10].value,
+                                win:datas[11].value,
+                            },
+                            success:function () {
+                                console.log("success")
+                            },
+                            error:function () {
+                                console.log("false")
+                            }
+                        })
+                    }
+                });
+            },
+        };
+        $('#create').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        table.on('tool(table2)', function(obj){
+            var data = obj.data;
+            switch(obj.event){
+                //详情按钮
+                case 'edit':
+                    var id = data.number;
+                    $.ajax({
+                        url:'',
+                        data:{
+                            id:id
+                        },
+                        success:function () {
+                            layer.open({
+                                type:1
+                                ,title:"修改"
+                                ,closeBtn:1
+                                ,area:['80%','65%']
+                                ,id:'LAY_layuipro'
+                                ,btn:['确认','取消']
+                                ,btnAlign:'c'
+                                ,moveType:1
+                                ,content:$('#createlayer')
+                                ,success:function (layero,index) {
+                                    var inputs = $("#createlayer input");
+                                    var i=0;
+                                    for (var  key in data){
+                                        inputs[i].value = data[key];
+                                        console.log(data[key])
+                                        i++;
+                                    }
+                                }
+                            });
+                        }
+                    })
+
+                    break;
+                //删除按钮
+                case 'del':
+                    var number = obj.data.number;
+                    var id = obj.data.number;
+                    layer.open({
+                        type:1
+                        ,title:false
+                        ,closeBtn:1
+                        ,area:['30%','25%']
+                        ,id:'LAY_layuipro'
+                        ,btn:['确认','取消']
+                        ,btnAlign:'c'
+                        ,moveType:1
+                        ,content:$('#delGMAll')
+                        ,success:function (layero,index) {
+                            $('#num').html(number);
+                        }
+                        ,yes:function (index,layero) {
+                            $.ajax({
+                                url:'',
+                                type:'POST',
+                                data:{
+                                    'id': id
+                                },
+                                success:function (data) {
+                                    console.log("成功");
+                                    //删除成功后重载表格
+                                    table.reload('allGMList', {
+                                        url:'/test/t205',
+                                    });
+                                    layer.close(index);
+                                },
+                                error:function () {
+                                    console.log("失败");
+                                }
+                            });
+                        }
+                    });
+                    break;
+            }
+        });
+    });
+</script>
+</body>
+<style>
+    #createlayer th{width:150px;}
+    #createlayer td{padding: 0;width:150px;}
+    #createlayer td>input{border:0;padding:0;}
+    #createlayer .layui-form-label{width:150px!important;}
+    .layui-form-item .layui-input-inline{width:30%;}
+</style>
+<div class="layui-body" style="display:none;" id="createlayer">
+    <form action="" class="layui-form">
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">序号</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" readonly style="border:none" name="index">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">随机号</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" readonly style="border:none" name="randomNum">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="userName">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">用户头像ID</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="headerID">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人IP</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="robotIP">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人底注最高范围</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="userName" placeholder="2000">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人随机属性</label>
+            <div class="layui-input-inline" style="width: 80%;">
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th>携带元宝</th>
+                        <th>当前元宝</th>
+                        <th>借贷次数</th>
+                        <th>借贷额度</th>
+                        <th>游戏场次</th>
+                        <th>赢场次</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="text" class="layui-input"></td>
+                        <td><input type="text" class="layui-input"></td>
+                        <td><input type="text" class="layui-input"></td>
+                        <td><input type="text" class="layui-input"></td>
+                        <td><input type="text" class="layui-input"></td>
+                        <td><input type="text" class="layui-input"></td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="x-body" id="delGMAll"  style="display: none;text-align: center;padding-top:10%;">
+    <h2 class="center">确认删除编号为<span id="num"></span>的机器人吗？</h2>
+</div>

@@ -1,0 +1,71 @@
+<style>
+    .center{
+        position:absolute;
+        /*width:300px;*/
+        /*height: 100px;*/
+        left: 20%;
+
+    }
+</style>
+<body>
+<div class="x-body">
+    <div class="center">
+        <form action="" class="layui-form">
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">用户ID</label>
+                <div class="layui-input-inline">
+                    <input id="1" type="text" class="layui-input" name="userID" >
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">白菜姓名</label>
+                <div class="layui-input-inline">
+                    <input  id="2" type="text" class="layui-input" name="cabbageName">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">联系方式</label>
+                <div class="layui-input-inline">
+                    <input  id="3" type="text" class="layui-input" name="phone">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">下注开关</label>
+                <div class="layui-input-inline">
+                    <select name="switch" id="">
+                        <option value="1">开启</option>
+                        <option value="0">关闭</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item" style="width:100%;">
+                <div style="position: absolute;left:40%;margin-bottom: 15px;">
+                    <button class="layui-btn" lay-submit="" lay-filter="addCabbage">确认</button>
+                    <button class="layui-btn" type="reset">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    layui.use('form',function () {
+        var form = layui.form;
+        form.on('submit(addCabbage)',function (data) {
+            // $.ajax({
+            //     type:"POST"
+            //     ,url:'/test/t201/'
+            //     ,data:{
+            //         'managerID':data.field.managerID
+            //     }
+            //     ,success:function () {
+            //         console.log("成功");
+            //     }
+            //     ,error:function () {
+            //         console.log("失败");
+            //     }
+            //
+            // })
+        })
+    })
+</script>
+</body>

@@ -1,0 +1,94 @@
+<body>
+<div class="x-body">
+    <div action="" class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <select name="" id="gameName">
+                    <option value="">游戏名称</option>
+                    <option value="1">三张牌</option>
+                    <option value="2">内蒙打大A</option>
+                    <option value="3">山西麻将</option>
+                    <option value="4">内蒙麻将</option>
+                    <option value="5">牛牛</option>
+                    <option value="6">跑得快</option>
+                    <option value="7">推筒子</option>
+                    <option value="8">三公</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="开始日期" id="startTime">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="结束日期" id="endTime">
+            </div>
+            <button class="layui-btn"  id="search" data-type="search">查询</button>
+        </div>
+    </div>
+    <table class="layui-table " id="recordDetails" lay-filter="sort"></table>
+</div>
+<script>
+    //日期查询
+    layui.use(['table','layer','laydate'],function () {
+        var laydate = layui.laydate;
+        laydate.render({elem:'#date'});
+        var table = layui.table;
+        table.render({
+            elem:"#recordDetails"
+            ,url:"/test/t206"
+            ,page:true
+            ,id:"rechargeReload"
+            ,cols:[[
+                {field:" ",title:' '}
+                ,{field:" ",title:' '}
+                ,{field:" ",title:' '}
+                ,{field:" ",title:' '}
+                ,{field:" ",title:' '}
+                ,{field:" ",title:' '}
+                ,{field:" ",title:' '}
+                ,{field:" ",title:' '}
+                ,{field:" ",title:' '}
+                ,{field:"  ",title:' '}
+                ,{field:" ",title:' '}
+            ]]
+        });
+
+//排序
+        table.on('sort(sort)', function(obj){
+            table.reload('recordDetails', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        //查询
+        var $ = layui.$, active = {
+            search: function(){
+                var gameName = $('#gameName').val();
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
+
+                //执行重载
+                table.reload('rechargeReload', {
+                    url:'/test/t204'
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        gameName: gameName,
+                        startTime: startTime,
+                        endTime: endTime
+                    }
+                });
+            }
+        };
+        $('#search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    })
+</script>
+</body>
+

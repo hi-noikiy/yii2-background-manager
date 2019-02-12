@@ -1,0 +1,80 @@
+
+<body>
+<div class="x-body">
+    <div action="" class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="用户ID" id="userID">
+            </div>
+            <button class="layui-btn" data-method="search" id="search" data-type="reload" id="search" style="margin-left:-10px;">查询</button>
+        </div>
+    </div>
+    <table class="layui-table " id="proxiesTable" lay-filter="sort"></table>
+</div>
+<script>
+    layui.use(['table','layer'],function () {
+        var table = layui.table;
+        table.render({
+            elem:"#proxiesTable"
+            ,url:"/test/t206"
+            ,page:true
+            // ,id:"rechargeReload"
+            ,cols:[[
+                {field:"number",title:"序号",sort:true}
+                ,{field:"userID",title:"用户ID",sort:true}
+                ,{field:"higherLevel",title:"上级信息（ID)"}
+                ,{field:"nickName",title:"昵称"}
+                ,{field:"userName",title:"真实姓名"}
+                ,{field:"phone",title:"电话"}
+                ,{field:"creatData",title:"创建时间"}
+                ,{field:"underPlayer",title:"伞下玩家"}
+                ,{field:"withdrawCash",title:"可提现金额"}
+                ,{field:"cashAmount ",title:"已提现金额"}
+                ,{field:"InviterReward ",title:"邀请人奖励"}
+                ,{field:"rebateAmount ",title:"返利金额"}
+                ,{field:"rebateTreasure",title:"返利元宝"}
+                ,{field:"totalRevenue",title:"总收入"}
+                ,{field:"todayRevenue ",title:"今日收入"}
+                ,{field:"upgrade",title:"是否升级"}
+            ]]
+            ,done:function () {
+                //查询
+                var $ = layui.$, active = {
+                    reload: function(){
+                        var userID = $('#userID').val();
+                        //执行重载
+                        table.reload('proxiesTable', {
+                            url:'/test/t204'
+                            ,page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                            ,where: {
+                                key: {
+                                    id: userID,
+                                }
+                            }
+                        });
+                    }
+                };
+                $('#search').on('click', function(){
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+            }
+        });
+
+        table.on('sort(sort)', function(obj){
+            table.reload('proxiesTable', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+    })
+</script>
+</body>
+
+

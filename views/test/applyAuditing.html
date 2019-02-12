@@ -1,0 +1,48 @@
+<body>
+<div class="x-body">
+    <!--<div class="refresh refreshThis " style="float:right;cursor:pointer;position: relative;"> <i class="layui-icon layui-icon-refresh" ></i></div>-->
+
+    <table class="layui-table" id="applyAudiTable"  lay-filter="sort"></table>
+</div>
+<script type="text/html" id="barapplyAudiTable">
+<button class="layui-btn layui-btn-xs">不知道这里是啥操作</button>
+</script>
+<script>
+    layui.use('table',function () {
+        var $ = layui.$;
+        $(".refresh").on("click",function(){
+            window.location.href = window.location.href;
+        });
+        var table = layui.table;
+        table.render({
+            elem:"#applyAudiTable"
+            ,url:'/test/t206'
+            ,page:true
+            ,cols:[[
+                {field:"number",title:"序号"}
+                ,{field:"ID",title:"用户ID",sort:true}
+                ,{field:"phone",title:"电话"}
+                ,{field:"wechatImage",title:"微信群截图"}
+                ,{field:"twentyID",title:"20名群成员ID",sort:true}
+                ,{field:"tenRoomNum",title:"10局桌数房号",sort:true}
+                ,{field:"superiority",title:"拥有的资源/优势"}
+                ,{field:"applyStatus",title:"申请状态",sort:true}
+                ,{field:"",title:"操作",toolbar:"#barapplyAudiTable"}
+            ]]
+        });
+
+        table.on('sort(sort)', function(obj){
+            table.reload('applyAudiTable', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+
+    })
+</script>
+</body>
+</html>

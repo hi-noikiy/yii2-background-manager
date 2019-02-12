@@ -1,0 +1,58 @@
+<body>
+<div class="x-body">
+    <form action="" class="layui-form">
+        <div class="layui-form-item">
+            <!--<label for="" class="layui-form-label">用户ID</label>-->
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="用户ID">
+            </div>
+            <div class="layui-btn" style="margin-left:-10px;">查询</div>
+        </div>
+    </form>
+    <table class="layui-table" id="everyoneTable" lay-filter="sort"></table>
+</div>
+<script type="text/html" id="barpartnerList">
+    <button class="layui-btn layui-btn-xs">消耗详情</button>
+    <button class="layui-btn layui-btn-xs">下级详情</button>
+</script>
+<script>
+    layui.use('table',function () {
+        var table =  layui.table;
+        table.render({
+            elem:"#everyoneTable"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+                {field:"number",title:"序号",sort:true}
+                ,{field:"userID",title:"用户ID"}
+                ,{field:"higherLevel",title:"上级信息（ID)"}
+                ,{field:"nickName",title:"昵称"}
+                ,{field:"userName",title:"真实姓名"}
+                ,{field:"phone",title:"电话"}
+                ,{field:"creatData",title:"创建时间"}
+                ,{field:"underPlayer",title:"伞下玩家"}
+                ,{field:"withdrawCash",title:"可提现金额"}
+                ,{field:"cashAmount ",title:"已提现金额"}
+                ,{field:"InviterReward ",title:"邀请人奖励"}
+                ,{field:"rebateAmount ",title:"返利金额"}
+                ,{field:"rebateTreasure",title:"返利元宝"}
+                ,{field:"totalRevenue",title:"总收入"}
+                ,{field:"todayRevenue ",title:"今日收入"}
+                ,{field:"upgrade",title:"是否升级"}
+                // ,{field:"",title:"操作",toolbar:"#barpartnerList",width:150}
+            ]]
+        });
+
+        table.on('sort(sort)', function(obj){
+            table.reload('everyoneTable', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+    })
+</script>
+</body>

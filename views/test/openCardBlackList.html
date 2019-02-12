@@ -1,0 +1,249 @@
+<style>
+    label{width:98px!important;}
+    .rf{float: right;}
+    .lf{float: left;}
+    .per{
+        position: relative;
+        left:-30px;
+    }
+</style>
+<body>
+<div class="x-body">
+    <form action="" class="layui-form">
+        <div class="layui-form-item layui-col-xs4">
+            <label for="" class="layui-form-label">黑名单概率：</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="probability">
+            </div>
+            <span class="lf per" style="margin-top: 10px;" >%</span>
+
+            <!--<label for="" class="layui-form-label">萌新赢局数：</label>-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input type="text" class="layui-input" name="number">-->
+            <!--</div>-->
+            <div class="layui-btn" id="revise" lay-submit="" lay-filter="revise">修改</div>
+            <div class="layui-btn layui-btn-danger stop" id="changeBtn" lay-submit="" lay-filter="changeBtn">暂停</div>
+        </div>
+    </form>
+    <div class="layui-col-xs1 layui-col-xs-offset7">
+        <!--<div class="layui-input-inline">-->
+            <!--<input type="text" class="layui-input" placeholder="开始日期" id="startTime">-->
+        <!--</div>-->
+        <!--<div class="layui-input-inline">-->
+            <!--<input type="text" class="layui-input" placeholder="结束日期" id="endTime">-->
+        <!--</div>-->
+        <div class="layui-btn layui-btn-xs1" data-type="search" id="addBlackList" data-method="addBlackList">添加黑名单</div>
+    </div>
+
+    <table class="layui-table" id="blackList" lay-filter="sort">
+        <caption><h2>黑名单统计</h2></caption>
+    </table>
+    <!--<table class="layui-table" id="warning">-->
+        <!--<caption><h2>异常警告</h2></caption>-->
+    <!--</table>-->
+    <h2 style="text-align: center">操作记录</h2>
+    <div style="background-color: #F2F2F2;padding:10px;">
+        <p id="operationRecord"></p>
+    </div>
+</div>
+<script type="text/html" id="barblackList">
+    <div class="demoTable">
+        <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del" >移除</button>
+    </div>
+</script>
+<script>
+    layui.use(['table','laydate','form','layer'],function () {
+        var $ = layui.$;
+        var layer = layui.layer;
+        //table渲染
+        var table = layui.table;
+        table.render({
+            elem:'#blackList'
+            ,url:'/test/t205'
+            ,page:true
+            ,cols:[[
+                {field:'index',title:'序号',sort:true}
+                ,{field:'userID',title:'玩家ID'}
+                ,{field:'playerName',title:'玩家名称'}
+                ,{field:'higherLevelID',title:'上级ID'}
+                ,{field:'higherLevelName',title:'上级名称'}
+                ,{field:'oneselfYB',title:'自身元宝'}
+                ,{field:'winNum',title:'赢场次'}
+                ,{field:'lostNum',title:'输场次'}
+                ,{field:'winYB',title:'赢元宝'}
+                ,{field:'LostYB',title:'输元宝'}
+                ,{field:'createDate',title:'创建日期'}
+                ,{field:'operatingPer',title:'操作人'}
+                ,{field:'',title:'操作',toolbar:'#barblackList'}
+            ]]
+            ,done:function () {
+                //删除table行数据
+                table.on('tool(sort)', function(obj){
+                    var data = obj.data;
+                    layer.confirm('真的删除行么', function(index){
+                        //alert(index);
+                        $.ajax({
+                            type:'POST'
+                            ,url:'/test/t204'
+                            ,data:{}
+                            ,success:function () {
+                            }
+                            ,error:function () {
+
+                            }})
+                        // obj.del();
+                        layer.close(index);
+                    });
+                });
+
+                $('.demoTable .layui-btn').on('click', function(){
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+
+            }
+        });
+        
+        //排序
+        table.on('sort(sort)',function (obj) {
+            table.reload('newSetting',{
+                url:'/test/t205'
+                ,initSort:obj
+                ,where:{
+                    field:obj.field
+                    ,order:obj.type
+                }
+            })
+        });
+        //查询
+        var active = {
+            search:function () {
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
+                table.reload('newSetting',{
+                    url:'/test/t204'
+                    ,page:{
+                        curr:1
+                    }
+                    ,where:{
+                        key:{
+                            startTime:startTime
+                            ,endTime:endTime
+                        }
+                    }
+                })
+            }
+            //添加黑名单弹出层
+            ,addBlackList:function () {
+                layer.open({
+                    type: 1
+                    ,title: "黑名单创建" //不显示标题栏
+                    ,closeBtn: 1
+                    ,area: ['30%','30%']
+                    ,shade: 0.8
+                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                    ,btn: ['创建','取消']
+                    ,btnAlign: 'c'
+                    ,moveType: 1 //拖拽模式，0或者1
+                    ,content:$('#addblacklistlayer')
+                    ,yes:function (index,layero) {
+                        //alert('添加成功');
+                        $.ajax({
+                            type:'POST'
+                            ,url:''
+                            ,data:{}
+                            ,success:function () {
+                                
+                            }
+                            ,error:function () {
+                                
+                            }
+                        })
+                        layer.close(index);//设置关闭弹出层
+
+                    }
+                });
+            }
+        };
+        $('#addBlackList').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+        $('#search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        //form事件
+        var form = layui.form;
+        //修改
+        form.on('submit(revise)',function (data) {
+            $.ajax({
+                type:'POST'
+                ,data:{
+                    'probability':data.field.probability
+                }
+                ,url:''
+                ,success:function () {
+
+                }
+                ,error:function () {
+
+                }
+            })
+        });
+
+        //暂停开启按钮切换
+        form.on('submit(changeBtn)',function (data) {
+            if ($('#changeBtn').hasClass("stop")){
+                $('#changeBtn').removeClass('stop');
+                $('#changeBtn').removeClass('layui-btn-danger');
+                $('#changeBtn').addClass('start');
+                $('#changeBtn').html('开启');
+            }else{
+                $('#changeBtn').removeClass('start');
+                $('#changeBtn').addClass('stop');
+                $('#changeBtn').addClass('layui-btn-danger');
+                $('#changeBtn').html('暂停');
+            }
+
+            $.ajax({
+                type:'POST'
+                ,data:{
+
+                }
+                ,url:''
+                ,success:function () {
+
+                }
+                ,error:function () {
+
+                }
+            })
+        });
+        //从后台获取操作记录并显示
+        $.ajax({
+            type:"GET"
+            ,url:'/test/t206'
+            ,data:{}
+            ,dataType:'JSON'
+            ,success:function (val) {
+                console.log(val);
+                // var data = JSON.parse(val);
+                // console.log(data.number);
+                console.log(val.data[0].number);
+                $('#operationRecord').html(val.data[0].number);
+            }
+        })
+    })
+</script>
+</body>
+<body>
+<div class="x-body" id="addblacklistlayer" style="display: none">
+    <form action="" class="layui-form">
+        <label for="">玩家ID</label>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input">
+        </div>
+    </form>
+</div>
+</body>

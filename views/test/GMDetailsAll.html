@@ -1,0 +1,21 @@
+<body>
+<div class="x-body" >
+    <table class="layui-table" id="GMDetails"></table>
+</div>
+<script>
+    layui.use('table',function () {
+        var table = layui.table ;
+        table.render({
+            elem:"#GMDetails"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+                {field:'GMNum',title:'跑马灯编号'}
+                ,{field:'operatPer',title:'操作人'}
+                ,{field:'modifyContent',title:'修改内容'}
+                ,{field:'ModifyTime ',title:'修改时间'}
+            ]]
+        })
+    })
+</script>
+</body>

@@ -1,0 +1,38 @@
+
+<body>
+<div class="x-body">
+    <h2>绑定客户经理</h2>
+    <form action="" class="layui-form" style="margin-top:50px;">
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label" style="width: 20%;">客户经理ID</label>
+            <div class="layui-input-inline" style="width: 60%;">
+                <input type="text" class="layui-input" lay-verify="required" name="managerID">
+            </div>
+        </div>
+        <div class="layui-col-xs1 layui-col-xs-offset5" style="margin-top:30px;">
+            <button class="layui-btn" lay-filter="boundAccount">提交</button>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use('form',function () {
+        var form = layui.form;
+        form.on('submit(boundAccount)',function (data) {
+            $.ajax({
+                type:"POST"
+                ,url:''
+                ,data:{
+                    'managerID':data.field.managerID
+                }
+                ,success:function () {
+                    console.log("成功");
+                }
+                ,error:function () {
+                    console.log("失败");
+                }
+
+            })
+        })
+    })
+</script>
+</body>

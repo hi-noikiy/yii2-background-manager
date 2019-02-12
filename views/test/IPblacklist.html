@@ -1,0 +1,146 @@
+<body>
+<div class="x-body">
+    <!--<form action="" class="layui-form">-->
+        <!--<label for="" class="layui-form-label">代理昵称</label>-->
+        <div class="layui-col-xs3">
+            <div class="layui-inline">
+                <input type="text" class="layui-input" placeholder="IP" id="searchIP">
+            </div>
+            <div class="layui-btn" style="margin-left:-4px;" data-type="search1" id="search1">查询</div>
+        </div>
+        <!--<div class="layui-btn">导出</div>-->
+        <div class="layui-inline layui-col-xs1 layui-col-xs-offset8">
+            <button class="layui-btn " data-method="add" id="addBtn">添加</button>
+        </div>
+    <!--</form>-->
+    <table class="layui-table" id="IPblackTable1" lay-filter="table1"></table>
+</div>
+<script type="text/html" id="barIPblack">
+    <div id="layerDemo">
+        <button  class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+    </div>
+
+</script>
+<script>
+    layui.use(['table','layer'],function () {
+        //table数据渲染
+        var table =layui.table;
+        var $ = layui.$;
+        table.render({
+            elem:"#IPblackTable1"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+                {field:"number",title:"序号"}
+                ,{field:"ipAddress",title:"IP/IP段",sort:true}
+                ,{field:"higherLevel",title:"添加时间"}
+                ,{field:"nickName",title:"添加者"}
+                ,{field:"",title:"操作",toolbar:"#barIPblack"}
+            ]]
+        });
+        //表格事件监听
+        table.on('tool(table1)',function (obj) {
+            var data = obj.data;
+            if (obj.event==='del'){
+                var number = data.number;
+
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['30%','25%']
+                    ,id:'LAY_layuipro'
+                    ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#del')
+                    ,success:function (layero,index) {
+                        //将删除的跑马灯编号显示在提示窗口
+                        $('#num').html(number);
+                    }
+                    ,yes:function (index,layero) {
+                        //向后端发送将要删除的跑马灯ID
+                        $.ajax({
+                            url:'',
+                            type:'POST',
+                            data:{
+                                'number': number
+                            },
+                            success:function (data) {
+                                console.log("成功");
+                                //删除成功后重载表格
+                                table.reload('allGMList', {
+                                    url:'/test/t205',
+                                });
+                                layer.close(index);
+                                layer.msg("删除成功！",{time:1000});
+                            },
+                            error:function () {
+                                console.log("失败");
+                                layer.msg("删除失败！",{time:1000});
+
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+        //查询搜索功能
+        var active = {
+            search1:function () {
+            var searchIP = $("#searchIP").val();
+            table.reload('IPblackTable1',{
+                page:{
+                    curr:1
+                }
+                ,where:{
+                    searchIP:searchIP
+                }
+            })
+            }
+        };
+        $('#search1').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        //排序
+        table.on('sort(table1)', function(obj){
+            table.reload('IPblackTable', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+
+        var active = {
+            add:function () {
+                layer.open({
+                    type: 2
+                    ,title: "添加IP黑名单" //不显示标题栏
+                    ,closeBtn: 1
+                    ,area: ['60%','70%']
+                    ,shade: 0.8
+                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                    // ,btn: ['添加黑名单','返回']
+                    ,btnAlign: 'c'
+                    ,moveType: 1 //拖拽模式，0或者1
+                    ,content:'addipblack'
+                })
+            }
+        };
+        $('#addBtn').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+    })
+</script>
+</body>
+
+<!--删除按钮弹出层-->
+<div class="x-body" id="del"  style="display: none;text-align: center;padding-top:10%;">
+    <h2 class="center">确认删除<span id="num"></span>IP吗？</h2>
+</div>

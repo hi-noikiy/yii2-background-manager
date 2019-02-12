@@ -1,0 +1,61 @@
+
+<body>
+<div class="x-body">
+    <table class="layui-table" id="reportedCheck">
+
+    </table>
+</div>
+</body>
+<script>
+    layui.use('table',function () {
+        var table = layui.table;
+        table.render({
+            elem:'#reportedCheck'
+            ,url:'file/2reportedCheck/'
+            ,page:true
+            ,cols:[[
+                {field:'reportedID',title:'举报人ID',sort:true}
+                ,{field:'beReportedID',title:'被举报人ID',sort:true}
+                ,{field:'gameID',title:'游戏ID',sort:true}
+                ,{field:'waiGua',title:'外挂嫌疑'}
+                ,{field:'heHuo',title:'合伙作弊'}
+                ,{field:'yanYu',title:'言语辱骂/地域歧视'}
+                ,{field:'shuaPing',title:'恶意刷屏'}
+                ,{field:'wenZi',title:'文字举报'}
+                ,{field:'data',title:'举报时间',sort:true}
+                ,{field:'phone',title:'手机号'}
+                ,{field:'QQ',title:'QQ号'}
+                ,{field:'weChat',title:'微信号'}
+            ]]
+            ,done:function (res, curr, count) {
+                console.log(res);
+
+                //得到当前页码
+                console.log(curr);
+
+                //得到数据总量
+                console.log(count);
+                $(".layui-table-sort-asc").click(function () {
+                    var dataField = $(this).parent().parent().parent().attr("data-field");
+                    table.reload('reportedCheck',{
+                        url:'file/2reportedCheckAsc'
+                        ,where:{
+                            sort:'asc',
+                            dataField:dataField
+                        }
+                    })
+                });
+                $(".layui-table-sort-desc").click(function () {
+                    var dataField = $(this).parent().parent().parent().attr("data-field");
+                    table.reload('reportedCheck',{
+                        url:'file/2reportedCheckDesc'
+                        ,where:{
+                            sort:'desc',
+                            dataField:dataField
+                        }
+                    })
+                });
+            }
+        })
+    })
+</script>

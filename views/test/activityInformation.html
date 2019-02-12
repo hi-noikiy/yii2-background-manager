@@ -1,0 +1,444 @@
+<style>
+    .topOption{width:100%;}
+    .layui-form-label{width:120px;}
+    .sortBtn{float:left;display: none;}
+    .rightBtn{width:20%;float:right;}
+    .rightBtn button,.rightBtn a{float:right;}
+    .rightBtn a{margin:0 10px;}
+    .remove{cursor: pointer; width:10px;height:10px;}
+    .remove i1{color:green;font-size:20px;}
+</style>
+
+<body>
+<div class="x-body">
+    <div class="topOption">
+        <div class="sortBtn">
+            <button class="layui-btn layui-btn-xs" id="subSort">确定</button>
+            <button class="layui-btn layui-btn-danger layui-btn-xs" id="cancel">取消</button>
+        </div>
+        <div class="rightBtn">
+
+            <button class="layui-btn" data-method="add" id="add">新增活动</button>
+            <a href="historyactiveinfo" class="layui-btn"  id="history">历史活动库</a>
+            <button class="layui-btn" data-method="sort" id="sort">排序</button>
+        </div>
+
+    </div>
+    <table class="layui-table" id="activityTable" lay-filter="activityTable"></table>
+</div>
+<script type="text/html" id="barActivity">
+    <div id="layerDemo">
+        <a class="" lay-event="revise" title="修改"><i class="layui-icon">&#xe642;</i></a>
+        <a class="" lay-event="del" title="移除"><i class="layui-icon">&#xe640;</i></a>
+    </div>
+</script>
+<script>
+
+    layui.use(['table','layer'],function () {
+        var table = layui.table;
+        table.render({
+            elem:"#activityTable"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+                {type:'numbers',title:"序号",width:100}
+                ,{field:'title',title:"活动标题",sort:true}
+                ,{field:'startDate',title:"开始时间",sort:true}
+                ,{field:'endDate',title:"结束时间",sort:true}
+                ,{field:'link',title:"跳转"}
+                ,{field:'',title:"相关操作",toolbar:'#barActivity',width:100}
+            ]]
+        });
+
+        var $=layui.jquery,layer=layui.layer;
+
+        //点击排序按钮后增加箭头元素
+        function addDom(){
+            var frag1 = document.createDocumentFragment();
+            var i1 = document.createElement("i1");
+            $(i1).addClass("layui-icon remove");
+            $(i1).html("&#xe62f;&nbsp;&nbsp;&nbsp;");
+            $(i1).css({"color":"green","fontSize":16,"fontWeight":900});
+            frag1.appendChild(i1);
+            var frag2 = document.createDocumentFragment();
+            var i2 = document.createElement("i2");
+            $(i2).addClass("layui-icon remove");
+            $(i2).css({"color":"red","fontSize":16,"fontWeight":900});
+            $(i2).html("&nbsp;&nbsp;&nbsp;&#xe601;");
+            frag2.appendChild(i2);
+            $(".laytable-cell-numbers:not(:first)").prepend(frag1);
+            $(".laytable-cell-numbers:not(:first)").append(frag2);
+        }
+        //排序按钮和确认取消按钮切换
+        function changeBtn(submit,sort){
+            $('.sortBtn').css('display',submit);
+            $('#sort').css('display',sort)
+        }
+        //点击箭头移动当前行 a>0上移，a<0下移
+        function moveRow(a,This){
+            var currentRow = This.parents("tr");
+            if (a>0) {
+                var contrastRow = This.parents("tr").prev("tr");
+                currentRow.insertBefore(contrastRow);
+            }else if(a<0){
+                var contrastRow = This.parents("tr").next("tr");
+                currentRow.insertAfter(contrastRow);
+            }
+        }
+        //点击确认或取消按钮后移除箭头元素
+        function removeDom(){
+            $(".laytable-cell-numbers:not(:first) i1").remove();
+            $(".laytable-cell-numbers:not(:first) i2").remove();
+        }
+        var active = {
+            add:function(){
+                layer.open({
+                    type:1
+                    ,title:'新增'
+                    ,closeBtn:1
+                    ,shade: 0.8
+                    ,anim:3
+                    ,maxmin:true
+                    ,area:['50%','70%']
+                    //,shade:0.5
+                    ,id:"LAY_layuipro"
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#addActive')
+                })
+            }
+            ,sort:function () {
+                changeBtn('block','none')
+                addDom();
+                $("#cancel").click(function () {
+                    changeBtn('none','block');
+                    removeDom();
+                    table.reload("activityTable",{url:'/test/t206'})
+                })
+                $(".laytable-cell-numbers:not(:first) i1").click(function () {
+                    moveRow(1,$(this));
+                })
+                $(".laytable-cell-numbers:not(:first) i2").click(function () {
+                    moveRow(-1,$(this));
+                })
+            }
+
+        };
+        $('#layerDemo .layui-btn').on('click',function () {
+            var othis = $(this),method = othis.data('method');
+            active[method]?active[method].call(this.othis):'';
+        });
+        $('#add').on('click',function () {
+            var othis = $(this),method = othis.data('method');
+            active[method]?active[method].call(this.othis):'';
+        });
+        $('#sort').on('click',function () {
+            var othis = $(this),method = othis.data('method');
+            active[method]?active[method].call(this.othis):'';
+        });
+
+        table.on('tool(activityTable)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'revise'){
+                layer.open({
+                    type:1
+                    ,title:"修改"
+                    ,closeBtn:1
+                    ,shade: 0.8
+                    ,anim:3
+                    ,maxmin:true
+                    ,area:['80%','85%']
+                    ,id:'LAY_layuipro'
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#addActive')
+                    ,success:function (layero,index) {
+                        var linkVal=$('#link').next().children('div').children().val();
+                        if(linkVal=="外部跳转"){
+                            $('#leve1').css('display','none');
+                            $('#leve2').css('display','none');
+                            $('#input1').css('display','')
+                        }else{
+                            $('#input1').css('display','none');
+                            $('#leve1').css('display','block');
+                            $('#leve2').css('display','block');
+                        }
+                        $('#title').val(data.title)
+                        $('#startDate').val(data.startDate)
+                        $('#endDate').val(data.endDate)
+                        $('#link').val(data.link)
+
+                    }
+                })
+            }
+            else if (obj.event === 'del'){
+                var number = obj.data.number;
+                var id = obj.data.id;
+                layer.open({
+                    type:1
+                    ,title:"刪除"
+                    ,closeBtn:1
+                    ,shade: 0.8
+                    ,anim:3
+                    ,maxmin:true
+
+                    ,area:['30%','25%']
+                    ,id:'LAY_layuipro'
+                    ,btn:['确认','取消']
+                    ,btnAlign:'c'
+
+                    ,content:$('#del')
+                    ,success:function (layero,index) {
+                        $('#num').html(id);
+                    }
+                    ,yes:function (index,layero) {
+                        $.ajax({
+                            url:'',
+                            type:'POST',
+                            data:{
+                                'id': id
+                            },
+                            success:function (data) {
+                                console.log("成功");
+                                //删除成功后重载表格
+                                table.reload('activityTable', {
+                                    url:'/marquee/gm-marquee',
+                                });
+                            },
+                            error:function () {
+                                console.log("失败");
+
+                            }
+                        });
+                        layer.close(index);
+                    }
+                })
+            }
+        });
+
+
+
+        table.on('sort(activityTable)', function(obj){
+            table.reload('activityTable', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+    })
+</script>
+</body>
+
+<div class="x-body" id="del"  style="display: none;text-align: center;padding-top:10%;">
+    <h2 class="center">确认删除ID为<span id="num"></span>的活动信息吗？</h2>
+</div>
+
+<div class="x-body" style="display: none" id="addActive">
+    <form action="" class="layui-form">
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">活动标题</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input"  lay-verify="required" name="title" id="title">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">开始时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="startDate" name="date">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">结束时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="endDate" name="date">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">上传标签图片</label>
+            <!--<div class="layui-input-inline">-->
+            <!--<input type="file" name="fileUpload">-->
+            <!--</div>-->
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="test2">上传图片</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="demo2">
+                    <p id="demoText2"></p>
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">上传内容图片</label>
+            <!--<div class="layui-input-inline">-->
+            <!--<input type="file" name="fileUpload">-->
+            <!--</div>-->
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="test1">上传图片</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="demo1">
+                    <p id="demoText"></p>
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">是否跳转</label>
+            <div class="layui-input-inline">
+                <select name="jump" id="link" lay-filter="link">
+                    <option value="0">外部跳转</option>
+                    <option value="1">内部跳转</option>
+                </select>
+            </div>
+            <div class="layui-input-inline" id="input1">
+                <input type="text" class="layui-input">
+            </div>
+            <div class="layui-input-inline" style="display: none" id="leve1">
+                <select name="" >
+                    <option value="">1</option>
+                </select>
+            </div>
+            <div class="layui-input-inline" style="display: none" id="leve2">
+                <select name="" >
+                    <option value="">1</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">奖励</label>
+            <div class="layui-input-inline">
+                <select name="jump" id="">
+                    <option value="0">元宝</option>
+                    <option value="1">钻石</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="number" class="layui-input">
+            </div>
+        </div>
+        <!--<div class="layui-form-item">-->
+        <!--<label for="" class="layui-form-label">跳转地址</label>-->
+        <!--<div class="layui-input-inline">-->
+        <!--<input type="text" class="layui-input" name="jumpLink">-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <div class="layui-form-item" style="width:100%;">
+            <div style="position: absolute;left:40%;margin-bottom: 15px;">
+                <button class="layui-btn" lay-submit="" lay-filter="addActive">确认</button>
+                <button class="layui-btn" type="reset">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(['laydate','form','layedit','upload'],function () {
+        var laydate = layui.laydate,layedit = layui.layedit,upload = layui.upload;
+        laydate.render({elem:'#startDate'});
+        laydate.render({elem:'#endDate'});
+        var uploadInst = upload.render({
+            elem: '#test1'
+            ,url: '/upload/'
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+        var uploadInst2 = upload.render({
+            elem: '#test2'
+            ,url: '/upload/'
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo2').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText2');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst2.upload();
+                });
+            }
+        });
+
+
+        var form = layui.form;
+        // //创建一个编辑器
+        // var editIndex = layedit.build('LAY_demo_editor');
+        form.on('submit(addActive)',function (data) {
+            //debugger
+            console.log(data.field);
+            $.ajax({
+                type:'post'
+                ,data:{
+                    'userID':data.field.userID
+                    ,'title':data.field.title
+                    ,'fileUpLoad':data.field.fileUpLoad
+                    ,'jump':data.field.jump
+                    ,'jumpLink':data.field.jumpLink
+                }
+                ,url:"/test/t206"
+                ,success:function (data) {
+                    //debugger
+                    console.log(data);
+
+                }
+                ,error:function (data) {
+                    console.log("失败");
+                }
+            })
+        })
+        form.on('select(link)',function (data) {
+            if (data.value == 0){
+                $('#leve1').css('display','none');
+                $('#leve2').css('display','none');
+                $('#input1').css('display','')
+            }else{
+                $('#input1').css('display','none');
+                $('#leve1').css('display','block');
+                $('#leve2').css('display','block');
+            }
+        })
+    })
+
+
+    //    历史信息库
+</script>
+<!--历史信息库-->
+<div class="x-body" style="display: none" id="historyInfo">
+    <table class="layui-table" id="historyTable" lay-filter="historyTable"></table>
+</div>
+<script type="text/html" id="barhistoryBtn">
+    <a class="" lay-event="revise" title="查看"><i class="layui-icon">&#xe63c;</i></a>
+</script>

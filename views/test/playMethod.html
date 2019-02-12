@@ -1,0 +1,116 @@
+<style type="text/css">
+    .layui-table-cell {
+        height: auto;
+        line-height: 20px;
+        padding: 0 10px;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        box-sizing: border-box;
+    }
+
+</style>
+<body>
+<div class="x-body">
+    <!--<h2 style="text-align: center;color: #666666;"></h2>-->
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="startTime" name="start" placeholder="开始日期">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="endTime" name="end" placeholder="结束日期">
+            </div>
+            <button class="layui-btn search" data-type="search" style="float: left">查询</button>
+            <div class="layui-input-inline" style="margin-left:50px;width:110px;">
+                <select name="gameName" id="game" lay-filter="gameFilter">
+                    <option value="0">麻将</option>
+                    <option value="1">三张</option>
+                    <option value="2">跑得快</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <table id="playerMethodCount" class="layui-table" lay-filter="playerMethodCountFilter"></table>
+    <hr>
+</div>
+<script>
+    //日期查询
+    layui.use('laydate',function(){
+        var laydate = layui.laydate;
+        laydate.render({elem:'#startTime'});
+        laydate.render({elem:'#endTime'});
+    });
+    layui.use(['table','form'],function () {
+        var table = layui.table;
+        //table渲染数据
+        table.render({
+            elem:'#playerMethodCount'
+            ,url:'/test/t206'
+            ,page:true
+            ,cols:[[
+                {field:'game',title:'游戏' ,sort:true }
+                ,{field:'participantsNum',title:'参与人数'}
+                ,{field:'matchingUser',title:'匹配用户'}
+                ,{field:'creatRoomUser',title:'创建房间用户'}
+                ,{field:'perCapitaNum',title:'人均场次'}
+                ,{field:'YBdeposit',title:'元宝淤积（比）'}
+                ,{field:'YBconsume',title:'元宝消耗（比）'}
+                ,{field:'mostActiveModel',title:'最活跃模式'}
+                ,{field:'mostActivePlay',title:'最活跃场次'}
+                ,{field:'goldRecovery',title:'金币回收（比）'}
+                ,{field:'goldDeposit',title:'金币淤积（比）'}
+            ]]
+        });
+
+        //table排序
+        table.on('sort(sort)', function(obj){
+            table.reload('playerMethodCount', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+
+        var active = {
+            //table查询
+            search:function () {
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
+                table.reload('filter1',{
+                    url:'/test/t201/'
+                    ,page:{
+                        curr:1
+                    }
+                    ,where:{
+                        startTime:startTime
+                        ,endTime:endTime
+                    }
+                })
+            }
+        };
+        $('.search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        //select监听事件
+        var form = layui.form;
+        form.on('select(gameFilter)',function (data) {
+            table.reload('playerMethodCount',{
+                url:'/test/t201/',
+                page:{
+                    curr:1
+                },
+                where:{
+                    game:data.value
+                }
+            })
+        })
+    })
+</script>
+</body>

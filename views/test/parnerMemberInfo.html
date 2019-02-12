@@ -1,0 +1,70 @@
+<body>
+<div class="x-body">
+    <form action="" class="layui-form">
+
+            <div class="layui-input-inline">
+                <div class="layui-inline">
+                    <input type="text" class="layui-input" placeholder="代理ID" id="agentID">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <input type="text" class="layui-input" id="date" placeholder="日期选择">
+            </div>
+            <div class="layui-btn" style="margin-left:-4px;" data-type="search" id="search">查询</div>
+            <div class="layui-btn">导出</div>
+
+    </form>
+    <table class="layui-table" id="agencyOpenStat" lay-filter="user"> </table>
+</div>
+<script>
+    //日期查询
+    layui.use('laydate',function(){
+        var laydate = layui.laydate;
+        laydate.render({elem:'#date'});
+    });
+    layui.use('table',function () {
+        //table数据渲染
+        var table =layui.table;
+        table.render({
+            elem:"#agencyOpenStat"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+                {field:"id",title:"ID"}
+                ,{field:"startData",title:"创建时间",sort:true}
+                ,{field:"userID",title:"用户ID"}
+                ,{field:"nickName",title:"微信昵称"}
+                ,{field:"SupAgent",title:"上级代理"}
+                ,{field:"topLevelAgent",title:"顶级代理"}
+                ,{field:"presentYB",title:"当前元宝"}
+                ,{field:"consume",title:"消耗"}
+                ,{field:"recharge",title:"充值",sort:true}
+                ,{field:"registrationTime",title:"注册时间",sort:true}
+                ,{field:"lastLandingTime",title:"最后登录时间",sort:true}
+            ]]
+        });
+        var active = {
+            search:function () {
+                var agentID = $('#agentID').val();
+                var date = $('#date').val();
+                table.reload('agencyOpenStat',{
+                    url:'/test/t201/',
+                    page:{
+                        curr:1
+                    }
+                    ,where:{
+                        agentID:agentID
+                        ,date:date
+                    }
+                })
+            }
+        };
+        $('#search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    })
+</script>
+</body>
+</html>

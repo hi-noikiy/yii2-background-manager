@@ -1,0 +1,85 @@
+<body>
+<div class="x-body">
+    <!--<form action="" class="layui-form">-->
+    <div class="layui-form-item">
+        <div class="layui-col-xs11">
+            <!--<form action="" class="layui-form">-->
+                <!--<label for="" class="layui-form-label">玩家ID</label>-->
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" placeholder="玩家ID" id="playerID">
+                </div>
+                <div class="layui-btn" style="margin-left:-10px;" id="search" data-type="search">查询</div>
+            <!--</form>-->
+        </div>
+
+        <div class="layui-col-xs1">
+            <button class="layui-btn" data-method="add" id="add">添加</button>
+        </div>
+    </div>
+    <!--</form>-->
+    <table class="layui-table" id="blackList"  lay-filter="sort"></table>
+</div>
+
+<script>
+    layui.use('table',function () {
+        var table =  layui.table;
+        table.render({
+            elem:"#blackList"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+                {field:"number",title:"序号"}
+                ,{field:"userID",title:"创建人ID"}
+                ,{field:"nickName",title:"创建人昵称"}
+                ,{field:"creatData",title:"创建时间"}
+                ,{field:"content",title:"内容"}
+            ]]
+        });
+        var active = {
+            search:function () {
+                var playerID = $('#playerID').val();
+                table.reload('blackList',{
+                    url:'/test/t201/',
+                    page:{
+                        curr:1
+                    }
+                    ,where:{
+                        playerID:playerID
+                    }
+                })
+            }
+            ,add:function () {
+                    layer.open({
+                        type:2
+                        ,title:'添加黑名单'
+                        ,closeBtn:1
+                        ,area:['50%','50%']
+                        ,id:'LAY_layuipro'
+                        ,btnAlign:'c'
+                        ,moveType:1
+                        ,content:'addblack'
+                    })
+                }
+        };
+        $('#add').on('click',function () {
+            var othis = $(this),method = othis.data('method');
+            active[method]?active[method].call(this.othis):'';
+        });
+        $('#search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        table.on('sort(sort)', function(obj){
+            table.reload('blackList', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+    })
+</script>
+</body>

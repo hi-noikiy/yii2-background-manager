@@ -1,0 +1,241 @@
+<body>
+<div class="x-body">
+    <!--<form action="" class="layui-form">-->
+    <div class="layui-inline">
+        <input type="text" class="layui-input" placeholder="代理昵称" id="agentNick">
+    </div>
+    <div class="layui-btn" style="margin-left:-4px;" data-type="search" id="search">查询</div>
+    <!--<div class="refresh refreshThis " style="float:right;cursor:pointer;position: relative";> <i class="layui-icon layui-icon-refresh" ></i></div>-->
+
+    <!--</form>-->
+    <table class="layui-table" id="brokerTable" lay-filter="table1"> </table>
+
+</div>
+<script type="text/html" id="barbrokerTable">
+    <div id="layerDemo">
+        <button  class="layui-btn layui-btn-xs" lay-event="income">收益详情</button>
+        <button class="layui-btn layui-btn-xs" lay-event="lowerLevel">下级详情</button>
+    </div>
+
+</script>
+<script>
+    layui.use(['table','layer'],function () {
+        var $ = layui.$;
+        $(".refresh").on("click",function(){
+            window.location.href = window.location.href;
+        });
+            //table数据渲染
+        var table =layui.table;
+        table.render({
+            elem:"#brokerTable"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+               {field:"ID",title:"用户ID",sort:true}
+                ,{field:"higherLevel",title:"上级信息（ID）"}
+                ,{field:"nickName",title:"昵称"}
+                ,{field:"userName",title:"真实姓名"}
+                ,{field:"phone",title:"电话"}
+                ,{field:"address",title:"地址"}
+                ,{field:"startData",title:"创建时间",sort:true}
+                ,{field:"overplus",title:"直属总收益",sort:true}
+                ,{field:"totalRevenue",title:"直属当月收益",sort:true}
+                ,{field:"totalRevenue",title:"直属代理",sort:true}
+                ,{field:"functionary",title:"本月新增代理"}
+                ,{field:"",title:"操作",width:205,toolbar:"#barbrokerTable"}
+            ]]
+        });
+        table.on('tool(table1)',function (obj) {
+            var id = obj.data.ID;
+            if (obj.event==='income') {
+                var id = obj.data.ID;
+                layer.open({
+                    type: 1
+                    ,title: false //不显示标题栏
+                    ,closeBtn: 1
+                    ,area: ['60%','60%']
+                    ,shade: 0.8
+                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                    // ,btn: ['确认输入','取消']
+                    ,btnAlign: 'c'
+                    ,moveType: 1 //拖拽模式，0或者1
+                    ,content:$('#incomedetails')
+                    ,success:function (layero,index) {
+                        $.ajax({
+                            url:'/test/t201/',
+                            type:'POST',
+                            data:{
+                                'id': id
+                            },
+                            success:function (data) {
+                                table.render({
+                                    elem:"#incomeDetailsTable"
+                                    ,url:"/test/t206"
+                                    ,page:true
+                                    ,cols:[[
+                                        {field:"date",title:'日期',sort:true}
+                                        ,{field:"income",title:'收益详情'}
+                                    ]]
+                                })
+                            },
+                            error:function (data) {
+                                layer.msg('操作失败！',{time:1000});
+                            }
+                        });
+                        var active = {
+                            reload: function(){
+                                var startTime = $('#startTime1');
+                                var endTime = $('#endTime1');
+
+                                //执行重载
+                                table.reload('incomeDetailsTable', {
+                                    url:'/test/t204'
+                                    ,page: {
+                                        curr: 1 //重新从第 1 页开始
+                                    }
+                                    ,where: {
+                                        start_time: startTime.val(),
+                                        end_time: endTime.val()
+                                    }
+                                });
+                            }
+                        };
+                        //查询按钮绑定事件
+                        $('#search1').on('click', function(){
+                            var type = $(this).data('type');
+                            active[type] ? active[type].call(this) : '';
+                        });
+                    }
+
+                });
+            }else if(obj.event === 'lowerLevel'){
+                layer.open({
+                    type: 1
+                    ,title: false //不显示标题栏
+                    ,closeBtn: 1
+                    ,area: ['60%','60%']
+                    ,shade: 0.8
+                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                    // ,btn: ['确认输入','取消']
+                    ,btnAlign: 'c'
+                    ,moveType: 1 //拖拽模式，0或者1
+                    ,content:$('#lowerleveldetails')
+                    ,success:function (layero,index) {
+                        $.ajax({
+                            url:'/test/t201/',
+                            type:'POST',
+                            data:{
+                                'id': id
+                            },
+                            success:function (data) {
+                                table.render({
+                                    elem:"#lowerLevelTable"
+                                    ,url:"/test/t206"
+                                    ,page:true
+                                    ,cols:[[
+                                        {field:"date",title:'代理ID',sort:true}
+                                        ,{field:"income",title:'昵称'}
+                                        ,{field:"income",title:'所选日期收益'}
+                                    ]]
+                                })
+                            },
+                            error:function (data) {
+                              layer.msg('操作失败',{time:1000});
+                            }
+                        });
+                        var active = {
+                            reload: function(){
+                                var userID = $('#ID');
+                                var startTime = $('#startTime2');
+                                var endTime = $('#endTime2');
+
+                                //执行重载
+                                table.reload('lowerLevelTable', {
+                                    url:'/test/t204'
+                                    ,page: {
+                                        curr: 1 //重新从第 1 页开始
+                                    }
+                                    ,where: {
+                                        id: userID.val(),
+                                        start_time: startTime.val(),
+                                        end_time: endTime.val()
+                                    }
+                                });
+                            }
+                        };
+                        //查询按钮绑定事件
+                        $('#search2').on('click', function(){
+                            var type = $(this).data('type');
+                            active[type] ? active[type].call(this) : '';
+                        });
+                    }
+                });
+            }
+        })
+        //排序
+        table.on('sort(table1)', function(obj){
+            table.reload('agentTable', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        //查询
+        var active = {
+            search: function(){
+                var startTime = $('#agentNick').val();
+                //执行重载
+                table.reload('brokerTable', {
+                    url:'/test/t204'
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        start_time: startTime
+                    }
+                });
+            }
+        };
+        //查询按钮绑定事件
+        $('#search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    })
+</script>
+</body>
+<!--经纪人列表的收益详情-->
+<div class="x-body" id="incomedetails" style="display:none">
+    <div class="layui-form-item">
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" placeholder="开始时间" id="startTime1">
+        </div>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" placeholder="结束时间" id="endTime1">
+        </div>
+        <button class="layui-btn"  data-type="reload" id="search1">查询</button>
+    </div>
+    <table class="layui-table" id="incomeDetailsTable"></table>
+</div>
+
+<!--经纪人列表的下级详情-->
+<div class="x-body" id="lowerleveldetails" style="display: none">
+    <!--过滤条件-->
+    <div class="layui-form-item">
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" placeholder="代理ID" id="ID">
+        </div>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" placeholder="开始日期" id="startTime2">
+        </div>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" placeholder="结束日期" id="endTime2">
+        </div>
+        <button class="layui-btn"  data-type="reload" id="search2">查询</button>
+    </div>
+    <!--表格数据-->
+    <table class="layui-table " id="lowerLevelTable" lay-filter="sort"></table>
+</div>

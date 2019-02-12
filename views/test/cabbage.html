@@ -1,0 +1,361 @@
+<style>
+   .list1 h2{
+        /*display: inline;*/
+        float:left;
+        position: absolute;
+        left:45%;
+        text-align: center;
+    }
+
+    .rf{
+        float:right;
+    }
+</style>
+<body>
+<div class="x-body">
+    <div class="list1">
+        <h2 >会员列表</h2>
+        <button class="rf layui-btn" data-method="add" id="add">新增白菜</button>
+        <table id="memberList" class="layui-table" lay-filter="table1"></table>
+    </div>
+    <div class="list2">
+        <!--<form action="">-->
+            <!--<label for="">查询日期</label>-->
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="startTime1" name="start" placeholder="开始日期">
+            </div>
+            <!--<span>至</span>-->
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="endTime1" name="end" placeholder="结束日期">
+            </div>
+            <button class="layui-btn search " data-type="search1">查询</button>
+        <!--</form>-->
+        <table id="cabbagePrice" class="layui-table" lay-filter="sort2">
+            <caption><h2>白菜货币详情统计</h2></caption>
+        </table>
+    </div>
+    <div class="list3">
+        <!--<form action="">-->
+            <!--<label for="">查询日期</label>-->
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="startTime2" name="start" placeholder="开始日期">
+            </div>
+            <!--<span>至</span>-->
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="endTime2" name="end" placeholder="结束日期">
+            </div>
+            <button class="layui-btn search" data-type="search2">查询</button>
+        <!--</form>-->
+        <table id="gobang" class="layui-table" lay-filter="sort3">
+            <caption><h2>白菜五子棋对局详情</h2></caption>
+        </table>
+    </div>
+
+</div>
+<script type="text/html" id="barMemberList">
+    <div id="layerBtn">
+        <button lay-event="revise" class="layui-btn layui-btn-sm">修改</button>
+        <button lay-event="del" class="layui-btn layui-btn-sm layui-btn-danger" >删除</button>
+    </div>
+</script>
+<script>
+    layui.use(['table','layer','laydate'],function () {
+        //日期查询
+        var $ = layui.$;
+        var laydate = layui.laydate;
+        laydate.render({elem:'#startTime1'});
+        laydate.render({elem:'#endTime1'});
+        laydate.render({elem:'#startTime2'});
+        laydate.render({elem:'#endTime2'});
+        //表格数据渲染
+        var table = layui.table;
+        table.render({
+            elem:'#memberList'
+            ,url:'/test/t206'
+            ,page:true
+            ,cols:[[
+                {type:'number',title:'序号'}
+                ,{field:'gameID',title:'游戏ID',sort:true}
+                ,{field:'cabbageName',title:'白菜姓名'}
+                ,{field:'tel',title:'联系方式'}
+                ,{field:'switch',title:'盛付通开关'}
+                ,{field:'createTime',title:'创建时间'}
+                ,{field:'',title:'操作',toolbar:'#barMemberList'}
+            ]]
+
+        });
+        //白菜设置列表的监听事件
+        table.on('tool(table1)',function (obj) {
+            var data =obj.data;
+            //修改操作
+            if (obj.event==='revise'){
+                var originalPublic;
+                data.public==="是"? originalPublic=1:originalPublic=0;
+                var id = data.number;
+                var originalGameID = data.gameID;
+                var originalTel = data.tel;
+
+                layer.open({
+                    type: 1
+                    ,title: false //不显示标题栏
+                    ,closeBtn: 1
+                    ,area: ['40%','40%']
+                    ,shade: 0.8
+                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                    ,btn: ['确认输入','取消']
+                    ,btnAlign: 'c'
+                    ,moveType: 1 //拖拽模式，0或者1
+                    ,content:$('#revisecabbagelist')
+                    ,success:function (layero,index) {
+                        $('#content').val(originalGameID);
+                        $('#startTime').val(originalTel);
+                    }
+                    ,yes:function (index,layero) {
+                        var userID = $('#userID').val();
+                        var cabbageName = $('#cabbageName').val();
+                        var tel = $('#tel').val();
+                        var switchCont = $('#switch').val();
+                        $.ajax({
+                            url:'',
+                            type:"POST",
+                            data:{
+                                'userID':userID,
+                                'cabbageName':cabbageName,
+                                'tel':tel,
+                                'switchCont':switchCont,
+                            }
+                            ,success:function (data) {
+                                console.log("成功");
+                                layer.close(index);
+                                layer.confirm('修改成功！',{time:1000});
+                            }
+                            ,error:function () {
+                                console.log("失败");
+                                layer.msg('修改失败！',{time:1000});
+                            }
+                        });
+                        // layer.close(index);
+                    }
+                })
+           //删除操作
+            }else if(obj.event==='del'){
+                var gameID = obj.data.gameID;
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['30%','30%']
+                    ,id:'LAY_layuipro'
+                    ,btn:['确认','取消']
+                    ,content:$('#del')
+                    ,success:function (layero,index) {
+                        $('#num').html(gameID);
+                    }
+                    ,yes:function (index,layero) {
+                        $.ajax({
+                            url:'',
+                            type:'POST',
+                            data:{
+                                'gameID': gameID
+                            },
+                            success:function (data) {
+                                console.log("成功");
+                                //删除成功后重载表格
+                                table.reload('memberList', {
+                                    url:'/test/t205',
+                                });
+                                layer.close(index);
+                                layer.msg('删除成功！',{time:1000});
+                            },
+                            error:function () {
+                                console.log("失败");
+                                layer.msg('删除失败！',{time:1000});
+
+                            }
+                        });
+
+                    }
+                })
+            }
+        })
+        table.render({
+            elem:'#cabbagePrice'
+            ,url:'/test/t206'
+            ,page:true
+            ,cols:[[
+                {type:'number',title:'序号'}
+                ,{field:'date',title:'日期',sort:true}
+                ,{field:'recharge ',title:'充值元宝'}
+                ,{field:'export',title:'输出元宝'}
+                ,{field:'reverseTransaction ',title:'兑回（108：1）元'}
+                ,{field:'createTime',title:'赢入元宝'}
+                ,{field:'runOut',title:'兑出（110：1）元'}
+                ,{field:'surplus',title:'剩余元宝'}
+            ]]
+        });
+        table.render({
+            elem:'#gobang'
+            ,url:'/test/t206'
+            ,page:true
+            ,cols:[[
+                {field:'number',title:'序号'}
+                ,{field:'date',title:'时间',sort:true}
+                ,{field:'userId ',title:'用户ID'}
+                ,{field:'nickName',title:'昵称'}
+                ,{field:'beforeMatchNum ',title:'对局前元宝数'}
+                ,{field:'afterMatchNum',title:'对局后元宝数'}
+                ,{field:'regulation',title:'元宝增减'}
+                ,{field:'bureauID',title:'对局人ID'}
+                ,{field:'bureauNick',title:'对局人昵称'}
+                ,{field:'burBefMatchNum',title:'对局前元宝数'}
+                ,{field:'buraftMatchNum',title:'对局后元宝数'}
+                ,{field:'deductions ',title:'元宝扣费'}
+            ]]
+        });
+        var active = {
+            search1:function () {
+                var startTime1 = $("#startTime1").val();
+                var endTime1 = $("#endTime1").val();
+                table.reload('cabbagePrice',{
+                    url:'/test/t206/'
+                    ,page:{
+                        curr:1
+                    }
+                    ,where:{
+                        key:{
+                            startTime1:startTime1
+                            ,endTime1:endTime1
+                        }
+                    }
+                })
+            }
+            ,search2:function () {
+                var startTime2 = $('#startTime2').val();
+                var endTime2 = $('#endTime2').val();
+                table.reload('gobang',{
+                    url:'/test/t206/'
+                    ,page:{
+                        curr:1
+                    }
+                    ,where:{
+                        key:{
+                            startTime2:startTime2
+                            ,endTime2:endTime2
+                        }
+                    }
+                })
+            }
+            //新增白菜功能
+            ,add:function () {
+                layer.open({
+                    type:2
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['40%','40%']
+                    ,id:'LAY_layuipro'
+                    // ,btn:['确认','取消']
+                    ,content:'addcabbage'
+
+                })
+            }
+        };
+        $('.search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        $('#layerBtn .layui-btn').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+        $('#add').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+        table.on('sort(sort1)', function(obj){
+            table.reload('memberList', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        table.on('sort(sort2)', function(obj){
+            table.reload('cabbagePrice', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        table.on('sort(sort3)', function(obj){
+            table.reload('gobang', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+
+    })
+</script>
+</body>
+
+
+
+<!--白菜设置列表的修改弹出层-->
+<style>
+    .center{
+        position:absolute;
+        /*width:300px;*/
+        /*height: 100px;*/
+        left: 20%;
+    }
+</style>
+<body>
+<div class="x-body" id="revisecabbagelist" style="display:none;">
+    <div class="center">
+        <form action="" class="layui-form">
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">用户ID</label>
+                <div class="layui-input-inline">
+                    <input id="userID" type="text" class="layui-input" readonly>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">白菜姓名</label>
+                <div class="layui-input-inline">
+                    <input  id="cabbageName" type="text" class="layui-input" name="cabbageName">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">联系方式</label>
+                <div class="layui-input-inline">
+                    <input  id="tel" type="text" class="layui-input" name="phone">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">下注开关</label>
+                <div class="layui-input-inline">
+                    <select name="switch" id="switch">
+                        <option value="1">开启</option>
+                        <option value="0">关闭</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+
+
+<!--白菜设置列表的修改弹出层-->
+<div class="x-body" id="del"  style="display: none;text-align: center;padding-top:10%;">
+    <h2 class="center">确认删除游戏ID为<span id="num"></span>的会员吗</h2>
+</div>
