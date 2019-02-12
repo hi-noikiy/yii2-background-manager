@@ -1,0 +1,99 @@
+<style type="text/css">
+    .layui-table-cell {
+        height: auto;
+        line-height: 20px;
+        padding: 0 10px;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        box-sizing: border-box;
+    }
+</style>
+<body>
+<div class="x-body">
+    <!--<form action="" class="layui-form">-->
+    <!--<label for="" class="layui-form-label">日期选择</label>-->
+    <div class="layui-inline">
+        <input type="text" class="layui-input" id="agentID" placeholder="代理ID">
+    </div>
+    <div class="layui-inline">
+        <input type="text" class="layui-input" id="date" placeholder="日期选择">
+    </div>
+    <button class="layui-btn" style="margin-left:-4px;" id="search" data-type="search">查询</button>
+    <div class="layui-btn">导出</div>
+    <!--</form>-->
+    <table class="layui-table" id="agentInfo"></table>
+    <table class="layui-table" id="agencyOpenStat" lay-filter="sort"></table>
+</div>
+<script>
+    //日期查询
+    layui.use('laydate',function(){
+        var laydate = layui.laydate;
+        laydate.render({elem:'#date'});
+    });
+    layui.use('table',function () {
+        //table数据渲染
+        var table =layui.table;
+        table.render({
+            elem:"#agentInfo"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+                {field:"number",title:"代理ID"}
+                ,{field:"nickName",title:"昵称"}
+                ,{field:"userName",title:"真实姓名"}
+                ,{field:"higherLevelID",title:"上级代理ID"}
+                ,{field:"higherLevelName",title:"上级代理名称"}
+            ]]
+        });
+        table.render({
+            elem:"#agencyOpenStat"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+                {field:"number",title:"代理ID"}
+                ,{field:"searchDate",title:"查询日期"}
+                ,{field:"nickName",title:"昵称"}
+                ,{field:"userName",title:"真实姓名"}
+                ,{field:"lowerLevelAgent",title:"下级代理数"}
+                ,{field:"depositYB",title:"淤积元宝"}
+                ,{field:"agentDailyIncome",title:"代理日收益"}
+                ,{field:"openMemberNum",title:"开局会员数",sort:true}
+                ,{field:"MemberConsume",title:"会员消耗（环比）",sort:true}
+                ,{field:"MemberOpenNum",title:"会员开局人数（环比）",sort:true}
+                ,{field:"lostUser",title:"流失用户",sort:true}
+            ]]
+        });
+        //排序
+        table.on('sort(sort)', function(obj){
+            table.reload('agencyOpenStat', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        var active = {
+            search:function() {
+                var searchDate = $('#date').val();
+                table.reload('agencyOpenStat',{
+                    page:{
+                        curr:1
+                    }
+                    ,where:{
+                        date:searchDate
+                    }
+                })
+            }
+        };
+        $('#search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    })
+</script>
+</body>
+</html>

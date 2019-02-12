@@ -1,0 +1,309 @@
+<body>
+<div class="x-body">
+    <!--<div class="layui-row">-->
+    <a href="robotsetting"><i class="layui-icon layui-icon-left" style="font-size: 20px; color: #666666;">返回</i></a>
+        <div class="layui-col-1 layui-col-xs-offset11" >
+            <button class="layui-btn " data-method="addRobot" id="addRobotBtn">新增机器人</button>
+        </div>
+        <h2 style="text-align: center">机器人列表</h2>
+        <table id="robotListTable" class="layui-table" lay-data="{url:'/test/t200',page:true,limit:10,even: true}" lay-filter="table2">
+            <thead>
+            <tr>
+                <th lay-data="{field:'number'}">序号</th>
+                <th lay-data="{field:'robotID'}">机器人ID</th>
+                <th lay-data="{field:'name'}">名称</th>
+                <th lay-data="{field:'headSculpture'}">头像ID</th>
+                <th lay-data="{field:'robotIP'}">机器人IP</th>
+                <th lay-data="{field:'character'}">性格</th>
+                <th lay-data="{field:'carryYB'}">携带元宝</th>
+                <th lay-data="{field:'presentYB'}">当前元宝</th>
+                <th lay-data="{field:'carryTimes'}">携带次数</th>
+                <th lay-data="{field:'borrowTimes'}">借贷次数</th>
+                <th lay-data="{field:'borrowLimit'}">借贷额度</th>
+                <th lay-data="{field:'gameMarket'}">游戏场次</th>
+                <th lay-data="{field:'winMarket'}">赢场次</th>
+                <th lay-data="{field:'loseMarket'}">输场次</th>
+                <th lay-data="{field:'scale'}">输赢比例</th>
+                <th lay-data="{toolbar:'#robotListbar'}">操作</th>
+            </tr>
+            </thead>
+        </table>
+</div>
+<script type="text/html" id="robotListbar">
+    <button class="layui-btn layui-btn-xs" lay-event="reviseBtn2">修改</button>
+    <button class="layui-btn layui-btn-xs" lay-event="delBtn2">删除</button>
+</script>
+<script>
+    layui.use(['table'],function () {
+        var table = layui.table;
+        //修改删除机器人
+        table.on('tool(table2)',function (obj) {
+            var data1 = obj.data;
+            if(obj.event === 'reviseBtn2'){
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['50%','90%']
+                    ,id:'LAY_layuipro'
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#reviseRobot')
+                    ,success:function (layer,index) {
+                        var inputs1 = $('#reviseRobot input');
+                        var i=0;
+                        for (var key in data1){
+                            if (j<inputs.length){
+                                inputs1[i].value = data1[key];
+                                i++;
+                            }
+
+                        }
+                    }
+
+                })
+            }else if(obj.event === 'delBtn2'){
+                var number = obj.data.number;
+                var id = obj.data.number;
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['30%','25%']
+                    ,id:'LAY_layuipro'
+                    ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#del')
+                    ,success:function (layero,index) {
+                        //将删除的跑马灯编号显示在提示窗口
+                        $('#num').html(number);
+                    }
+                    ,yes:function (index,layero) {
+                        //向后端发送将要删除的跑马灯ID
+                        $.ajax({
+                            url:'',
+                            type:'POST',
+                            data:{
+                                'id': id
+                            },
+                            success:function (data) {
+                                console.log("成功");
+                                //删除成功后重载表格
+                                table.reload('robotListTable', {
+                                    url:'/test/t205',
+                                });
+                            },
+                            error:function () {
+                                console.log("失败");
+
+                            }
+                        });
+                        layer.close(index);
+                    }
+                })
+            }
+        })
+        //添加机器人
+        var active  = {
+            addRobot:function(){
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['50%','90%']
+                    ,id:'LAY_layuipro'
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#addRobot')
+
+                })
+            }
+        };
+        $('#addRobotBtn').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+    })
+</script>
+</body>
+<!--删除-->
+<div class="x-body" id="del"  style="display: none;text-align: center;padding-top:10%;">
+    <h2 class="center">确认删除编号为<span id="num"></span>的机器人吗？</h2>
+</div>
+<!--修改-->
+<style>
+    .layui-form-label{
+        width:19%!important;
+    }
+</style>
+<div class="x-body" id="reviseRobot" style="display: none">
+    <form action="" class="layui-form">
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">序号</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="robotNum" readonly name="num">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">随机ID</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="randomID" readonly name="randomID">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="userName" name="userName" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">用户头像ID</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="userimgID"  name="userimgID">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人IP</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="robotIP" name="robotIP" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人性格</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="robotCharacter" name="robotCharacter" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人底注最高范围</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="hightest"  name="hightest">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人随机属性</label>
+                <div class="layui-input-inline" style="width: 75%;" >
+                    <table class="layui-table"  >
+                        <thead>
+                        <tr>
+                            <th>携带元宝</th>
+                            <th>当前元宝</th>
+                            <th>借贷次数</th>
+                        </tr>
+                        <tr>
+                            <th><input type="text" name="carryYB" class="layui-input"></th>
+                            <th><input type="text" name="current" class="layui-input"></th>
+                            <th><input type="text" name="borrowNum" class="layui-input"></th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th>借贷额度</th>
+                            <th>游戏场次</th>
+                            <th>赢场次</th>
+                        </tr>
+                        <tr>
+                            <th><input type="text" name="borrowLimits" class="layui-input"></th>
+                            <th><input type="text" name="gameArea" class="layui-input"></th>
+                            <th><input type="text" name="winArea" class="layui-input"></th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+        </div>
+        <div style="width: 150px;margin: 0 auto;">
+            <button class="layui-btn" type="submit">修改</button>
+            <button class="layui-btn">关闭</button>
+        </div>
+    </form>
+</div>
+<!--新增机器人-->
+<div class="x-body" id="addRobot" style="display: none">
+    <form action="" class="layui-form">
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">序号</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="robotNum1" readonly name="num">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">随机ID</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="randomID1" readonly name="randomID">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="userName1" name="userName" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">用户头像ID</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="userimgID1"  name="userimgID">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人IP</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="robotIP1" name="robotIP" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人性格</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="robotCharacter1" name="robotCharacter" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人底注最高范围</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" id="hightest1"  name="hightest">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人随机属性</label>
+            <div class="layui-input-inline" style="width: 75%;" >
+                <table class="layui-table"  >
+                    <thead>
+                    <tr>
+                        <th>携带元宝</th>
+                        <th>当前元宝</th>
+                        <th>借贷次数</th>
+                    </tr>
+                    <tr>
+                        <th><input type="text" name="carryYB" class="layui-input"></th>
+                        <th><input type="text" name="current" class="layui-input"></th>
+                        <th><input type="text" name="borrowNum" class="layui-input"></th>
+                    </tr>
+                    </thead>
+                </table>
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th>借贷额度</th>
+                        <th>游戏场次</th>
+                        <th>赢场次</th>
+                    </tr>
+                    <tr>
+                        <th><input type="text" name="borrowLimits" class="layui-input"></th>
+                        <th><input type="text" name="gameArea" class="layui-input"></th>
+                        <th><input type="text" name="winArea" class="layui-input"></th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div style="width: 150px;margin: 0 auto;">
+            <button class="layui-btn" type="submit">修改</button>
+            <button class="layui-btn">关闭</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,38 @@
+
+<body>
+<div class="x-body">
+    <form action="" class="layui-form">
+    <label for="" class="layui-form-label">内容</label>
+    <!--<div class="layui-input">-->
+    <textarea name="userIDs" id="" cols="80" rows="10" placeholder="请输入需要添加的用户ID，如果批量输入请以#分隔每个ID"></textarea>
+    <div class="layui-form-item" style="width:100%;">
+        <div style="position: absolute;left:40%;margin-bottom: 15px;">
+            <div class="layui-btn" lay-submit="" lay-filter="submit">确认</div>
+            <button class="layui-btn" type="reset">重置</button>
+        </div>
+    </div>
+    <!--</div>-->
+    </form>
+</div>
+<script>
+    layui.use('form',function () {
+        var form = layui.form;
+        form.on('submit(submit)',function (data) {
+            $.ajax({
+                type:"POST"
+                ,url:'/test/t206'
+                ,data:{
+                    'userIDs':data.field.userIDs
+                }
+                ,success:function () {
+                    console.log("成功");
+                }
+                ,error:function () {
+                    console.log("失败");
+                }
+
+            })
+        })
+    })
+</script>
+</body>

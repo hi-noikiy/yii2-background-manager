@@ -1,0 +1,90 @@
+<body>
+<div class="x-body">
+    <div action="" class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="代理ID" id="ID">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="代理昵称" id="nick">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="开始日期" id="startTime">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="结束日期" id="endTime">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="月查询" id="monthSearch">
+            </div>
+            <button class="layui-btn" data-method="search" id="search" data-type="reload" id="search">查询</button>
+        </div>
+    </div>
+    <table class="layui-table " id="agentOperData"></table>
+</div>
+<script>
+    //日期查询
+    layui.use('laydate',function(){
+        var laydate = layui.laydate;
+        laydate.render({
+            elem:'#startTime'
+        });
+        laydate.render({
+            elem:'#endTime'
+        });
+        laydate.render({
+            elem:'#monthSearch'
+            ,type:'month'
+        });
+    });
+    layui.use(['table','layer'],function () {
+        var table = layui.table;
+        table.render({
+            elem:"#agentOperData"
+            ,url:"/test/t206"
+            ,page:true
+            ,id:"rechargeReload"
+            ,cols:[[
+                {field:"date",title:'时间'}
+                ,{field:"subAgentNum",title:'下级代理数量'}
+                ,{field:"pre10",title:'下级代理贡献（10%）'}
+                ,{field:"lowerLevel",title:'下下级代理数量'}
+                ,{field:"pre5",title:'下下级代理贡献（5%）'}
+                ,{field:"subplayerNum",title:'下级玩家数量'}
+                ,{field:"pre35",title:'下级玩家贡献（35%）'}
+                ,{field:"partNum",title:'下级玩家参与局数（人次）'}
+                ,{field:"generalIncome",title:'总收入'}
+            ]]
+        });
+        //查询
+        var $ = layui.$, active = {
+            reload: function(){
+                var userID = $('#ID').val();
+                var nick = $('#nick').val();
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
+                var monthSearch = $('#monthSearch').val();
+                //执行重载
+                table.reload('rechargeReload', {
+                    url:'/test/t204'
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        userID: userID
+                        ,nick: nick
+                        ,startTime: startTime
+                        ,endTime: endTime
+                        ,monthSearch: monthSearch
+                    }
+                });
+            }
+        };
+        $('#search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    })
+</script>
+</body>
+

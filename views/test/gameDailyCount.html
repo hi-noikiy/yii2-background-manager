@@ -1,0 +1,294 @@
+<style type="text/css">
+    .layui-table-cell {
+        height: auto;
+        line-height: 20px;
+        padding: 0 10px;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        box-sizing: border-box;
+    }
+    .thbg{background-color: #F2F2F2;text-align: center}
+    table>tbody>tr>td{width:100px;}
+</style>
+<body>
+<div class="x-body">
+    <!--<h2 style="text-align: center;color: #666666;"></h2>-->
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="startTime" name="start" placeholder="开始日期">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="endTime" name="end" placeholder="结束日期">
+            </div>
+            <button class="layui-btn search" data-type="search" style="float: left">查询</button>
+            <div class="layui-input-inline" style="margin-left:50px;width:110px;">
+                <select name="gameName" id="game" lay-filter="gameFilter">
+                    <option value="0">麻将</option>
+                    <option value="1">三张</option>
+                    <option value="2">跑得快</option>
+                </select>
+            </div>
+            <div class="layui-input-inline" style="width:110px;">
+                <select name="gameName" id="space" lay-filter="spaceFilter">
+                    <option value="0">金币场</option>
+                    <option value="1">元宝场</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!--金币场tab-->
+    <div id="goldSpace" class="layui-tab layui-tab-card" lay-filter="tabFilter">
+        <ul class="layui-tab-title">
+            <li class="layui-this">金币消耗</li>
+            <li>活跃人数</li>
+            <li>游戏玩法</li>
+            <li>系统供给</li>
+            <li>系统回收</li>
+            <li>金币购买</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div id="echar0" style="width:80%;height:400px;"></div>
+            </div>
+        </div>
+    </div>
+    <!--元宝场tab-->
+    <div id="YBSpace" class="layui-tab layui-tab-card layui-hide" lay-filter="tabFilter1">
+        <ul class="layui-tab-title">
+            <li class="layui-this">元宝消耗</li>
+            <li>活跃人数</li>
+            <li>游戏玩法</li>
+            <li>请离用户</li>
+            <li>内储值</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div id="echar1" style="width:80%;height:400px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <table id="dizhu_1000" border="1"   cellspacing="0" class="layui-table" >
+        <thead>
+        <tr class="thbg"><th colspan="2" >类别</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr>
+        </thead>
+        <tbody>
+        <tr><td rowspan="14">底注1000</td><td>金币消耗</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>金币消耗占比</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>活跃人数</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>活跃人数占比</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>游戏场次</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>标准模式</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>激情模式</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>必闷三轮</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>双倍比赛</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>请离用户人/次</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>请离用户占比</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>系统提供金币</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>游戏回收金币</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>游戏内兑换金币</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        </tbody>
+
+    </table>
+    <hr>
+</div>
+<script src="//cdn.bootcss.com/echarts/3.3.2/echarts.min.js" charset="utf-8"></script>
+<script>
+    layui.use(['table','form','laydate','element'],function () {
+        var table = layui.table;
+        //日期查询
+        var laydate = layui.laydate;
+        laydate.render({elem:'#startTime'});
+        laydate.render({elem:'#endTime'});
+
+        var myChart = echarts.init(document.getElementById('echar0'));
+        function mychart(url,title1){
+            $.ajax({
+                type:"get",
+                url:url,
+                success:function (res) {
+                    option = {
+                        title: {
+                            text:title1 ,
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [{
+                            data: [120, 200, 150, 80, 70, 110, 130,120, 200, 150, 80, 70, 110, 130,120, 200, 150, 80, 70, 110, 130,70, 110],
+                            type: 'bar'
+                        }]
+                    };
+                    myChart.setOption(option);
+                }
+            })
+        }
+
+        //table数据渲染函数
+        function mytable(url){
+            // console.log($('#dizhu_1000 tr:first td:eq(1)').html());
+            // console.log($('#dizhu_1000 tr:eq(1) td:eq(1)').html());
+            // console.log($('#dizhu_1000 tr:eq(2) td:eq(0)').html());
+            console.log($('#dizhu_1000 tbody tr td:eq(1)'));
+            $.ajax({
+                type:"get",
+                url:url,
+                dataType:'JSON',
+                success:function (res) {
+                    var data = res.data;
+                    $('#dizhu_1000 tbody tr:eq(0) td:eq(2)').html(data[0].a[0]);
+                    $('#dizhu_1000 tbody tr:not(tr:first)').find('td:eq(1)').each(function (index, element) {
+                        $(this).html(data[0].a[index+1]);
+                    });
+                }
+            })
+        }
+        //初始化第一个tab图表
+         mychart('/test/t201/',"金币消耗");
+        //初始化第一个table
+        mytable('/test/t208');
+        element.on('tab(tabFilter)',function (data) {
+            switch(data.index){
+                case 0:mychart('/test/t201/',"金币消耗");break;
+                case 1:mychart('/test/t203/',"活跃人数");break;
+                case 2:mychart('/test/t205/',"游戏玩法");break;
+                case 3:mychart('/test/t206/',"系统供给");break;
+                case 4:mychart('/test/t201/',"系统回收");break;
+                case 5:mychart('/test/t206/',"金币购买");break;
+            }
+        });
+        //tab事件监听
+        //场的监听事件
+        var form = layui.form;
+        form.on('select(spaceFilter)',function (data) {
+            console.log(data.value);
+            if (data.value==='0'){
+                console.log('111');
+                $('#YBSpace').addClass('layui-hide');
+                $('#goldSpace').removeClass('layui-hide');
+                //金币场后端获取图表数据函数
+
+                mychart('/test/t201/',"金币消耗");
+                //切换tab时的图表切换
+                var element = layui.element;
+
+                //获取表格数据
+                mytable('/test/t208');
+
+            }else if(data.value==='1'){
+                $('#goldSpace').addClass('layui-hide');
+                $('#YBSpace').removeClass('layui-hide');
+                //元宝场
+                var myChart1 = echarts.init(document.getElementById('echar1'));
+                function mychart1(url,title1){
+                    $.ajax({
+                        type:"get",
+                        url:url,
+                        success:function (res) {
+                            option = {
+                                title: {
+                                    text:title1 ,
+                                },
+                                xAxis: {
+                                    type: 'category',
+                                    data: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
+                                },
+                                yAxis: {
+                                    type: 'value'
+                                },
+                                series: [{
+                                    data: [120, 200, 150, 80, 70, 110, 130,120, 200, 150, 80, 70, 110, 130,120, 200, 150, 80, 70, 110, 130,70, 110],
+                                    type: 'bar'
+                                }]
+                            };
+                            myChart1.setOption(option);
+                        }
+                    })
+                }
+                mychart1('/test/t201/',"元宝消耗");
+                var element = layui.element;
+                //tab事件监听
+                element.on('tab(tabFilter1)',function (data) {
+                    switch(data.index){
+                        case 0:mychart1('/test/t201/',"元宝消耗");break;
+                        case 1:mychart1('/test/t203/',"活跃人数");break;
+                        case 2:mychart1('/test/t205/',"游戏玩法");break;
+                        case 3:mychart1('/test/t206/',"请离用户");break;
+                        case 4:mychart1('/test/t201/',"内储值");break;
+                    }
+                });
+            }
+        });
+        //游戏的监听事件
+        form.on('select(gameFilter)',function (data) {
+            table.reload('playerMethodCount',{
+                url:'/test/t201/',
+                page:{
+                    curr:1
+                },
+                where:{
+                    game:data.value
+                }
+            })
+        });
+
+        var active = {
+            //table查询
+            search:function () {
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
+                table.reload('filter1',{
+                    url:'/test/t201/'
+                    ,page:{
+                        curr:1
+                    }
+                    ,where:{
+                        startTime:startTime
+                        ,endTime:endTime
+                    }
+                })
+            }
+        };
+        $('.search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        //获取时间函数
+        function getBeforeDate(n){
+            var n = n;
+            var d = new Date();
+            var year = d.getFullYear();
+            var mon=d.getMonth()+1;
+            var day=d.getDate();
+            if(day <= n){
+                if(mon>1) {
+                    mon=mon-1;
+                }
+                else {
+                    year = year-1;
+                    mon = 12;
+                }
+            }
+            d.setDate(d.getDate()-n);
+            year = d.getFullYear();
+            mon=d.getMonth()+1;
+            day=d.getDate();
+            s = year+(mon<10?('0'+mon):mon)+(day<10?('0'+day):day);
+            return s;
+        }
+        var arrDate= [getBeforeDate(0),getBeforeDate(1),getBeforeDate(2),getBeforeDate(3),getBeforeDate(4),getBeforeDate(5),getBeforeDate(6)];
+        // $('#dizhu_1000 tr:first td:not(th:first)').html('111');
+        $('#dizhu_1000 thead tr:first th:not(th:first)').each(function (index, element) {
+            $(this).html(arrDate[index]);
+        })
+    })
+</script>
+</body>

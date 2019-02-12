@@ -1,0 +1,80 @@
+<!--<body>-->
+<!--<div class="x-body">-->
+    <!--&lt;!&ndash;过滤条件&ndash;&gt;-->
+        <!--<div class="layui-form-item">-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input type="text" class="layui-input" placeholder="代理ID" id="ID">-->
+            <!--</div>-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input type="text" class="layui-input" placeholder="开始日期" id="startTime">-->
+            <!--</div>-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input type="text" class="layui-input" placeholder="结束日期" id="endTime">-->
+            <!--</div>-->
+            <!--<button class="layui-btn"  data-type="reload" id="search">查询</button>-->
+        <!--</div>-->
+    <!--&lt;!&ndash;表格数据&ndash;&gt;-->
+    <!--<table class="layui-table " id="lowerLevel" lay-filter="sort"></table>-->
+<!--</div>-->
+<!--<script>-->
+    <!--layui.use(['table','layer','laydate'],function () {-->
+        <!--//日期查询-->
+        <!--var laydate = layui.laydate;-->
+        <!--laydate.render({elem:'#startTime'});-->
+        <!--laydate.render({elem:'#endTime'});-->
+        <!--//表格渲染-->
+        <!--var table = layui.table;-->
+        <!--table.render({-->
+            <!--elem:"#lowerLevel"-->
+            <!--,url:"/test/t206"-->
+            <!--,page:true-->
+            <!--,cols:[[-->
+                <!--{field:"date",title:'代理ID',sort:true}-->
+                <!--,{field:"income",title:'昵称'}-->
+                <!--,{field:"income",title:'所选日期收益'}-->
+            <!--]]-->
+            <!--// ,id: 'logReload'-->
+
+        <!--});-->
+        <!--//查询-->
+        <!--var $ = layui.$, active = {-->
+            <!--reload: function(){-->
+                <!--var userID = $('#ID');-->
+                <!--var startTime = $('#startTime');-->
+                <!--var endTime = $('#endTime');-->
+
+                <!--//执行重载-->
+                <!--table.reload('lowerLevel', {-->
+                    <!--url:'/test/t204'-->
+                    <!--,page: {-->
+                        <!--curr: 1 //重新从第 1 页开始-->
+                    <!--}-->
+                    <!--,where: {-->
+                        <!--key: {-->
+                            <!--id: userID.val(),-->
+                            <!--start_time: startTime.val(),-->
+                            <!--end_time: endTime.val()-->
+                        <!--}-->
+                    <!--}-->
+                <!--});-->
+            <!--}-->
+        <!--};-->
+        <!--//查询按钮绑定事件-->
+        <!--$('#search').on('click', function(){-->
+            <!--var type = $(this).data('type');-->
+            <!--active[type] ? active[type].call(this) : '';-->
+        <!--});-->
+        <!--//排序-->
+        <!--// table.on('sort(sort)', function(obj){-->
+        <!--//     table.reload('logTable', {-->
+        <!--//         url:'/test/t205',-->
+        <!--//         initSort: obj-->
+        <!--//         ,where: {-->
+        <!--//             field: obj.field-->
+        <!--//             ,order: obj.type-->
+        <!--//         }-->
+        <!--//     });-->
+        <!--// });-->
+    <!--})-->
+<!--</script>-->
+<!--</body>-->

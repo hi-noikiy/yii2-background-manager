@@ -1,0 +1,260 @@
+<style>
+    td{width:25%;}
+</style>
+<body>
+
+<div class="x-body">
+
+    <!--查询框-->
+    <form action="" class="layui-form layui-row layui-col-xs10">
+        <div class="layui-input-inline">
+            <input id="searchCont" type="text" class="layui-input" placeholder="用户ID">
+        </div>
+        <div id="searchBtn" class="layui-btn " style="margin-left:-4px;">查询</div>
+
+    <!--<div class="refresh refreshThis " style="float:right;cursor:pointer;"> <i class="layui-icon layui-icon-refresh" ></i></div>-->
+    </form>
+    <button class="layui-btn reviseBtn" style="float: right;position: relative;right:30px;" data-method="userInfo">修改用户信息</button>
+    <!--用户信息表-->
+    <table id="table1" class="layui-table table" >
+        <caption><h2>用户信息</h2></caption>
+        <tr>
+            <td>用户ID</td>
+            <td></td>
+            <td>用户昵称</td>
+            <td id="userNick"></td>
+        </tr>
+        <tr>
+            <td>真实姓名</td>
+            <td></td>
+            <td>代理级别</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>联系方式</td>
+            <td></td>
+            <td>联系地址</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>创建时间</td>
+            <td></td>
+            <td>最后登录时间</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>代理开通总次数</td>
+            <td id="agentOpenNum"></td>
+            <td>剩余次数</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>未提现金额</td>
+            <td></td>
+            <td>总收益</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>下级代理数量</td>
+            <td></td>
+            <td>下级玩家数量</td>
+            <td></td>
+        </tr>
+    </table>
+    <hr>
+    <!--上级信息表-->
+    <table id="table2" class="layui-table table">
+        <caption><h2>上级信息</h2></caption>
+        <tr>
+            <td>绑定邀请码的代理ID</td>
+            <td id="agentID"></td>
+            <td>代理昵称</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>创建时间</td>
+            <td></td>
+            <td>代理级别</td>
+            <td></td>
+        </tr>
+    </table >
+    <hr>
+    <!--代理相关-->
+    <h2 style="text-align: center;color:#666666">代理相关</h2>
+    <table id="table3" class="layui-table" lay-filter="sort3" lay-data="{ url:'', page:true, id:'test'}" >
+        <thead>
+        <tr>
+            <th lay-data="{field:'userID',sort: true}">用户ID</th>
+            <th lay-data="{field:'userName'}">姓名</th>
+            <th lay-data="{field:'agentLevel',sort: true}">代理级别</th>
+            <th lay-data="{field:'todayIncrease'}">今日新增</th>
+            <th lay-data="{field:'todayActive'}">今日活跃</th>
+            <th lay-data="{field:'totalActive', sort: true}">总活跃用户</th>
+            <th lay-data="{field:'loseUser', sort: true}">流失用户</th>
+            <th lay-data="{field:'singleMaximum',sort: true}">单笔最高</th>
+            <th lay-data="{field:'todayStored',sort: true}">今日储值</th>
+            <th lay-data="{field:'totalStored',sort: true}">总储值</th>
+        </tr>
+        </thead>
+    </table>
+    <hr>
+    <!--管理员操作记录表-->
+    <h2 style="text-align: center;color:#666666">管理员操作记录</h2>
+    <table id="table4" class="layui-table" lay-filter="sort4" lay-data="{ url:'', page:true, id:'test1'}">
+        <thead>
+        <tr>
+            <th lay-data="{field:'date',sort: true}">操作时间</th>
+            <th lay-data="{field:'user'}">操作人</th>
+            <th lay-data="{field:'content',sort: true}">操作内容</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+layui.use(['layer','table'],function () {
+    var layer = layui.layer;
+    var table =  layui.table;
+    //点击查询按钮时，向后端提交检索数据，并拿到后端返回结果放在对应td中
+    $("#searchBtn").on('click',function () {
+        var searchCont = $("#searchCont").val();
+        $.ajax({
+            type:"GET"
+            ,url:"/test/t201"
+            ,data:{searchCont:searchCont}
+            ,success:function (val) {
+                var json = JSON.parse(val).data[0];
+                // var tds = document.getElementsByTagName('td');
+                var  j=1;
+                var tds = $(".table td");
+                for (var key in json){
+                    tds[j].innerHTML=json[key];
+                    j+=2;
+                }
+                $('#userNick').append('<button class="layui-btn layui-btn-xs reviseBtn" style="margin-left:20px;" data-method="userNick">修改</button>');
+                $('#agentOpenNum').append('<button class="layui-btn layui-btn-xs reviseBtn" style="margin-left:20px;" data-method="agentOpenNum">修改</button>');
+                $('#agentID').append('<button class="layui-btn layui-btn-xs reviseBtn" style="margin-left:20px;" data-method="agentID">修改</button>');
+                var active = {
+                    userNick:function () {
+                        layer.open({
+                            type:1
+                            ,title:'修改用户昵称'
+                            ,closeBtn:1
+                            ,area:['50%','70%']
+                            //,shade:0.5
+                            ,id:"LAY_layuipro"
+                            ,btn:['确认','取消']
+                            ,btnAlign:'c'
+                            ,moveType:1
+                            ,content:''
+                        })
+                    }
+                    ,agentOpenNum:function () {
+                        layer.open({
+                            type:1
+                            ,title:'修改代理开通总次数'
+                            ,closeBtn:1
+                            ,area:['50%','70%']
+                            //,shade:0.5
+                            ,id:"LAY_layuipro"
+                            ,btn:['确认','取消']
+                            ,btnAlign:'c'
+                            ,moveType:1
+                            ,content:''
+                        })
+                    }
+                    ,agentID:function () {
+                        layer.open({
+                            type:1
+                            ,title:'修改绑定邀请码的代理ID'
+                            ,closeBtn:1
+                            ,area:['50%','70%']
+                            //,shade:0.5
+                            ,id:"LAY_layuipro"
+                            ,btn:['确认','取消']
+                            ,btnAlign:'c'
+                            ,moveType:1
+                            ,content:''
+                        })
+                    }
+                };
+                $('.reviseBtn').on('click',function () {
+                    var othis = $(this),method = othis.data('method');
+                    active[method]?active[method].call(this.othis):'';
+                });
+                table.reload('table3',{
+                    url:'/test/t201/',
+                    where:{
+                        page:{
+                            curr:1
+                        }
+                    }
+                });
+                table.reload('table4',{
+                    url:'/test/t201/',
+                    where:{
+                        page:{
+                            curr:1
+                        }
+                    }
+                })
+            },
+            error:function (err) {
+                layer.msg('您输入的ID不存在！',{time:1000});
+            }
+        });
+    });
+    //修改用户信息按钮操作
+    var active = {
+        userInfo:function () {
+            layer.open({
+                type:1
+                ,title:'修改用户信息'
+                ,closeBtn:1
+                ,area:['50%','70%']
+                //,shade:0.5
+                ,id:"LAY_layuipro"
+                ,btn:['确认','取消']
+                ,btnAlign:'c'
+                ,moveType:1
+                ,content:''
+            })
+        }
+    }
+    $('.reviseBtn').on('click',function () {
+        var othis = $(this),method = othis.data('method');
+        active[method]?active[method].call(this.othis):'';
+    });
+    //排序
+    table.on('sort(sort3)',function (obj) {
+        table.reload('table3',{
+            url:'/test/t205',
+            initSort: obj
+            ,where: {
+                field: obj.field
+                , order: obj.type
+            }
+        })
+    })
+    table.on('sort(sort4)',function (obj) {
+        table.reload('table4',{
+            url:'/test/t205',
+            initSort: obj
+            ,where: {
+                field: obj.field
+                , order: obj.type
+            }
+        })
+    })
+
+
+
+})
+
+
+
+</script>
+</body>
+
+
+<!--</html>-->

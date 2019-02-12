@@ -1,0 +1,77 @@
+<!--<style>-->
+
+    <!--#span{-->
+        <!--/*display:inline-block;*/-->
+        <!--/*padding-top:10px;*/-->
+        <!--/*padding:10px;*/-->
+        <!--/*width:10px;*/-->
+        <!--/*height:10px;*/-->
+        <!--/*border-radius: 10px;*/-->
+        <!--/*background-color: #9F9F9F;*/-->
+    <!--}-->
+<!--</style>-->
+<!--<body>-->
+<!--<div class="x-body">-->
+    <!--<form action="" class="layui-form" style="margin:30px 0 0 100px;">-->
+        <!--<div class="layui-form-item">-->
+            <!--<label for="" class="layui-form-label">代理ID</label>-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input type="text" class="layui-input" name="agentID" id="agentIDCont">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item" id="getCode">-->
+            <!--<label for="" class="layui-form-label">操作验证码</label>-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input type="text" class="layui-input" name="identifyingCode">-->
+            <!--</div>-->
+            <!--<button class="layui-btn layui-btn-sm" style="margin:3px 5px;"id="getCodeBtn">获取验证码</button><span id="span" style="display: none;">5s</span>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;<div class="layui-form-item" style="width:100%;">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div style="position: absolute;left:40%;margin-bottom: 15px;">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="layui-btn" lay-submit="" lay-filter="reviseAgentID">确认修改</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<button class="layui-btn" type="reset">重置</button>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</form>-->
+<!--</div>-->
+<!--<script>-->
+    <!--//设置获取验证码倒计时-->
+    <!--// function getCode(){-->
+        <!--$('#getCodeBtn').on('click',function(){-->
+            <!--document.getElementById('getCodeBtn').setAttribute("disabled",true);-->
+            <!--$('#span').show();-->
+            <!--var span = $('#span').html();-->
+            <!--var a=parseInt(span);-->
+            <!--console.log(span);-->
+            <!--var timer1 = setInterval(function () {-->
+                <!--if (a==0){-->
+                    <!--clearInterval(timer1);-->
+                    <!--$('#span').hide();-->
+                <!--} else{-->
+                    <!--a&#45;&#45;;-->
+                    <!--console.log(a);-->
+                    <!--$('#span').text(a+'s');-->
+                <!--}-->
+            <!--},1000);-->
+        <!--});-->
+    <!--// }-->
+
+    <!--// $('#getCodeBtn').on('click',function () {-->
+    <!--//     $.ajax({-->
+    <!--//         type:'GET'-->
+    <!--//         ,url:''-->
+    <!--//         ,data:{}-->
+    <!--//         ,success:function () {-->
+    <!--//             getCode();-->
+    <!--//         }-->
+    <!--//     })-->
+    <!--// })-->
+    <!--layui.use('form',function () {-->
+        <!--var form = layui.form;-->
+        <!--form.on('submit(reviseAgentID)',function (data) {-->
+            <!--//debugger-->
+            <!--// alert('1');-->
+        <!--})-->
+    <!--})-->
+<!--</script>-->
+<!--</body>-->

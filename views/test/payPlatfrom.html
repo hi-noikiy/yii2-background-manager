@@ -1,0 +1,398 @@
+<style>
+    .x-nav{margin-bottom:10px!important;padding:0!important;}
+    .BGO{background-color: #EEEEEE;padding:1px;}
+    .BGBtn{background-color: #EEEEEE;padding:5px;}
+</style>
+<body>
+<div class="x-body">
+    <div class="x-nav">
+        <span class="layui-breadcrumb">
+            <a href="#">鲸鱼用户</a>
+            <a>
+                <cite>鲸鱼用户</cite>
+            </a>
+        </span>
+        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">&#xe669;</i></a>
+    </div>
+    <div id="box1">
+        <!--<h2>支付平台</h2>-->
+
+        <!--盾平台模块-->
+        <div class="firstPlatform ">
+
+            <!--盾平台标题内容-->
+            <h1>盾平台</h1><hr>
+            <div>
+                <form action="" class="layui-form  x-so BGO">
+                    <label for="" class="layui-form-label" style="width:120px;">盾平台单人限额</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="count" autocomplete="off" class="layui-input limit " readonly disabled >
+                    </div>
+                    <button class="layui-btn layui-btn-sm " onclick="x_admin_show('盾平台的单人限额','./revise',600,400)">修改</button>
+                </form>
+               <div class="BGBtn">
+                   <button class="layui-btn layui-icon" onclick="x_admin_show('创建/查看支付平台','./addplatfrom',600,600)">&#xe608;&nbsp;添加盾平台</button>
+               </div>
+
+            </div>
+
+            <!--盾平台table-->
+            <table id="first" class="layui-table"  lay-filter="table1"></table>
+        </div>
+
+        <!--子平台模块-->
+        <div class="secondPlatfrom">
+            <!--字平台标题内容-->
+            <h1>子平台</h1><hr>
+            <div class="BGBtn">
+                <button class="layui-btn layui-icon" onclick="x_admin_show('创建/查看支付平台','./addplatfrom',600,600)">&#xe608;&nbsp;添加子平台</button>
+            </div>
+            <!--字平台table-->
+            <table class="layui-table" id="second" lay-filter="table2"></table>
+        </div>
+        <!--操作记录模块-->
+        <div class="thirdPlatfrom">
+            <h1>操作记录</h1><hr>
+            <!--操作记录table-->
+            <table class="layui-table" id="third" lay-filter="table3"></table>
+        </div>
+    </div>
+</div>
+<!--</div>-->
+</body>
+
+<!--盾平台table下的按钮-->
+<script type="text/html" id="barfirst">
+    <button class="layui-btn layui-btn-xs" lay-event="details1" >查看</button>
+    <button class="layui-btn layui-btn-xs" lay-event="sealOff1">封停</button>
+</script>
+
+<!--子平台table下的按钮-->
+<script type="text/html" id="barsecond">
+    <button class="layui-btn layui-btn-xs"  lay-event="details2">查看</button>
+    <button class="layui-btn layui-btn-xs" lay-event="sealOff2">封停</button>
+</script>
+
+<script>
+    //获取盾平台table数据
+    layui.use(['table','layer'],function(){
+        var table = layui.table;
+        var layer = layui.layer;
+        table.render({
+            elem:'#first'
+            //,height:500
+            ,url:'/test/t205'
+            ,page:true
+            ,cols:[[
+                {field:'platName',title:'平台名称',sort:true}
+                ,{field:'platInfo',title:"平台信息",sort:true}
+                ,{field:'feilv',title:'费率'}
+                ,{field:'limitTotle',title:'总付费额度'}
+                ,{field:'peopleTotle',title:'总付费人数'}
+                ,{field:'Alipay',title:'支付宝'}
+                ,{field:'weightAli',title:'权重'}
+                ,{field:'wechat',title:"微信"}
+                ,{field:'weightWechat',title:'权重'}
+                ,{field:'option',title:'操作',toolbar:'#barfirst'}
+            ]]
+            });
+        table.on('tool(table1)',function (obj) {
+            var data = obj.data;
+            if(obj.event==='details1'){
+                var id = data.platName;
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['80%','80%']
+                    ,id:'LAY_layuipro'
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#check')
+                    ,success:function (layero,index) {
+                        $.ajax({
+                            url:'/test/t201/',
+                            type:'POST',
+                            data:{
+                                'id': id
+                            },
+                            success:function (data) {
+                                table.render({
+                                    elem:"#checkTable"
+                                    ,url:"/test/t206"
+                                    ,page:true
+                                    ,cols:[[
+                                        {field:'reportedID',title:'举报人ID',sort:true}
+                                        ,{field:'beReportedID',title:'被举报人ID',sort:true}
+                                        ,{field:'gameID',title:'游戏ID',sort:true}
+                                        ,{field:'waiGua',title:'外挂嫌疑'}
+                                        ,{field:'heHuo',title:'合伙作弊'}
+                                        ,{field:'yanYu',title:'言语辱骂/地域歧视'}
+                                        ,{field:'shuaPing',title:'恶意刷屏'}
+                                        ,{field:'wenZi',title:'文字举报'}
+                                        ,{field:'data',title:'举报时间',sort:true}
+                                        ,{field:'phone',title:'手机号'}
+                                        ,{field:'QQ',title:'QQ号'}
+                                        ,{field:'weChat',title:'微信号'}
+                                    ]]
+                                })
+                            },
+                            error:function (data) {
+                               layer.msg('操作失败！',{time:1000});
+                            }
+                        })
+                    }
+                });
+            }else if(obj.event==='sealOff1'){
+                var id = data.platName;
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['60%','60%']
+                    ,id:'LAY_layuipro'
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#sealOff')
+                    ,success:function (layero,index) {
+                        $.ajax({
+                            url:'/test/t201/',
+                            type:'POST',
+                            data:{
+                                'id': id
+                            },
+                            success:function (data) {
+                                table.render({
+                                    elem:"#sealOffTable"
+                                    ,url:"/test/t201"
+                                    ,page:true
+                                    ,cols:[[
+                                        {field:'reportedID',title:'举报人ID',sort:true}
+                                        ,{field:'beReportedID',title:'被举报人ID',sort:true}
+                                        ,{field:'gameID',title:'游戏ID',sort:true}
+                                        ,{field:'waiGua',title:'外挂嫌疑'}
+                                        ,{field:'heHuo',title:'合伙作弊'}
+                                        ,{field:'yanYu',title:'言语辱骂/地域歧视'}
+                                        ,{field:'shuaPing',title:'恶意刷屏'}
+                                        ,{field:'wenZi',title:'文字举报'}
+                                        ,{field:'data',title:'举报时间',sort:true}
+                                        ,{field:'phone',title:'手机号'}
+                                        ,{field:'QQ',title:'QQ号'}
+                                        ,{field:'weChat',title:'微信号'}
+                                    ]]
+                                })
+                            },
+                            error:function (data) {
+                                layer.msg('操作失败！',{time:1000});
+                            }
+                        });
+                    }
+                });
+            }
+        })
+        table.render({
+            elem:'#second',
+            //height:500,
+            url:'/test/t205',
+            page:true,
+            cols:[[
+                {field:'platName',title:'平台名称',sort:true}
+                ,{field:'platInfo',title:"平台信息",sort:true}
+                ,{field:'feilv',title:'费率'}
+                ,{field:'limitTotle',title:'总付费额度'}
+                ,{field:'peopleTotle',title:'总付费人数'}
+                ,{field:'Alipay',title:'支付宝'}
+                ,{field:'weightAli',title:'权重'}
+                ,{field:'wechat',title:"微信"}
+                ,{field:'weightWechat',title:'权重'}
+                ,{field:'option',title:'操作',toolbar:'#barsecond'}
+            ]]
+        });
+        table.on('tool(table2)',function (obj) {
+            var data = obj.data;
+            if(obj.event==='details2'){
+                var id = data.platName;
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['80%','80%']
+                    ,id:'LAY_layuipro'
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#check')
+                    ,success:function (layero,index) {
+                        $.ajax({
+                            url:'/test/t201/',
+                            type:'POST',
+                            data:{
+                                'id': id
+                            },
+                            success:function (data) {
+                                table.render({
+                                    elem:"#checkTable"
+                                    ,url:"/test/t206"
+                                    ,page:true
+                                    ,cols:[[
+                                        {field:'reportedID',title:'举报人ID',sort:true}
+                                        ,{field:'beReportedID',title:'被举报人ID',sort:true}
+                                        ,{field:'gameID',title:'游戏ID',sort:true}
+                                        ,{field:'waiGua',title:'外挂嫌疑'}
+                                        ,{field:'heHuo',title:'合伙作弊'}
+                                        ,{field:'yanYu',title:'言语辱骂/地域歧视'}
+                                        ,{field:'shuaPing',title:'恶意刷屏'}
+                                        ,{field:'wenZi',title:'文字举报'}
+                                        ,{field:'data',title:'举报时间',sort:true}
+                                        ,{field:'phone',title:'手机号'}
+                                        ,{field:'QQ',title:'QQ号'}
+                                        ,{field:'weChat',title:'微信号'}
+                                    ]]
+                                })
+                            },
+                            error:function (data) {
+                                layer.msg('操作失败！',{time:1000});
+                            }
+                        })
+                    }
+                });
+            }else if(obj.event==='sealOff2'){
+                var id = data.platName;
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['60%','60%']
+                    ,id:'LAY_layuipro'
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#sealOff')
+                    ,success:function (layero,index) {
+                        $.ajax({
+                            url:'/test/t201/',
+                            type:'POST',
+                            data:{
+                                'id': id
+                            },
+                            success:function (data) {
+                                table.render({
+                                    elem:"#sealOffTable"
+                                    ,url:"/test/t201"
+                                    ,page:true
+                                    ,cols:[[
+                                        {field:'reportedID',title:'举报人ID',sort:true}
+                                        ,{field:'beReportedID',title:'被举报人ID',sort:true}
+                                        ,{field:'gameID',title:'游戏ID',sort:true}
+                                        ,{field:'waiGua',title:'外挂嫌疑'}
+                                        ,{field:'heHuo',title:'合伙作弊'}
+                                        ,{field:'yanYu',title:'言语辱骂/地域歧视'}
+                                        ,{field:'shuaPing',title:'恶意刷屏'}
+                                        ,{field:'wenZi',title:'文字举报'}
+                                        ,{field:'data',title:'举报时间',sort:true}
+                                        ,{field:'phone',title:'手机号'}
+                                        ,{field:'QQ',title:'QQ号'}
+                                        ,{field:'weChat',title:'微信号'}
+                                    ]]
+                                })
+                            },
+                            error:function (data) {
+                                layer.msg('操作失败！',{time:1000});
+                            }
+                        });
+                    }
+                });
+            }
+        })
+        table.render({
+            elem:'#third',
+            // height:500,
+            url:'/test/t205',
+            page:true,
+            cols:[[
+                {field:'index',title:'序列号',sort:true},
+                {field:'date',title:'操作时间'},
+                {field:'redord',title:'修改记录'},
+                {field:'ID',title:'操作人ID'}
+            ]]
+        });
+
+//排序
+        table.on('sort(table1)', function(obj){
+            table.reload('first', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        table.on('sort(table2)', function(obj){
+            table.reload('second', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        table.on('sort(table3)', function(obj){
+            table.reload('third', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+
+    });
+//设置盾平台单人限额显示的数值
+   $.ajax({
+       type:"post"
+       ,url:'/111/'
+       ,success:function (value) {
+           // var json=$.parseJSON(value);
+           // console.log(json.data[0].index);
+           // //将获取到的数据显示在页面
+           //  $('.limit').attr('placeholder',json.data[0].index);
+           $('.limit').val('111');
+       }
+       ,error:function () {
+           layer.msg('操作失败！',{time:1000});
+       }
+   });
+</script>
+
+
+
+<!--查看弹出层-->
+<div class="x-body" id="check" style="display: none">
+    <table class="layui-table" id="checkTable"></table>
+</div>
+<!--封停弹出层-->
+<style>
+    .x-body .inform{width:30%;background-color: #2D93CA;float:left;margin:7px;padding:5%;box-sizing:border-box;}
+</style>
+<div class="x-body" id="sealOff" style="display: none">
+    <div class="layui-form-item">
+        <div class="inform"><p>会员ID</p><p>123456987</p></div>
+        <div class="inform"><p>IP地址</p><p>192.163.12.55</p></div>
+        <div class="inform"><p>设备号</p><p>12de45e5de8</p></div>
+    </div>
+    <div class="layui-form-item">
+        <div class="btn">
+            <button class="layui-btn layui-btn-sm">解封</button>
+            <button class="layui-btn layui-btn-sm layui-btn-danger">封停</button>
+        </div>
+    </div>
+    <table class="layui-table" id="sealOffTable">
+    </table>
+</div>
+
+

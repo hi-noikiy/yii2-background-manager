@@ -1,0 +1,518 @@
+<!--百人场推筒子-->
+<body>
+<style>
+    .w{
+        background-color: #e2e2e2;
+    }
+    #count{
+        margin:0 auto;
+        color:red;
+    }
+    #count p{
+        display:inline-block;
+        margin:0 50px;
+        padding:5px 0;
+    }
+    .fz{
+        font-size:25px;
+    }
+    .layui-row{
+        margin:10px;
+    }
+    .layui-input-inline{
+        margin:0 20px;
+        width:130px;
+    }
+    .box{
+        margin:30px;
+    }
+    .distance{ padding:9px 20px 9px 30px!important;}
+    .merge .inputborder .layui-input-inline{
+        margin: 0!important;
+        width:75px!important;
+    }
+    .merge .inputborder input{
+        border:0;
+
+    }
+    .inputborder{
+        width:180px;
+        border:1px solid #EEEEEE;
+    }
+    .labelWidth{width: 100px;}
+    .perDiv{
+        border: 1px solid #EEEEEE;height:38px;
+    }
+    .perInput{
+        width: 90%;border: none;float: left;
+    }
+    .perSign{
+        float: right;position: relative;top: 10px;right:3px;
+    }
+</style>
+<body>
+<div class="x-body">
+    <div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">数据查询</li>
+        <li>配表设置</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form">
+                <div class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <select name=""  id="gameName">
+                                <option value="">游戏名称</option>
+                                <option value="1">三张牌</option>
+                                <option value="2">内蒙打大A</option>
+                                <option value="3">山西麻将</option>
+                                <option value="4">内蒙麻将</option>
+                                <option value="5">牛牛</option>
+                                <option value="6">跑得快</option>
+                                <option value="7">推筒子</option>
+                                <option value="8">三公</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" placeholder="开始日期" id="startDate">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" placeholder="结束日期" id="endDate">
+                        </div>
+                        <div class="layui-btn" data-type="search" id="search">查询</div>
+                    </div>
+                </div>
+            </form>
+            <div style="height:140px;">
+                <div class="layui-field-box">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-body">
+                                <div class="layui-carousel x-admin-carousel x-admin-backlog" lay-anim="" lay-indicator="inside" lay-arrow="none" style="width: 100%; height: 90px;">
+                                    <ul class="layui-row layui-col-space10 layui-this ">
+                                        <li class="layui-col-md2">
+                                            <div class="x-admin-backlog-body">
+                                                <p><cite id="JCED">0.02</cite></p>
+                                                <div>当前奖池额度</div>
+                                            </div>
+                                        </li>
+                                        <li class="layui-col-sm2">
+                                            <div class="x-admin-backlog-body">
+                                                <p><cite id="LJSY">2225</cite></p>
+                                                <p>累计输赢</p>
+                                            </div>
+                                        </li>
+                                        <li class="layui-col-sm2">
+                                            <div class="x-admin-backlog-body">
+                                                <p><cite id="YBK">25987</cite></p>
+                                                <div>元宝库</div>
+                                            </div>
+                                        </li>
+                                        <li class="layui-col-sm2">
+                                            <div class="x-admin-backlog-body">
+                                                <p><cite id="JRSY">0.02</cite></p>
+                                                <div>今日输赢</div>
+                                            </div>
+                                        </li>
+                                        <li class="layui-col-md2">
+                                            <div class="x-admin-backlog-body">
+                                                <p><cite id="JRYH">0.02</cite></p>
+                                                <div>今日用户</div>
+                                            </div>
+                                        </li>
+                                        <li class="layui-col-sm2">
+                                            <div class="x-admin-backlog-body">
+                                                <p><cite id="JRWJXH">2225</cite></p>
+                                                <p>今日玩家消耗</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="container" style="height: 300px;width: 70%;"></div>
+            <table class="layui-table" id="TTZData" lay-filter="TTZData"></table>
+
+            <!--<div class="layui-row w">-->
+                <!--<div class="layui-col-xs10 layui-col-xs-offset2">-->
+                    <!--<div id="count" ><p>【统计】玩法：<span id="play"></span></p><span id="countdate"></span><p>玩家人数：<span id="playNum"></span></p><p>平台收益：<span id="platfromincome"></span>元宝</p></div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form">
+                <div class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <select name=""  id="gameName1">
+                                <option value="">游戏名称</option>
+                                <option value="1">三张牌</option>
+                                <option value="2">内蒙打大A</option>
+                                <option value="3">山西麻将</option>
+                                <option value="4">内蒙麻将</option>
+                                <option value="5">牛牛</option>
+                                <option value="6">跑得快</option>
+                                <option value="7">推筒子</option>
+                                <option value="8">三公</option>
+                            </select>
+                        </div>
+                        <div class="layui-btn" data-type="search" id="search1">确定</div>
+                    </div>
+                </div>
+            </form>
+
+            <div style="height:140px;">
+                <div class="layui-field-box">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-body">
+                                <div class="layui-carousel x-admin-carousel x-admin-backlog" lay-anim="" lay-indicator="inside" lay-arrow="none" style="width: 100%; height: 90px;">
+                                    <ul class="layui-row layui-col-space10 layui-this ">
+                                        <li class="layui-col-sm3">
+                                            <div class="x-admin-backlog-body">
+                                                <p><cite id="JCED">0.02</cite></p>
+                                                <div>奖池ID</div>
+                                            </div>
+                                        </li>
+                                        <li class="layui-col-sm3">
+                                            <div class="x-admin-backlog-body">
+                                                <p><cite id="JCED">0.02</cite></p>
+                                                <div>奖池初始额度</div>
+                                            </div>
+                                        </li>
+                                        <li class="layui-col-sm3">
+                                            <div class="x-admin-backlog-body">
+                                                <p><cite id="JCED">0.02</cite></p>
+                                                <div>当前奖池额度</div>
+                                            </div>
+                                        </li>
+                                        <li class="layui-col-sm3">
+                                            <div class="x-admin-backlog-body">
+                                                <p><cite id="JCED">0.02</cite></p>
+                                                <div>库内收益元宝</div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="fz">游戏设置</div>
+            <hr>
+            <div class="box">
+                    <form action="" class="layui-form">
+
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label labelWidth" >入库开关</label>
+                            <div class="layui-input-block" style="padding-top: 6px;">
+                                <input  type="checkbox" lay-skin="switch">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label labelWidth">机器人开关</label>
+                            <div class="layui-input-block" style="padding-top: 6px;">
+                                <input  type="checkbox" lay-skin="switch">
+                            </div>
+                        </div>
+                        <div class="layui-row">
+                            <div class="layui-col-xs3">
+                                <div class="layui-form-item">
+                                    <label for="" class="layui-form-label labelWidth">入场元宝数</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" lay-verify="required|number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-xs3">
+                                <div class="layui-form-item">
+                                <label for="" class="layui-form-label labelWidth">离场元宝数</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required|number">
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row">
+                            <div class="layui-col-xs3">
+                                <div class="layui-form-item">
+                                <label for="" class="layui-form-label labelWidth">上庄元宝</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required|number">
+                                </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-xs3">
+                                <div class="layui-form-item">
+                                <label for="" class="layui-form-label labelWidth">下庄元宝</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required|number">
+                                </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-xs3">
+                                <div class="layui-form-item">
+                                <label for="" class="layui-form-label labelWidth">连庄局数</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required|number">
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label labelWidth" >投注档位金额</label>
+                            <div class="layui-input-inline" >
+                                <input  type="type" class="layui-input" lay-verify="required|number">
+                            </div>
+                            <div class="layui-input-inline" >
+                                <input  type="type" class="layui-input" lay-verify="required|number">
+                            </div>
+                            <div class="layui-input-inline" >
+                                <input  type="type" class="layui-input" lay-verify="required|number">
+                            </div>
+                            <div class="layui-input-inline" >
+                                <input  type="type" class="layui-input" lay-verify="required|number">
+                            </div>
+                            <div class="layui-input-inline" >
+                                <input  type="type" class="layui-input" lay-verify="required|number">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label labelWidth" >警戒线</label>
+                            <div class="layui-input-inline" >
+                                <div class="perDiv">
+                                    <input  type="type" class="layui-input perInput" lay-verify="required|number">
+                                    <span class="perSign">%</span>
+                                </div>
+
+                            </div>
+                            <div class="layui-input-inline" >
+                                <div class="perDiv">
+                                    <input  type="type" class="layui-input perInput" lay-verify="required|number">
+                                    <span class="perSign">%</span>
+                                </div>
+                            </div>
+                            <div class="layui-input-inline" >
+                                <div class="perDiv">
+                                    <input  type="type" class="layui-input perInput" lay-verify="required|number">
+                                    <span class="perSign">%</span>
+                                </div>
+                            </div>
+                            <div class="layui-input-inline" >
+                                <div class="perDiv">
+                                    <input  type="type" class="layui-input perInput" lay-verify="required|number">
+                                    <span class="perSign">%</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="layui-form-item" style="margin-top: 30px;position: relative;left: 10%;">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <div class="fz">行为触发比例</div>
+            <hr>
+            <div style="width: 607px;">
+                <table id="actionScale" class="layui-table" lay-filter="actionScale"></table>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+</body>
+<script type="text/html" id="searchBtn">
+    <button class="layui-btn layui-btn-sm" lay-event="search">查询</button>
+</script>
+<script>
+    layui.use(['table','layer','laydate','form'],function () {
+        var laydate = layui.laydate;
+        var  $ = layui.$;
+        var form = layui.form;
+        laydate.render({
+            elem:'#startDate'
+        });
+        laydate.render({
+            elem:'#endDate'
+        });
+        var table = layui.table;
+
+        table.render({
+            elem:'#TTZData'
+            ,url:'/test/t206'
+            ,page:true
+            ,cols:[[
+                {field:"id",title:"日期"}
+                ,{field:"email_code",title:"游戏场次"}
+                ,{field:"title",title:"结算金额"}
+                ,{field:"content",title:"元宝库收入"}
+                ,{field:"receive_player",title:"元宝消耗"}
+                ,{field:"send_time",title:"天门投注比"}
+                ,{field:"created_time",title:"地门投注比"}
+                ,{field:"creator",title:"顺门投注比"}
+                ,{field:"creator",title:"玩家人数"}
+                ,{field:"phone",title:"上庄人数"}
+                ,{field:"send_time",title:"上庄次"}
+                ,{field:"created_time",title:"人输总"}
+                ,{field:"creator",title:"人赢总"}
+                ,{field:"",title:"操作",toolbar:"#searchBtn",width:110}
+            ]]
+
+        });
+
+        table.on('tool(TTZData)',function (obj) {
+            if (obj.event === 'search') {
+                layer.open({
+                    type:1
+                    ,title:""
+                    ,closeBtn:1
+                    ,area:['80%','65%']
+                    ,id:'LAY_layuipro'
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#searchTable')
+                    ,success:function (layero,index) {
+                        table.render({
+                            elem:'#DRZJ'
+                            ,url:'/test/t206'
+                            ,page:true
+                            ,cols:[[
+                                {field:"id",title:"日期"}
+                                ,{field:"email_code",title:"庄ID"}
+                                ,{field:"title",title:"牌型"}
+                                ,{field:"content",title:"所带元宝"}
+                                ,{field:"receive_player",title:"顺门"}
+                                ,{field:"send_time",title:"点数"}
+                                ,{field:"created_time",title:"天门"}
+                                ,{field:"creator",title:"牌型"}
+                                ,{field:"creator",title:"输赢额"}
+                                ,{field:"phone",title:"地门"}
+                                ,{field:"send_time",title:"牌型"}
+                                ,{field:"created_time",title:"输赢额"}
+                                ,{field:"creator",title:"机器人输赢"}
+                                ,{field:"creator",title:"消耗"}
+                            ]]
+                        });
+                    }
+                });
+            }
+        })
+
+
+        table.render({
+            elem:'#actionScale'
+            ,url:'/test/t206'
+            ,cols:[[
+                {field:"id",title:"奖池额度比",edit:"text",minWidth:100,align:"center"}
+                ,{field:"email_code",title:"随机概率",edit:"text",minWidth:100,align:"center"}
+                ,{field:"title",title:"通赔概率",edit:"text",minWidth:100,align:"center"}
+                ,{field:"content",title:"通杀",edit:"text",minWidth:100,align:"center"}
+                ,{field:"receive_player",title:"杀一门概率",edit:"text",minWidth:100,align:"center"}
+                ,{field:"send_time",title:"杀两门概率",edit:"text",minWidth:100,align:"center"}
+
+            ]]
+
+        });
+
+        table.on('edit(actionScale)', function(obj){
+            var value = obj.value
+                ,data = obj.data
+                ,field = obj.field;
+            layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+        });
+
+        //查询
+        var active = {
+
+        };
+        $('#search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    })
+</script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    app.title = '坐标轴刻度与标签对齐';
+
+
+    $.ajax({
+        type: 'get',
+        url: '/test/t206/',
+        success: function(res) {
+            option = {
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'',
+                        type:'bar',
+                        barWidth: '45%',
+                        data:[10, 52, 200, 334, 390, 330, 220,330, 220,52, 200, 334,200, 334]
+                    }
+                ]
+            };
+            myChart.setOption(option, true);
+        }
+    });
+
+
+
+    ;
+
+</script>
+
+
+<div style="display: none" id="searchTable">
+    <table class="layui-table" id="DRZJ" ></table>
+</div>

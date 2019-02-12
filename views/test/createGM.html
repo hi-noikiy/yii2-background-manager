@@ -1,0 +1,60 @@
+<body>
+<div class="x-body">
+    <form action="" class="layui-form">
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">内容</label>
+            <div class="layui-input-inline">
+                <textarea  id="" cols="80" rows="10"  style="resize:none;" placeholder="50个中文字符，避免出现敏感字符" name="content"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left:67px!important;" >
+            <!--<label for="" class="layui-form-label"></label>-->
+            <input type="checkbox" title="以公告的形式" lay-skin="primary" lay-filter="check" id="check">
+        </div>
+        <div class="layui-form-item" style="margin-left:30px!important;">
+            <label for="" class="layui-form-label" >开始时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="startTime" name="startTime" >
+            </div>
+            <label for="" class="layui-form-label" >结束时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="terminalTime" name="terminalTime">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:100%;">
+            <div style="position: absolute;left:40%;margin-bottom: 15px;">
+                <div class="layui-btn" lay-submit="" lay-filter="submit">确认</div>
+                <div class="layui-btn" type="reset">重置</div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(['laydate','form'],function () {
+        var laydate = layui.laydate;
+        laydate.render({elem:'#startTime',type: 'datetime'});
+        laydate.render({elem:'#terminalTime',type: 'datetime'});
+        var form = layui.form;
+        var AnnouncementForm;
+        form.on('submit(submit)',function (data) {
+            $('#check').next().hasClass("layui-form-checked")? AnnouncementForm=1: AnnouncementForm=0;
+            $.ajax({
+                type:"POST"
+                ,url:'/marquee/gm-create'
+                ,data:{
+                    'content':data.field.content,
+                    'start_time':data.field.startTime,
+                    'end_time':data.field.terminalTime,
+                    'is_notice':AnnouncementForm
+                }
+                ,success:function () {
+                    console.log("成功");
+                }
+                ,error:function () {
+                    console.log("失败");
+                }
+            })
+        });
+    })
+</script>
+</body>

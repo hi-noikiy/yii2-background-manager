@@ -1,0 +1,304 @@
+<style type="text/css">
+     .layui-table-cell {
+        height: auto;
+        line-height: 20px;
+        padding: 0 10px;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        box-sizing: border-box;
+    }
+
+</style>
+<body>
+<div class="x-body">
+    <div class="list1">
+        <h2 style="text-align: center;color: #666666;">每日运营统计</h2>
+        <div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="startTime" name="start" placeholder="开始日期">
+            </div>
+
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="endTime" name="end" placeholder="结束日期">
+            </div>
+            <button class="layui-btn search" data-type="search">查询</button>
+        </div>
+        <table id="dailyOperStat" class="layui-table"  lay-filter="sort"></table>
+    </div>
+    <hr>
+    <div class="list2">
+        <h2 style="text-align: center;color: #666666;">每日用户信息</h2>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <select name="gameName" id="game" >
+                        <option value="0">麻将</option>
+                        <option value="1">三张</option>
+                        <option value="2">跑得快</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="startTime2" name="start" placeholder="开始日期">
+                </div>
+
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="endTime2" name="end" placeholder="结束日期">
+                </div>
+                <button class="layui-btn search" data-type="search2">查询</button>
+            </div>
+        </div>
+        <table id="table2" class="layui-table" lay-filter="filter2"></table>
+    </div>
+    <hr>
+    <div class="list3">
+        <h2 style="text-align: center;color: #666666;">每日元宝信息</h2>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="startTime3" name="start" placeholder="开始日期">
+                </div>
+
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="endTime3" name="end" placeholder="结束日期">
+                </div>
+                <button class="layui-btn search" data-type="search3" >查询</button>
+            </div>
+        </div>
+        <table id="table3" class="layui-table" lay-filter="filter3"></table>
+    </div>
+    <hr>
+    <div class="list4">
+        <h2 style="text-align: center;color: #666666;">每日金币信息</h2>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="startTime4" name="start" placeholder="开始日期">
+                </div>
+
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="endTime4" name="end" placeholder="结束日期">
+                </div>
+                <button class="layui-btn search" data-type="search4">查询</button>
+            </div>
+        </div>
+        <table id="table4" class="layui-table" lay-filter="filter4"></table>
+    </div>
+    <hr>
+</div>
+<script>
+    //日期查询
+    layui.use('laydate',function(){
+        var laydate = layui.laydate;
+        laydate.render({elem:'#startTime'});
+        laydate.render({elem:'#endTime'});
+    });
+    layui.use('table',function () {
+        var table = layui.table;
+        //table1渲染数据
+        table.render({
+            elem:'#dailyOperStat'
+            ,url:'/test/t206'
+            ,page:true
+            ,cols:[[
+                {field  :'number',title:'日期' ,sort:true }
+                ,{field:'gameID',title:'新增注册'}
+                ,{field:'cabbageName',title:'新增登陆'}
+                ,{field:'tel',title:'次日留存'}
+                ,{field:'switch',title:'总登陆用户'}
+                ,{field:'DAU',title:'日登陆（DAU）'}
+                ,{field:'rechargeAmount',title:'充值金额(元)'}
+                ,{field:'systemIssuance ',title:'系统增发'}
+                ,{field:'consume',title:'元宝消耗'}
+                ,{field:'siltingUp',title:'元宝淤积'}
+                ,{field:'paidUsersNum',title:'付费用户数'}
+                ,{field:'ARPU',title:'ARPU'}
+                ,{field:'agentDivision',title:'代理分成（元）'}
+                ,{field:'primAgentDivi ',title:'一级代理分成(元)'}
+                ,{field:'agentCash',title:'代理提现（元）'}
+                ,{field:'noviceGift',title:'新手赠送（元宝）'}
+                ,{field:'firstGift',title:'首冲赠送（元宝）',width:102}
+            ]]
+        });
+        //table2渲染数据
+        table.render({
+            elem:'#table2'
+            ,url:'/test/t206'
+            ,page:true
+            ,cols:[[
+                {field  :'date',title:'日期' ,sort:true }
+                ,{field:'increasedRegister ',title:'新增注册'}
+                ,{field:'increasedLogin',title:'新增登陆'}
+                ,{field:'cumulativeActivity ',title:'累计活跃'}
+                ,{field:'switch',title:'流失用户'}
+                ,{field:'useDuration ',title:'使用时长'}
+                ,{field:'startNum',title:'启动次数'}
+                ,{field:'payingUser ',title:'付费用户'}
+                ,{field:'ARPU',title:'ARPU'}
+                ,{field:'nextDayRemains',title:'次日存留'}
+                ,{field:'twoDay',title:'二日'}
+                ,{field:'threeDay',title:'三日'}
+                ,{field:'fourDay',title:'四日'}
+                ,{field:'fiveDay ',title:'五日'}
+                ,{field:'sixDay',title:'六日'}
+                ,{field:'sevenDay',title:'七日'}
+                ,{field:'fourteen',title:'十四日'}
+                ,{field:'thirtyDay',title:'三十日'}
+            ]]
+        });
+        //table3渲染数据
+        table.render({
+            elem:'#table3'
+            ,url:'/test/t206'
+            ,page:true
+            ,cols:[[
+                {field  :'date',title:'日期' ,sort:true }
+                ,{field:'currentDeposition ',title:'当前游戏内淤积'}
+                ,{field:'systemIssuance',title:'系统增发'}
+                ,{field:'YBconsume',title:'元宝消耗'}
+                ,{field:'maximumConsumption',title:'最高消耗游戏'}
+                ,{field:'currentUserDeposition',title:'新增用户淤积'}
+                ,{field:'banksNumber',title:'钱庄数量'}
+                ,{field:'depositionYB ',title:'钱庄淤积元宝'}
+                ,{field:'consume',title:'代理分层（元）'}
+                ,{field:'agentProfit',title:'以及代理分层'}
+                ,{field:'agentWithdrawCash',title:'代理提现'}
+            ]]
+        });
+        //table4渲染数据
+        table.render({
+            elem:'#table4'
+            ,url:'/test/t206'
+            ,page:true
+            ,cols:[[
+                {field  :'date',title:'日期' ,sort:true }
+                ,{field:'currentDeposition ',title:'当前游戏内淤积'}
+                ,{field:'systemIssuance',title:'系统每日增发'}
+                ,{field:'systemConsume',title:'系统消耗'}
+                ,{field  :'robotPlayback',title:'机器人回放' }
+                ,{field:'robotPutinto',title:'机器人投入'}
+                ,{field:'lessthanTen',title:'<10k(人)'}
+                ,{field:'morethanTen',title:'>10k(人)'}
+                ,{field:'morethanHundred',title:'>100k(人)'}
+                ,{field:'morethanOneM',title:'>1M(人)'}
+                ,{field:'bestPlayback',title:'最佳回放'}
+                ,{field:'exchangeQuota ',title:'元宝兑换金币额度'}
+            ]]
+        });
+
+        //table1排序
+        table.on('sort(sort)', function(obj){
+            table.reload('dailyOperStat', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        //table2排序
+        table.on('sort(filter2)', function(obj){
+            table.reload('dailyOperStat', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        //table3排序
+        table.on('sort(filter3)', function(obj){
+            table.reload('dailyOperStat', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        //table4排序
+        table.on('sort(filter4)', function(obj){
+            table.reload('dailyOperStat', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        var active = {
+            //table1查询
+            search:function () {
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
+                table.reload('dailyOperStat',{
+                    url:'/test/t201/'
+                    ,page:{
+                        curr:1
+                    }
+                    ,where:{
+                        startTime:startTime
+                        ,endTime:endTime
+                    }
+                })
+            },
+            //table2查询
+            search2:function () {
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
+                var game = $('#game').val();
+                table.reload('dailyOperStat',{
+                    url:'/test/t201/'
+                    ,page:{
+                        curr:1
+                    }
+                    ,where:{
+                        startTime:startTime
+                        ,endTime:endTime
+                        ,game:game
+                    }
+                })
+            },
+            //table3查询
+            search3:function () {
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
+                table.reload('dailyOperStat',{
+                    url:'/test/t201/'
+                    ,page:{
+                        curr:1
+                    }
+                    ,where:{
+                        startTime:startTime
+                        ,endTime:endTime
+                    }
+                })
+            },
+            //table4查询
+            search4:function () {
+                var startTime = $('#startTime').val();
+                var endTime = $('#endTime').val();
+                table.reload('dailyOperStat',{
+                    url:'/test/t201/'
+                    ,page:{
+                        curr:1
+                    }
+                    ,where:{
+                        startTime:startTime
+                        ,endTime:endTime
+                    }
+                })
+            }
+        };
+        $('.search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    })
+</script>
+</body>

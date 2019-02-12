@@ -1,0 +1,46 @@
+<ul class="layui-tab-title">
+    <li class="layui-this">玩家消息</li>
+    <li>GM信息</li>
+</ul>
+<div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">
+        <div  class="layui-form" style="float:left">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" placeholder="用户ID" id="ID">
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" placeholder="开始日期" id="startTime">
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" placeholder="结束日期" id="endTime">
+                </div>
+                <button class="layui-btn"  data-type="reload" id="search">查询</button>
+            </div>
+        </div>
+        <div style="float:right">
+            <button class="layui-btn layui-btn-warm">黑名单</button>
+            <button class="layui-btn">白名单</button>
+        </div>
+        <table class="layui-table" id="playerInfo" lay-filter="playerInfo"></table>
+    </div>
+    <div class="layui-tab-item">
+        <ul class="layui-tab-title" style="float:right;">
+            <li>全部</li>
+            <li>未播</li>
+            <li>已播</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                1
+                <table class="layui-table" id="allGMList" lay-filter="table1"></table>
+            </div>
+            <div class="layui-tab-item">2
+                <table class="layui-table" id="notPlayedGMList" lay-filter="table2"></table>
+            </div>
+            <div class="layui-tab-item">3
+                <table class="layui-table" id="playedGMList" lay-filter="table3"></table>
+            </div>
+        </div>
+    </div>
+</div>

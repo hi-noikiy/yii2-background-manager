@@ -1,0 +1,194 @@
+<body>
+<div class="x-body">
+    <div class="layui-col-xs10 layui-col-xs-offset11">
+        <button class="layui-btn" data-method="add" id="add">新增货币</button>
+    </div>
+    <table class="layui-table" id="moneyPrice"  lay-filter="table1"></table>
+</div>
+<script type="text/html" id="barmoneyPrice">
+    <div id="layerDemo">
+        <button class="layui-btn layui-btn-xs" lay-event="revise">修改</button>
+        <button class="layui-btn layui-btn-xs layui-btn-danger"  lay-event="del" >删除</button>
+    </div>
+</script>
+<script>
+    layui.use(['table','layer','form'],function () {
+        var table = layui.table;
+        var $=layui.jquery,layer=layui.layer;
+        var form = layui.form;
+        //table数据渲染
+        table.render({
+            elem:"#moneyPrice"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+                {type:'currencyID',title:"货币ID"}
+                ,{field:'obj',title:"所属对象",sort:true}
+                ,{field:'currencyNum',title:"货币数量"}
+                ,{field:'currencyPrice',title:"货币价格"}
+                ,{field:'giftsNum',title:"赠送数量"}
+                ,{field:'currencyType',title:"货币类型"}
+                ,{field:'',title:"操作",toolbar:'#barmoneyPrice'}
+            ]]
+        });
+        //修改删除功能
+        table.on('tool(table1)',function (obj) {
+            var data = obj.data;
+            if(obj.event==='revise'){
+                //获取原数据
+                var originalCurrencyID = data.currencyID;
+                var originalCurrencyNum = data.currencyNum;
+                var originalCurrencyPrice = data.currencyPrice;
+                var originalGiftsNum = data.giftsNum;
+                var originalObj = data.obj;
+                var originalCurrencyType = data.currencyType;
+                layer.open({
+                    type:1
+                    ,title:'操作'
+                    ,closeBtn:1
+                    ,area:['60%','60%']
+                    ,shade:0.5
+                    ,id:"LAY_layuipro"
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#revisecurrency')
+                    // ,content:'revisecurrency'
+                    ,success:function (layero,index) {
+                        $('#currencyID').val(originalCurrencyID);
+                        $('#currencyNum').val(originalCurrencyNum);
+                        $('#currencyPrice').val(originalCurrencyPrice);
+                        $('#giftsNum').val(originalGiftsNum);
+                        $('#Obj').val(originalObj);
+                        $('#currencyType').val(originalCurrencyType);
+                    }
+                })
+            }else if(obj.event==='del'){
+
+                layer.open({
+                    type:1
+                    ,title:'删除'
+                    ,closeBtn:1
+                    ,area:['30%','30%']
+                    //,shade:0.5
+                    ,id:"LAY_layuipro"
+                    ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#del')
+                    ,success:function (layero,index) {
+                        $('#num').html(data.currencyID);
+                    }
+                })
+            }
+        })
+//新增货币功能
+        var active = {
+            add:function(){
+                layer.open({
+                    type:2
+                    ,title:'新增'
+                    ,closeBtn:1
+                    ,area:['60%','60%']
+                    //,shade:0.5
+                    ,id:"LAY_layuipro"
+                    // ,btn:['确认','取消']
+                    ,btnAlign:'cwww'
+                    ,moveType:1
+                    ,content:'addcurrency'
+                })
+            }
+        };
+        $('#add').on('click',function () {
+            var othis = $(this),method = othis.data('method');
+            active[method]?active[method].call(this.othis):'';
+        });
+//排序
+        table.on('sort(table1)', function(obj){
+            table.reload('moneyPrice', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+    })
+</script>
+</body>
+
+
+<!--货币价格的修改弹出层-->
+<style>
+  .btn{
+      border-color:#1E9FFF;
+      background-color:#1E9FFF;
+      color: #ffffff;
+      height:28px;
+      weight:28px;
+      padding:0 15px;
+      border:1px solid #1E9FFF;
+      margin:5px;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+  }
+</style>
+<div class="x-body" id="revisecurrency" style="display: none">
+    <form action="" class="layui-form" style="margin-top:50px;" lay-filter="reviseCurrencyForm">
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label" style="width: 20%;">货币ID</label>
+            <div class="layui-input-inline" style="width: 60%;">
+                <input type="text" class="layui-input" name="currencyID" readonly id="currencyID">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label" style="width: 20%;">货币数量</label>
+            <div class="layui-input-inline" style="width: 60%;">
+                <input type="text" class="layui-input" lay-verify="required" id="currencyNum" name="currencyNum">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label" style="width: 20%;">货币价格</label>
+            <div class="layui-input-inline" style="width: 60%;">
+                <input type="text" class="layui-input" lay-verify="required" name="currencyPrice" id="currencyPrice">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label" style="width: 20%;">赠送数量</label>
+            <div class="layui-input-inline" style="width: 60%;">
+                <input type="text" class="layui-input" lay-verify="required" name="giftsNum" id="giftsNum">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label" style="width: 20%;">面向对象</label>
+            <div class="layui-input-inline" style="width: 60%;">
+                <select name="Obj" id="Obj" >
+                    <option value="">玩家</option>
+                    <option value="">币商</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label" style="width: 20%;">货币类型</label>
+            <div class="layui-input-inline" style="width: 60%;">
+                <select name="currencyType" id="currencyType">
+                    <option value="0">元宝</option>
+                    <option value="1">钻石</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:100%;">
+            <div style="position: absolute;left:40%;margin-bottom: 15px;">
+                <button class="btn" lay-submit="" lay-filter="submit">确认</button>
+                <button class="btn" type="reset">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--货币价格的删除弹出层-->
+<div class="x-body" id="del"  style="display: none;text-align: center;padding-top:10%;">
+    <h2 class="center">确认删除ID为<span id="num"></span>的货币吗？</h2>
+</div>

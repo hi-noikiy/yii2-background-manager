@@ -1,0 +1,97 @@
+<body>
+<div class="x-body">
+    <div action="" class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <select name=""  id="gameName">
+                    <option value="">游戏名称</option>
+                    <option value="1">炸金花</option>
+                    <option value="2">牛牛</option>
+                    <option value="3">三公</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="玩家ID" id="ID">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="查询日期" id="date">
+            </div>
+            <button class="layui-btn" data-method="search" id="search" data-type="search" id="search">查询</button>
+        </div>
+    </div>
+    <table class="layui-table " id="umberllaActivePlayer" lay-filter="sort"></table>
+</div>
+<script>
+    //日期查询
+    // layui.use('laydate',function(){
+    //     var laydate = layui.laydate;
+    //     laydate.render({
+    //         elem:'#date'
+    //     });
+    // });
+    layui.use(['table','layer','laydate'],function () {
+        var laydate = layui.laydate;
+        laydate.render({elem:'#date'});
+        var table = layui.table;
+        table.render({
+            elem:"#umberllaActivePlayer"
+            ,url:"/test/t206"
+            ,page:true
+            // ,id:"rechargeReload"
+            ,cols:[[
+                {field:"number",title:'序号',sort:true}
+                ,{field:"date",title:'当前日期'}
+                ,{field:"playerID",title:'玩家ID'}
+                ,{field:"playerNick",title:'玩家昵称'}
+                ,{field:"higherLevelID",title:'上级代理ID'}
+                ,{field:"higherLevelNick",title:'上级代理昵称'}
+                ,{field:"currentYB",title:'结余元宝'}
+                ,{field:"todayConsumption",title:'今日消耗'}
+                ,{field:"todayRecharge ",title:'今日充值金额'}
+                ,{field:"todayRechargeTimes ",title:'今日充值次数'}
+                ,{field:"registrationTime",title:'注册时间'}
+                ,{field:"lastLoginTime",title:'最后登录时间'}
+                ,{field:"morrowLogin",title:'次日是否登录'}
+            ]]
+        });
+
+        //排序
+        table.on('sort(sort)', function(obj){
+            table.reload('umberllaActivePlayer', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        //查询
+        var $ = layui.$, active = {
+            search: function(){
+                var userID = $('#ID').val();
+                var gameName = $('#gameName').val();
+                var date = $('#date').val();
+
+                //执行重载
+                table.reload('umberllaActivePlayer', {
+                    url:'/test/t204'
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        id: userID,
+                        gameName: gameName,
+                        date: date
+                    }
+                });
+            }
+        };
+        $('#search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    })
+</script>
+</body>
+

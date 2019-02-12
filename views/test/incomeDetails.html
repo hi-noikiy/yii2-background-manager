@@ -1,0 +1,73 @@
+<!--<body>-->
+<!--<div class="x-body">-->
+        <!--<div class="layui-form-item">-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input type="text" class="layui-input" placeholder="开始时间" id="startTime">-->
+            <!--</div>-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input type="text" class="layui-input" placeholder="结束时间" id="endTime">-->
+            <!--</div>-->
+            <!--<button class="layui-btn"  data-type="reload" id="search">查询</button>-->
+        <!--</div>-->
+    <!--<table class="layui-table" id="incomeDetails"></table>-->
+<!--</div>-->
+
+<!--<script>-->
+    <!--layui.use(['table','layer','laydate'],function () {-->
+        <!--//日期查询-->
+        <!--var laydate = layui.laydate;-->
+        <!--laydate.render({elem:'#startTime'});-->
+        <!--laydate.render({elem:'#endTime'});-->
+        <!--//表格渲染-->
+        <!--var table = layui.table;-->
+        <!--table.render({-->
+            <!--elem:"#incomeDetails"-->
+            <!--,url:"/test/t206"-->
+            <!--,page:true-->
+            <!--,cols:[[-->
+                <!--{field:"date",title:'日期',sort:true}-->
+                <!--,{field:"income",title:'收益详情'}-->
+            <!--]]-->
+            <!--// ,id: 'logReload'-->
+
+        <!--});-->
+        <!--//查询-->
+        <!--var $ = layui.$, active = {-->
+            <!--reload: function(){-->
+                <!--var startTime = $('#startTime');-->
+                <!--var endTime = $('#endTime');-->
+
+                <!--//执行重载-->
+                <!--table.reload('incomeDetails', {-->
+                    <!--url:'/test/t204'-->
+                    <!--,page: {-->
+                        <!--curr: 1 //重新从第 1 页开始-->
+                    <!--}-->
+                    <!--,where: {-->
+                        <!--key: {-->
+                            <!--start_time: startTime.val(),-->
+                            <!--end_time: endTime.val()-->
+                        <!--}-->
+                    <!--}-->
+                <!--});-->
+            <!--}-->
+        <!--};-->
+        <!--//查询按钮绑定事件-->
+        <!--$('#search').on('click', function(){-->
+            <!--var type = $(this).data('type');-->
+            <!--active[type] ? active[type].call(this) : '';-->
+        <!--});-->
+        <!--//排序-->
+        <!--// table.on('sort(sort)', function(obj){-->
+        <!--//     table.reload('logTable', {-->
+        <!--//         url:'/test/t205',-->
+        <!--//         initSort: obj-->
+        <!--//         ,where: {-->
+        <!--//             field: obj.field-->
+        <!--//             ,order: obj.type-->
+        <!--//         }-->
+        <!--//     });-->
+        <!--// });-->
+    <!--})-->
+<!--</script>-->
+<!--</body>-->

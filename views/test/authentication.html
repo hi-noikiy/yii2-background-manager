@@ -1,0 +1,53 @@
+<!-------玩家实名认证------->
+<body>
+<div class="x-body">
+    <div class="layui-row">
+        <div class="layui-col-xs3">
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">认证日期</label>
+
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="Date">
+            </div>
+            </div>
+        </div>
+        <div class="layui-col-xs4">
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="searchInput">
+            </div>
+            <button class="layui-btn">查询</button>
+        </div>
+        <div class="layui-col-xs1 layui-col-sm-offset3">
+            <button class="layui-btn">导出</button>
+        </div>
+    </div>
+    <table id="authentication" class="layui-table" lay-filter="authentication"></table>
+</div>
+</body>
+<script>
+    layui.use(['table','form','laydate'],function () {
+        var table = layui.table;
+        var form = layui.form;
+        var laydate = layui.laydate;
+        laydate.render({elem:'#Date'})
+
+        table.render({
+            elem:'#authentication'
+            ,url:'/test/t206'
+            ,page:true
+            ,cols:[[
+                {field:"id",title:"序号"}
+                ,{field:"email_code",title:"认证日期"}
+                ,{field:"title",title:"注册日期"}
+                ,{field:"content",title:"玩家ID"}
+                ,{field:"receive_player",title:"玩家昵称"}
+                ,{field:"send_time",title:"手机号"}
+                ,{field:"created_time",title:"微信"}
+                ,{field:"creator",title:"IP"}
+                ,{field:"creator",title:"地址"}
+                ,{field:"phone",title:"设备信息"}
+
+            ]]
+        });
+    })
+</script>

@@ -1,0 +1,414 @@
+
+<body>
+<div class="x-body layui-anim layui-anim-up">
+    <fieldset class="layui-elem-field">
+        <legend>数据统计</legend>
+        <div class="layui-field-box">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <div class="layui-carousel x-admin-carousel x-admin-backlog" lay-anim="" lay-indicator="inside" lay-arrow="none" style="width: 100%; height: 90px;">
+                            <ul class="layui-row layui-col-space10 layui-this ">
+                                <li class="layui-col-md3">
+                                    <div class="x-admin-backlog-body">
+                                        <div><span>RMB:<p style="display: inline-block"><cite>0.02</cite></p>元</span></div>
+                                        <div>今日: 充值额度</div>
+                                    </div>
+
+                                </li>
+                                <li class="layui-col-md3">
+                                    <div class="x-admin-backlog-body">
+                                        <p><cite>2225</cite></p>
+                                        <p>今日: 元宝消耗</p>
+                                    </div>
+                                </li>
+                                <li class="layui-col-md3">
+                                    <div class="x-admin-backlog-body">
+                                        <p><cite>25987</cite></p>
+                                        <div>今日: 元宝淤积</div>
+                                    </div>
+                                </li>
+                                <li class="layui-col-md3">
+                                    <div class="x-admin-backlog-body">
+                                        <div><span>RMB:<p style="display: inline-block"><cite>0.02</cite></p>元</span></div>
+                                        <div>今日: 提现额度</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="layui-tab">
+        <ul class="layui-tab-title tabs">
+            <!--<li class="layui-this">充值额度</li>-->
+            <li id="li2" class="layui-this">新增用户数</li>
+            <li id="li3">活跃用户</li>
+            <li id="li4">充值额度</li>
+        </ul>
+        <!--<div class="layui-tab-content" id="tabcontent">-->
+        <!--<div class="tab layui-tab-item   layui-show ">-->
+        <!--<div id="echart0" style="width:20%;height:400px; float:left"></div>-->
+        <!--<div id="echart1" style="width:80%; height:400px;float:right;">-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="tab layui-tab-item" style="width:1600px;" >-->
+        <!--<div id="echart2" style="width:20%;height:400px; float:left" id="main-line"></div>-->
+        <!--</div>-->
+        <!--<div class="tab layui-tab-item">-->
+        <!--<div id="echart3" style="width:100%;height:400px;"></div>-->
+        <!--</div>-->
+        <!--<div class="tab layui-tab-item ">-->
+        <!--<div id="echart4" style="width:100%;height:400px;"></div>-->
+        <!--</div>-->
+        <div id="charts" style="width:100%;height:400px;">
+            <div id="main1" class="layui-col-sm4" style="width:25%;height:400px;"></div>
+            <div id="main2" class="layui-col-sm8" style="width:65%;height:400px;"></div>
+            <div id="main" style="width:90%;height:400px;"></div>
+        </div>
+        <!--<div style="width:90%;" class="">-->
+        <!--<div id="main1" class="layui-col-sm4"></div><div id="main2" class="layui-col-sm8" style="width:60%;height:400px;"></div>-->
+        <!--</div>-->
+
+    </div>
+</div>
+</div>
+<script src="//cdn.bootcss.com/echarts/3.3.2/echarts.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('main'));
+    function mychart2(url) {
+        $.ajax({
+            type: 'get',
+            url: url,
+            success: function(res) {
+                option = {
+                    xAxis: {
+                        type: 'category',
+                        data: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: [120, 200, 150, 80, 70, 110, 130,120, 200, 150, 80, 70, 110, 130,120, 200, 150, 80, 70, 110, 130,70, 110],
+                        type: 'bar'
+                    }]
+                };
+                myChart.setOption(option);
+            }
+        });
+    }
+    function mychart3(url) {
+        $.ajax({
+            type: 'get',
+            url: url,
+            success: function(res) {
+                option = {
+                    xAxis: {
+                        type: 'category',
+                        data: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    itemStyle:{
+                        normal:{color:'#7CB5EC'}
+                    },
+                    series: [{
+                        data: [120, 200, 150, 80, 70, 110, 130,120, 200, 150, 80, 70, 110, 130,120, 200, 150, 80, 70, 110, 130,70, 110],
+                        type: 'bar'
+                    }]
+                };
+                myChart.setOption(option);
+            }
+        });
+    };
+    function mychart4(url) {
+        $.ajax({
+            type: 'get',
+            url: url,
+            success: function(res) {
+                option = {
+                    xAxis: {
+                        type: 'category',
+                        data: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    itemStyle:{
+                        normal:{color:'#A5AAD9'}
+                    },
+                    series: [{
+                        data: [120, 200, 150, 80, 70, 110, 130,120, 200, 150, 80, 70, 110, 130,120, 200, 150, 80, 70, 110, 130,70, 110],
+                        type: 'bar'
+                    }]
+                };
+                myChart.setOption(option);
+            }
+        });
+    };
+
+    $(".tabs li:eq(1)").click(function () {
+        $('#main1').hide();
+        $('#main2').hide();
+        $('#main').show();
+        mychart2('/test/t201');});
+    $(".tabs li:eq(2)").click(function () {
+        $('#main1').hide();
+        $('#main2').hide();
+        $('#main').show();
+        mychart3('/test/t201');});
+    $(".tabs li:eq(3)").click(function () {
+        $('#main1').hide();
+        $('#main2').hide();
+        $('#main').show();
+        mychart4('/test/t201');});
+
+    // var myChart0 = echarts.init(document.getElementById('main1'));
+    var myChart1 = echarts.init(document.getElementById('main2'));
+    function mychart0(url) {
+        $.ajax({
+            type: 'get',
+            url: url,
+            success: function(res) {
+                option = {
+                    tooltip : {
+                        formatter: "{a} <br/>{c} {b}"
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    series : [
+                        {
+                            name: '速度',
+                            type: 'gauge',
+                            z: 3,
+                            min: 0,
+                            max: 220,
+                            splitNumber: 11,
+                            radius: '50%',
+                            axisLine: {            // 坐标轴线
+                                lineStyle: {       // 属性lineStyle控制线条样式
+                                    width: 10
+                                }
+                            },
+                            axisTick: {            // 坐标轴小标记
+                                length: 15,        // 属性length控制线长
+                                lineStyle: {       // 属性lineStyle控制线条样式
+                                    color: 'auto'
+                                }
+                            },
+                            splitLine: {           // 分隔线
+                                length: 20,         // 属性length控制线长
+                                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                                    color: 'auto'
+                                }
+                            },
+                            title : {
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    fontWeight: 'bolder',
+                                    fontSize: 20,
+                                    fontStyle: 'italic'
+                                }
+                            },
+                            detail : {
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    fontWeight: 'bolder'
+                                }
+                            },
+                            data:[{value: 40, name: ' '}]
+                        },
+
+                    ]
+                };
+
+                myChart0.setOption(option);
+            }
+        });
+    }
+    function mychart1(url) {
+        $.ajax({
+            type: 'get',
+            url: url,
+            success: function(res) {
+                var option = {
+                    title: {
+                        text: '在线人数统计图',
+                        subtext:'非规律性时间内的变化'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        // verticalAlign:right
+                    },
+                    legend: {
+                        data:['今日在线人数','昨日在线人数','前日在线人数','四日在线人数',
+                            '五日在线人数','六日在线人数','七日在线人数']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['00:00','00:20','00:40','01:00','01:20','01:40','02:00',
+                            '02:20','02:40','03:00','03:20','03:40','04:00', '04:20',
+                            '04:40','05:00','05:20','05:40','06:00', '06:20','06:40',
+                            '07:00','07:20','07:40','08:00', '08:20','08:40','09:00',
+                            '09:20','09:40','10:00', '11:20','11:40','12:00','12:20',
+                            '12:40','13:00', '13:20','13:40','14:00','14:20','14:40',
+                            '15:00', '15:20','15:40','16:00','16:20','16:40','17:00',
+                            '17:20','17:40','18:00','18:20','18:40','19:00', '19:20',
+                            '19:40','20:00','21:20','21:40','22:00', '21:20','21:40',
+                            '22:00','22:20','22:40','23:00', '23:20','23:40',
+                        ]
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name:'今日在线人数',
+                            type:'line',
+                            stack: '总量',
+                            data:[120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101, 134, 90, 230, 210,
+                                120, 132, 101, 134, 90, 230,
+                            ]
+                        },
+                        {
+                            name:'昨日在线人数',
+                            type:'line',
+                            stack: '总量',
+                            data:[220, 182, 191, 234, 290, 330, 310,
+                                220, 182, 191, 234, 290, 330, 310,
+                                220, 182, 191, 234, 290, 330, 310,
+                                220, 182, 191, 234, 290, 330, 310,
+                                220, 182, 191, 234, 290, 330, 310,
+                                220, 182, 191, 234, 290, 330, 310,
+                                220, 182, 191, 234, 290, 330, 310,
+                                220, 182, 191, 234, 290, 330, 310,
+                                220, 182, 191, 234, 290, 330, 310,
+                                220, 182, 191, 234, 290, 330,
+                            ]
+                        },
+                        {
+                            name:'前日在线人数',
+                            type:'line',
+                            stack: '总量',
+                            data:[150, 232, 201, 154, 190, 330, 410,
+                                150, 232, 201, 154, 190, 330, 410,
+                                150, 232, 201, 154, 190, 330, 410,
+                                150, 232, 201, 154, 190, 330, 410,
+                                150, 232, 201, 154, 190, 330, 410,
+                                150, 232, 201, 154, 190, 330, 410,
+                                150, 232, 201, 154, 190, 330, 410,
+                                150, 232, 201, 154, 190, 330, 410,
+                                150, 232, 201, 154, 190, 330, 410,
+                                150, 232, 201, 154, 190, 330
+                            ]
+                        },
+                        {
+                            name:'四日在线人数',
+                            type:'line',
+                            stack: '总量',
+                            data:[320, 332, 301, 334, 390, 330, 320,
+                                320, 332, 301, 334, 390, 330, 320,
+                                320, 332, 301, 334, 390, 330, 320,
+                                320, 332, 301, 334, 390, 330, 320,
+                                320, 332, 301, 334, 390, 330, 320,
+                                320, 332, 301, 334, 390, 330, 320,
+                                320, 332, 301, 334, 390, 330, 320,
+                                320, 332, 301, 334, 390, 330, 320,
+                                320, 332, 301, 334, 390, 330, 320,
+                                320, 332, 301, 334, 390, 330
+                            ]
+                        },
+                        {
+                            name:'五日在线人数',
+                            type:'line',
+                            stack: '总量',
+                            data:[820, 932, 901, 934, 1290, 1330, 1320,
+                                320, 332, 301, 334, 390, 330, 320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330]
+                        },
+                        {
+                            name:'六日在线人数',
+                            type:'line',
+                            stack: '总量',
+                            data:[820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                201, 154, 190, 330, 410, 150, 232,
+                                820, 932, 901, 934, 1290, 1330]
+                        },
+                        {
+                            name:'七日在线人数',
+                            type:'line',
+                            stack: '总量',
+                            data:[820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                820, 932, 901, 934, 1290, 1330, 1320,
+                                201, 154, 190, 330, 410,
+                                150, 232,
+                                820, 932, 901, 934, 1290, 1330]
+                        }
+                    ]
+                };
+                myChart1.setOption(option);
+            }
+        });
+    }
+    // mychart0('/test/t201');
+    mychart1('/test/t201');
+    $(".tabs li:first").click(function () {
+        $('#main').hide();
+        $('#main1').show();
+        $('#main2').show();
+        // mychart0('/test/t201');
+        mychart1('/test/t201');
+    })
+
+</script>
+
+</body>
+</html>

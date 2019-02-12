@@ -1,0 +1,309 @@
+<style type="text/css">
+    /*.layui-table-cell {*/
+    /*height: auto;*/
+    /*line-height: 20px;*/
+    /*padding: 0 10px;*/
+    /*position: relative;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+    /*white-space: normal;*/
+    /*box-sizing: border-box;*/
+    /*}*/
+
+</style>
+<body>
+<div class="x-body">
+    <div class="layui-col-xs11 layui-col-xs-offset10">
+        <a href="createmail" class="layui-btn">创建邮件</a>
+        <button class="layui-btn" onclick="x_admin_show('历史信息库','./historyinfo',1000,600)">历史信息库</button>
+    </div>
+    <table class="layui-table" id="mailListTable" lay-filter="sort"></table>
+</div>
+<script type="text/html" id="barMailList">
+    <div>
+        <a  class="layui-btn layui-btn-xs" lay-event="revise" >修改</a>
+        <!--<button class="layui-btn layui-btn-xs" lay-event="revise">修改</button>-->
+        <button class="layui-btn layui-btn-xs" lay-event="del">删除</button>
+    </div>
+</script>
+<script>
+    layui.use(['table','form'],function () {
+        var table = layui.table;
+        var form = layui.form;
+        var $ = layui.$;
+        //table渲染数据
+        table.render({
+            elem:"#mailListTable"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+                {field:"index",title:"序号",sort:true}
+                ,{field:"number",title:"序列号"}
+                ,{field:"title",title:"标题",width:110}
+                ,{field:"content",title:"内容",width:110}
+                ,{field:"appendix",title:"是否带附件"}
+                ,{field:"publishObject",title:"发布对象"}
+                ,{field:"sendDate",title:"发送时间"}
+                ,{field:"status",title:"状态"}
+                ,{field:"issuer",title:"发布人"}
+                ,{field:"auditing",title:"审核"}
+                ,{field:"",title:"操作",toolbar:"#barMailList"}
+            ]]
+            ,done:function (res, curr, count) {
+                // console.log(res.data);
+                console.log($('tr'))
+
+                var data = res.data;
+                for (var i=0;i<data.length;i++){
+                    // debugger
+                    var a = data[i].status;
+                    var trs,tri;
+                    if (a == "准备发送"){
+                        trs = $('tr');
+                        tri = trs[i+1];
+                        $(tri).css('backgroundColor',"#FFB800");
+                    }else if(a === "已发送"){
+                        trs = $('tr');
+                        tri = trs[i+1];
+                        var tds = $(tri).children();
+                        $(tds[7]).css("backgroundColor","#84D945");
+                    }
+                }
+            }
+        });
+
+        //table排序功能
+        table.on('sort(sort)', function(obj){
+            table.reload('mailListTable', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+
+        //table监听事件，监听操作按钮
+        table.on('tool(sort)',function (obj) {
+            var data = obj.data;
+            var a = data.ID;
+            console.log(a);
+
+
+            switch (obj.event){
+                case 'revise':
+                    layer.open({
+                        type:2
+                        ,title:false
+                        ,closeBtn:1
+                        ,area:['80%','80%']
+                        ,id:'LAY_layuipro'
+                        // ,btn:['确认','取消']
+                        ,btnAlign:'c'
+                        ,moveType:1
+                        ,content:'createmail'
+                        ,success:function (layero,index) {
+                            var frameId = "#" + layero.find('iframe')[0].id;
+                            // debugger
+                            //修改页面渲染发布对象数据
+                            var optionsPubObj = $(frameId).contents().find('#publishObject').next().children('dl').children('dd');
+                            console.log(optionsPubObj[1]);
+                            for (var i=0;i<optionsPubObj.length;i++){
+                                if (data.publishObject === optionsPubObj[i].innerHTML) {
+                                    $(optionsPubObj[i]).addClass("layui-this");
+                                    // console.log(options[i]);
+                                    $(optionsPubObj[i]).click();
+                                }
+
+                                if (data.publishObject ==="多用户"||data.publishObject ==="单用户"){
+                                    $(frameId).contents().find('#objectID').css("display",'')
+                                }
+                            }
+
+                            var optionsAnno = $(frameId).contents().find('#announcement').next().children('dl').children('dd');
+                            for (var i=0;i<optionsAnno.length;i++){
+                                if (data.announcement === optionsAnno[i].innerHTML){
+                                    $(optionsAnno[i]).addClass("layui-this");
+                                    $(optionsAnno[i]).click();
+                                }
+                                if (data.announcement === "是"){
+                                    $(frameId).contents().find('#publicDate1').css("display","")
+                                }
+                            }
+
+                            $(frameId).contents().find('#title1').val(data.title);
+                            $(frameId).contents().find('#objectID').val(data.objectID1);
+                            $(frameId).contents().find('#contentText').val(data.content);
+                            $(frameId).contents().find('#sendDate1').val(data.sendDate);
+                            $(frameId).contents().find('#announcement').val(data.announcement1);
+                            $(frameId).contents().find('#publicDate1').val(data.publicDate);
+
+                            //渲染附件数据
+                            var xfile = data.content11+"×"+data.num11;
+                            var parent1 = $(frameId).contents().find("#content");
+                            function createDom2(xfile,parent){
+                                //debugger
+                                var frag=document.createDocumentFragment();
+                                var span = document.createElement('span');
+                                var i = document.createElement('i');
+                                span.innerHTML= xfile;
+                                $(span).css({"display":"inline-block","backgroundColor":"#e1e1e1","padding":"5px 10px","margin-left":5,"borderRadius":5,"margin":5});
+                                $(i).css({"color": "#E5E5E5;","font-size":12,"position":"relative","left":-12,"top":-13,"cursor":"pointer"});
+                                $(i).addClass("layui-icon layui-icon-close");
+                                frag.append(span);
+                                // frag.appendChild(btn);
+                                frag.append(i);
+                                parent.append(frag);
+                            }
+                            createDom2(xfile,parent1);
+
+                           var spans = $(frameId).contents().find("#content").children('span');
+                           console.log(spans);
+                           var giveArr = [];
+                           var reg = /^(.+?)\×/;
+                           for (var i = 0;i<spans.length;i++){
+
+                               var give = spans[i].innerHTML.split(reg);
+                               giveArr.push([give[1],give[2]]);
+                           }
+
+                            $(frameId).contents().find('#addFileBtn').click(function () {
+                                var parent2 = $(frameId).contents().find('#addContent');
+                                var seleoptions =  $(frameId).contents().find('#type1').next().children('dl').children('dd');
+                                for (var i=0;i<giveArr.length;i++){
+                                    var xfilei = giveArr[i][0]+"×"+giveArr[i][1];
+                                    console.log(giveArr[i][0]);
+                                    var typei = giveArr[i][0]
+                                    setTimeout(function () {
+                                        createDom2(xfilei,parent2);
+                                        console.log(typei);
+                                        seleoptions.each(function () {
+                                            if($(this).html()=== typei){
+                                                console.log(typei);
+                                                $(this).addClass("layui-disabled");
+                                            }
+                                        })
+                                    },100);
+                                }
+                            });
+                            $(frameId).contents().find('#content').on('click','i',function () {
+                                // var child = $('#addContent>*');
+debugger
+                                var cont1 = $(this).prev().html();
+                                //console.log(cont1);
+                                var reg1 = /^(.+?)\×/;
+                                var type1 = cont1.match(reg1)[1];
+
+                                $(this).prev().remove();
+                                $(this).remove();
+
+                                for (var z=0;z<giveArr.length;z++){
+                                    //console.log(contentArr,z,type,contentArr[z].typeT);
+                                    // debugger
+
+                                    if (type1 === giveArr[z].typeT){
+                                        giveArr.splice(z,1);
+                                    }
+                                }
+                                console.log(giveArr);
+
+                            });
+
+
+
+
+
+
+                            // // debugger
+                            $.ajax({
+                                    url:'/test/t206',
+                                    data:{
+                                        index:obj.data.number
+                                    },
+                                    success:function () {
+
+                                    },
+                                    error:function () {
+
+                                    }
+                                }
+
+                            )
+                        }
+                        ,yes:function (index,layero) {
+                            //向后端发送将要删除的跑马灯ID
+                            $.ajax({
+                                url:'',
+                                type:'POST',
+                                data:{
+                                    'id': id
+                                },
+                                success:function (data) {
+                                    console.log("成功");
+                                    //删除成功后重载表格
+                                    table.reload('mailListTable', {
+                                        url:'/test/t205',
+                                    });
+                                },
+                                error:function () {
+                                    console.log("失败");
+                                }
+                            });
+                            layer.close(index);
+                        }
+                    });
+                    break;
+                case 'del':
+                    var id = obj.data.ID;
+                    layer.open({
+                        type:1
+                        ,title:false
+                        ,closeBtn:1
+                        ,area:['30%','25%']
+                        ,id:'LAY_layuipro'
+                        ,btn:['确认','取消']
+                        ,btnAlign:'c'
+                        ,moveType:1
+                        ,content:$('#del')
+                        ,success:function (layero,index) {
+                            $('#num').html(id);
+                        }
+                        ,yes:function (index,layero) {
+                            //向后端发送将要删除的跑马灯ID
+                            $.ajax({
+                                url:'',
+                                type:'POST',
+                                data:{
+                                    'id': id
+                                },
+                                success:function (data) {
+                                    console.log("成功");
+                                    //删除成功后重载表格
+                                    table.reload('mailListTable', {
+                                        url:'/test/t205',
+                                    });
+                                },
+                                error:function () {
+                                    console.log("失败");
+                                }
+                            });
+                            layer.close(index);
+                        }
+                    });
+                    break;
+            }
+        })
+    })
+</script>
+</body>
+
+<div class="x-body" id="del"  style="display: none;text-align: center;padding-top:10%;">
+    <h2 class="center">确认删除<span id="num"></span>邮件吗？</h2>
+</div>
+
+
+<style>
+    label{width: 20%!important;}
+    .body .layui-input-inline{width: 60%!important;}
+</style>

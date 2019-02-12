@@ -1,0 +1,43 @@
+#------------------------在线类------------------------#
+#实时在线、每5分钟执行一次
+*/5 * * * * /data/wwwroot/yiquan/yii online/real-online
+#在线分析
+1 4 * * * /data/wwwroot/yiquan/yii online/analysis-online
+
+
+#------------------------用户类------------------------#
+#基础用户数据
+1 5 * * * /data/wwwroot/yiquan/yii player-stat/base-info
+#留存统计
+10 5 * * * /data/wwwroot/yiquan/yii player-stat/ru
+
+
+#------------------------充值分析------------------------#
+
+
+
+#------------------------消耗分析------------------------#
+
+
+#------------------------玩法分析------------------------#
+#玩法参与统计
+1 6 * * * /data/wwwroot/yiquan/yii operate-stat/game-play
+#每日玩家消耗
+4 6 * * * /data/wwwroot/yiquan/yii operate-stat/oper-user-expend-day
+#刷新战绩数据
+7 6 * * * /data/wwwroot/yiquan/yii game/record
+#玩家输赢统计
+11 6 * * * /data/wwwroot/yiquan/yii stat/win-lose
+
+#------------------------机器人定时任务------------------------#
+
+
+#------------------------返利计算------------------------#
+#计算台费产生的消耗
+*/3 * * * * /data/wwwroot/yiquan/yii infinite-agent/user-consume
+#计算每周代理等级
+12 6 * * 1 /data/wwwroot/yiquan/yii infinite-agent/agent-level
+#代理返利
+22 6 * * 1 /data/wwwroot/yiquan/yii infinite-agent/agent-rebate
+#更新代理金额
+32 6 * * 1 /data/wwwroot/yiquan/yii infinite-agent/update-agent

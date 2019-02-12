@@ -1,0 +1,832 @@
+<style>
+    .layui-table .layui-table-cell{
+        height:auto;
+        overflow:visible;
+        text-overflow:inherit;
+        white-space:normal;
+    }
+
+
+    .c{text-align: center!important;}
+    .box{display: flex;justify-content: space-between;}
+    /*.tableDiv{float: left;}*/
+    .characterTable td{height:39px;box-sizing: border-box;text-align: center;}
+    .characterTable td{width:85px!important;}
+    .character{font-size:18px;font-weight: bold;width:100px!important;}
+    .tableBtn{line-height: 413px;}
+    h2{line-height: 60px;}
+    .title{text-align: center;color:#666666;}
+</style>
+<body>
+<div class="x-body" >
+    <div class="refresh refreshThis"><i class="layui-icon "  >ဂ</i></div>
+    <div class="titleFormStyle">
+        <div class=" layui-col-xs2">
+            <form action="" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">机器人开关</label>
+                    <div class="layui-input-block" style="padding:6px 0;">
+                        <input id="switch1" type="checkbox"     lay-skin="switch" lay-text="ON|OFF" lay-filter="switch">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-col-xs2 layui-col-xs-offset8" id="btn">
+            <a class="layui-btn" href="robotlist">机器人列表</a>
+            <button class="layui-btn" data-method="addCharacter">新增性格</button>
+        </div>
+    </div>
+
+    <div class="title">
+        <h2>机器人性格列表</h2>
+    </div>
+
+
+    <div class="box" id="robot2">
+        <div class="tableDiv" >
+            <table class="layui-table characterTable" >
+                <tr style="background-color: #F2F2F2">
+                    <td rowspan="8" class="character" >鲁莽性格</td>
+                    <td>操作间隔</td>
+                    <td>准备等待</td>
+                    <td>随机时间</td>
+                    <td>离桌率</td>
+                    <td>时间间隔</td>
+                    <td>表情触发</td>
+                    <td>短信触发</td>
+                    <td>忍耐触发点</td>
+                    <td>短信概率</td>
+                    <td>负警戒线</td>
+                    <td>胜率提升至</td>
+                    <td>正警戒线</td>
+                    <td>胜率降低至</td>
+                    <td>最高游戏次数</td>
+                </tr>
+                <tr>
+                    <td>q</td>
+                    <td>w</td>
+                    <td>r</td>
+                    <td>t</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr style="background-color: #F2F2F2">
+                    <td colspan="4">看牌率</td>
+                    <td colspan="4">棋牌率</td>
+                    <td colspan="4">跟注</td>
+                    <td colspan="4">加注</td>
+                </tr>
+                <tr style="background-color: #F2F2F2">
+                    <td>1</td>
+                    <td>2~3</td>
+                    <td>4~5</td>
+                    <td>6~9</td>
+                    <td>1</td>
+                    <td>2~3</td>
+                    <td>4~5</td>
+                    <td>6~9</td>
+                    <td>1</td>
+                    <td>2~3</td>
+                    <td>4~5</td>
+                    <td>6~9</td>
+                    <td>1</td>
+                    <td>2~3</td>
+                    <td>4~5</td>
+                    <td>6~9</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr style="background-color: #F2F2F2">
+                    <td colspan="4">比牌</td>
+                    <td colspan="4">抢庄</td>
+                    <td colspan="4">叫分</td>
+                </tr>
+                <tr class="numTd" style="background-color: #F2F2F2">
+                    <td>1</td>
+                    <td>2~3</td>
+                    <td>4~5</td>
+                    <td>6~9</td>
+                    <td>1</td>
+                    <td>2~3</td>
+                    <td>4~5</td>
+                    <td>6~9</td>
+                    <td>1</td>
+                    <td>2~3</td>
+                    <td>4~5</td>
+                    <td>6~9</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div class="tableBtn">
+            <button class="layui-btn" data-method="reviseBtn">修改</button>
+            <button class="layui-btn" data-method="delBtn">删除</button>
+        </div>
+    </div>
+<div class="box" id="robot1">
+    <div class="tableDiv" >
+        <table class="layui-table characterTable" >
+            <tr style="background-color: #F2F2F2">
+                <td rowspan="8" class="character" >鲁莽性格</td>
+                <td>操作间隔</td>
+                <td>准备等待</td>
+                <td>随机时间</td>
+                <td>离桌率</td>
+                <td>时间间隔</td>
+                <td>表情触发</td>
+                <td>短信触发</td>
+                <td>忍耐触发点</td>
+                <td>短信概率</td>
+                <td>负警戒线</td>
+                <td>胜率提升至</td>
+                <td>正警戒线</td>
+                <td>胜率降低至</td>
+                <td>最高游戏次数</td>
+            </tr>
+            <tr>
+                <td>ee</td>
+                <td>w</td>
+                <td>r</td>
+                <td>t</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr style="background-color: #F2F2F2">
+                <td colspan="4">看牌率</td>
+                <td colspan="4">棋牌率</td>
+                <td colspan="4">跟注</td>
+                <td colspan="4">加注</td>
+            </tr>
+            <tr style="background-color: #F2F2F2">
+                <td>1</td>
+                <td>2~3</td>
+                <td>4~5</td>
+                <td>6~9</td>
+                <td>1</td>
+                <td>2~3</td>
+                <td>4~5</td>
+                <td>6~9</td>
+                <td>1</td>
+                <td>2~3</td>
+                <td>4~5</td>
+                <td>6~9</td>
+                <td>1</td>
+                <td>2~3</td>
+                <td>4~5</td>
+                <td>6~9</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr style="background-color: #F2F2F2">
+                <td colspan="4">比牌</td>
+                <td colspan="4">抢庄</td>
+                <td colspan="4">叫分</td>
+            </tr>
+            <tr class="numTd" style="background-color: #F2F2F2">
+                <td>1</td>
+                <td>2~3</td>
+                <td>4~5</td>
+                <td>6~9</td>
+                <td>1</td>
+                <td>2~3</td>
+                <td>4~5</td>
+                <td>6~9</td>
+                <td>1</td>
+                <td>2~3</td>
+                <td>4~5</td>
+                <td>6~9</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <div class="tableBtn">
+        <button class="layui-btn" data-method="reviseBtn">修改</button>
+        <button class="layui-btn" data-method="delBtn">删除</button>
+    </div>
+</div>
+
+</div>
+<script TYPE="text/html" id="barDemo">
+    <div id="layer">
+        <button class="layui-btn layui-btn-xs" lay-event="reviseBtn">修改</button>
+        <button class="layui-btn layui-btn-xs" lay-event="delBtn">删除</button>
+    </div>
+
+</script>
+<script>
+    layui.use(['table','form','layer'],function () {
+        var $ = layui.$;
+        var table = layui.table;
+        var form = layui.form;
+        var layer =layui.layer;
+
+        var charactData = [];
+        var tr2 = $('.characterTable tr:eq(1) td');
+        var tr5 = $('.characterTable tr:eq(4) td');
+        var tr8 = $('.characterTable tr:eq(7) td');
+        for (var i=0;i<tr2.length;i++){
+            charactData.push(tr2[i].innerHTML);
+        }
+        for (var i=0;i<tr5.length;i++){
+            charactData.push(tr5[i].innerHTML);
+        }
+        for (var i=0;i<tr8.length;i++){
+            charactData.push(tr8[i].innerHTML);
+        }
+
+        form.on('switch(switch)',function (data) {
+            console.log(data.elem.checked);
+            $.ajax({
+                url:'/test/t206/',
+                data:{
+                    switch:data.elem.checked
+                },
+                dataType:"json",
+                success:function(res){
+                    console.log("1");
+                },
+                error:function (res) {
+                    console.log("2");
+                }
+            })
+        });
+
+        // table.on('tool(table1)',function (obj) {
+        //     var data = obj.data;
+        //
+        //     if (obj.event=== 'reviseBtn') {
+        //         layer.open({
+        //             type:1
+        //             ,title:false
+        //             ,closeBtn:1
+        //             ,area:['90%','90%']
+        //             ,id:'LAY_layuipro'
+        //             ,btn:['确认','取消']
+        //             ,btnAlign:'c'
+        //             ,moveType:1
+        //             ,content:$('#reviseCharacter')
+        //             ,success:function (layero,index) {
+        //                 // alert('111111')
+        //                 var inputs = $('#reviseCharacter input');
+        //                 var j=0;
+        //                 for (var key in data){ // inputs[i].val=data[i];
+        //                     if(j<inputs.length){
+        //                         inputs[j].value=data[key];
+        //                         j++;
+        //                     }
+        //                 }
+        //             }
+        //         })
+        //     }else if(obj.event==='delBtn'){
+        //         var number = obj.data.number;
+        //         var id = obj.data.number;
+        //         layer.open({
+        //             type:1
+        //             ,title:false
+        //             ,closeBtn:1
+        //             ,area:['30%','25%']
+        //             ,id:'LAY_layuipro'
+        //             ,btn:['确认','取消']
+        //             ,btnAlign:'c'
+        //             ,moveType:1
+        //             ,content:$('#del')
+        //             ,success:function (layero,index) {
+        //                 //将删除的跑马灯编号显示在提示窗口
+        //                 $('#num').html(number);
+        //             }
+        //             ,yes:function (index,layero) {
+        //                 //向后端发送将要删除的跑马灯ID
+        //                 $.ajax({
+        //                     url:'',
+        //                     type:'POST',
+        //                     data:{
+        //                         'id': id
+        //                     },
+        //                     success:function (data) {
+        //                         console.log("成功");
+        //                         //删除成功后重载表格
+        //                         table.reload('robotSettingTable', {
+        //                             url:'/test/t205',
+        //                         });
+        //                     },
+        //                     error:function () {
+        //                         console.log("失败");
+        //                     }
+        //                 });
+        //                 layer.close(index);
+        //             }
+        //         })
+        //     }
+        // })
+        table.on('sort(table1)', function(obj){
+            table.reload('robotSettingTable', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+
+        var active = {
+            addCharacter:function () {
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['90%','90%']
+                    ,id:'LAY_layuipro'
+                    // ,btn:['确认','取消']
+                    ,content:$('#addCharacter')
+                })
+            },
+            reviseBtn:function () {
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['90%','90%']
+                    ,id:'LAY_layuipro'
+                    ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#reviseCharacter')
+                    ,success:function (layero,index) {
+                        // alert('111111')
+                        var inputs = $('#reviseCharacter input');
+                        var j=0;
+                        for (var key in charactData){ // inputs[i].val=data[i];
+                            if(j<inputs.length){
+                                inputs[j].value=charactData[key];
+                                j++;
+                            }
+                        }
+                    }
+                })
+            },
+            delBtn:function () {
+               var id = $(this).parents(".box").attr('id');
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,closeBtn:1
+                    ,area:['30%','25%']
+                    ,id:'LAY_layuipro'
+                    ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#del')
+                    ,success:function (layero,index) {
+                        //将删除的跑马灯编号显示在提示窗口
+                    }
+                    ,yes:function (index,layero) {
+
+                        //向后端发送将要删除的跑马灯ID
+                        $.ajax({
+                            url:'',
+                            type:'POST',
+                            data:{
+                                'id': id
+                            },
+                            success:function (data) {
+                                console.log("成功");
+                                //删除成功后重载表格
+                                window.location.href = window.location.href;
+                            },
+                            error:function () {
+                                console.log("失败");
+                            }
+                        });
+                        layer.close(index);
+                    }
+                })
+            }
+        }
+        $('#btn .layui-btn').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+        $('.tableBtn .layui-btn').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+        //获取机器人开关的值
+        $.ajax({
+            url:'',
+            data:{},
+            dataType:"JSON",
+            success:function (res) {
+                $('em:first').html('ON');
+                $('em:first').parent().addClass('layui-form-onswitch')
+            },
+            error:function (res) {
+                $('em:first').html('ON');
+                $('em:first').parent().addClass('layui-form-onswitch')
+            }
+        })
+    })
+</script>
+</body>
+<!--新增性格-->
+<div class="x-body " id="addCharacter" style="display: none;">
+    <form action="" class="layui-form"  id="robotForm" >
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">性格</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="character" id="character">
+            </div>
+        </div>
+        <div class="layui-input-inline">
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th>操作间隔</th>
+                    <th>准备等待</th>
+                    <th>随机时间</th>
+                    <th>离桌率</th>
+                    <th>时间间隔</th>
+                    <th>表情触发</th>
+                    <th>短信触发</th>
+                </tr>
+                <tr>
+                    <td><input type="text" class="layui-input" name="operationInterval" id="operationInterval"></td>
+                    <td><input type="text" class="layui-input" name="readyWait" id="readyWait"></td>
+                    <td><input type="text" class="layui-input" name="randomEvent" id="randomEvent"></td>
+                    <td><input type="text" class="layui-input" name="departureRate" id="departureRate"></td>
+                    <td><input type="text" class="layui-input" name="timeInterval" id="timeInterval"></td>
+                    <td><input type="text" class="layui-input" name="expressionTrigger" id="expressionTrigger"></td>
+                    <td><input type="text" class="layui-input" name="SMSTrigger" id="SMSTrigger"></td>
+                </tr>
+                </thead>
+            </table>
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th>忍耐触发</th>
+                    <th>短信概率</th>
+                    <th >负警戒线</th>
+                    <th>胜率提升至</th>
+                    <th>正警戒线</th>
+                    <th>胜率降低至</th>
+                    <th>最高游戏次数</th>
+                </tr>
+                <tr>
+                    <td><input type="text" class="layui-input" name="enduranceTrigger" id="enduranceTrigger"></td>
+                    <td><input type="text" class="layui-input" name="messageProbability" id="messageProbability"></td>
+                    <td><input type="text" class="layui-input" name="cordon0" id="cordon0"></td>
+                    <td><input type="text" class="layui-input" name="advance" id="advance"></td>
+                    <td><input type="text" class="layui-input" name="cordon1" id="cordon1"></td>
+                    <td><input type="text" class="layui-input" name="reduce" id="reduce"></td>
+                    <td><input type="text" class="layui-input" name="highest" id="highest"></td>
+                </tr>
+                </thead>
+            </table>
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th class="c" colspan="4">看牌率</th>
+                    <th class="c" colspan="4">弃牌率</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                </tr>
+                <tr>
+                    <td><input type="text" class="layui-input" name="kibitzing1" id="kibitzing1"></td>
+                    <td><input type="text" class="layui-input" name="kibitzing2-3" id="kibitzing2-3"></td>
+                    <td><input type="text" class="layui-input" name="kibitzing4-5" id="kibitzing4-5"></td>
+                    <td><input type="text" class="layui-input" name="kibitzing6-9" id="kibitzing6-9"></td>
+                    <td><input type="text" class="layui-input" name="Abandon1" id="Abandon1"></td>
+                    <td><input type="text" class="layui-input" name="Abandon2-3" id="Abandon2-3"></td>
+                    <td><input type="text" class="layui-input" name="Abandon4-5" id="Abandon4-5"></td>
+                    <td><input type="text" class="layui-input" name="Abandon6-9" id="Abandon6-9"></td>
+                </tr>
+                </thead>
+            </table>
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th class="c" colspan="4">跟注</th>
+                    <th class="c" colspan="4">加注</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                </tr>
+                <tr>
+                    <td><input type="text" class="layui-input" name="follow1" id="follow1"></td>
+                    <td><input type="text" class="layui-input" name="follow2-3" id="follow2-3"></td>
+                    <td><input type="text" class="layui-input" name="follow4-5" id="follow4-5"></td>
+                    <td><input type="text" class="layui-input" name="follow6-9" id="follow6-9"></td>
+                    <td><input type="text" class="layui-input" name="refuel1" id="refuel1"></td>
+                    <td><input type="text" class="layui-input" name="refuel2-3" id="refuel2-3"></td>
+                    <td><input type="text" class="layui-input" name="refuel4-5" id="refuel4-5"></td>
+                    <td><input type="text" class="layui-input" name="refuel6-9" id="refuel6-9"></td>
+                </tr>
+                </thead>
+            </table>
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th class="c" colspan="4">比牌</th>
+                    <th class="c" colspan="4">抢庄</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                </tr>
+                <tr>
+                    <td><input type="text" class="layui-input" name="comparison1" id="comparison1"></td>
+                    <td><input type="text" class="layui-input" name="comparison2-3" id="comparison2-3"></td>
+                    <td><input type="text" class="layui-input" name="comparison4-5" id="comparison4-5"></td>
+                    <td><input type="text" class="layui-input" name="comparison6-9" id="comparison6-9"></td>
+                    <td><input type="text" class="layui-input" name="knock1" id="knock1"></td>
+                    <td><input type="text" class="layui-input" name="knock2-3" id="knock2-3"></td>
+                    <td><input type="text" class="layui-input" name="knock4-5" id="knock4-5"></td>
+                    <td><input type="text" class="layui-input" name="knock6-9" id="knock6-9"></td>
+                </tr>
+                </thead>
+            </table>
+            <table class="layui-table" style="width: 50%">
+                <thead>
+                <tr> <th class="c" colspan="4">叫分</th></tr>
+                <tr>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                </tr>
+                <td><input type="text" class="layui-input" name="callPoints1" id="callPoints1"></td>
+                <td><input type="text" class="layui-input" name="callPoints2-3" id="callPoints2-3"></td>
+                <td><input type="text" class="layui-input" name="callPoints4-5" id="callPoints4-5"></td>
+                <td><input type="text" class="layui-input" name="callPoints6-9" id="callPoints6-9"></td>
+                </thead>
+            </table>
+        </div>
+        <div class="layui-form-item" style="width: 150px;margin: 0 auto;">
+            <input type="submit" class="layui-btn" value="创建" id="robotSubmitBtn">
+            <button class="layui-btn">重置</button>
+        </div>
+    </form>
+</div>
+<!--修改-->
+<div class="x-body " id="reviseCharacter" style="display: none;">
+    <form action="" class="layui-form"  id="robotForm1" >
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">性格</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="character" id="character1">
+            </div>
+        </div>
+        <div class="layui-input-inline">
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th>操作间隔</th>
+                    <th>准备等待</th>
+                    <th>随机时间</th>
+                    <th>离桌率</th>
+                    <th>时间间隔</th>
+                    <th>表情触发</th>
+                    <th>短信触发</th>
+                </tr>
+                <tr>
+                    <td><input type="text" class="layui-input" name="operationInterval" id="operationInterval1"></td>
+                    <td><input type="text" class="layui-input" name="readyWait" id="readyWait1"></td>
+                    <td><input type="text" class="layui-input" name="randomEvent" id="randomEvent1"></td>
+                    <td><input type="text" class="layui-input" name="departureRate" id="departureRate1"></td>
+                    <td><input type="text" class="layui-input" name="timeInterval" id="timeInterval1"></td>
+                    <td><input type="text" class="layui-input" name="expressionTrigger" id="expressionTrigger1"></td>
+                    <td><input type="text" class="layui-input" name="SMSTrigger" id="SMSTrigger1"></td>
+                </tr>
+                </thead>
+            </table>
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th>忍耐触发</th>
+                    <th>短信概率</th>
+                    <th >负警戒线</th>
+                    <th>胜率提升至</th>
+                    <th>正警戒线</th>
+                    <th>胜率降低至</th>
+                    <th>最高游戏次数</th>
+                </tr>
+                <tr>
+                    <td><input type="text" class="layui-input" name="enduranceTrigger" id="enduranceTrigger1"></td>
+                    <td><input type="text" class="layui-input" name="messageProbability" id="messageProbability1"></td>
+                    <td><input type="text" class="layui-input" name="cordon0" id="cordon01"></td>
+                    <td><input type="text" class="layui-input" name="advance" id="advance1"></td>
+                    <td><input type="text" class="layui-input" name="cordon1" id="cordon11"></td>
+                    <td><input type="text" class="layui-input" name="reduce" id="reduce1"></td>
+                    <td><input type="text" class="layui-input" name="highest" id="highest1"></td>
+                </tr>
+                </thead>
+            </table>
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th class="c" colspan="4">看牌率</th>
+                    <th class="c" colspan="4">弃牌率</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                </tr>
+                <tr>
+                    <td><input type="text" class="layui-input" name="kibitzing1" id="kibitzing11"></td>
+                    <td><input type="text" class="layui-input" name="kibitzing2-3" id="kibitzing2-31"></td>
+                    <td><input type="text" class="layui-input" name="kibitzing4-5" id="kibitzing4-51"></td>
+                    <td><input type="text" class="layui-input" name="kibitzing6-9" id="kibitzing6-91"></td>
+                    <td><input type="text" class="layui-input" name="Abandon1" id="Abandon11"></td>
+                    <td><input type="text" class="layui-input" name="Abandon2-3" id="Abandon2-31"></td>
+                    <td><input type="text" class="layui-input" name="Abandon4-5" id="Abandon4-51"></td>
+                    <td><input type="text" class="layui-input" name="Abandon6-9" id="Abandon6-91"></td>
+                </tr>
+                </thead>
+            </table>
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th class="c" colspan="4">跟注</th>
+                    <th class="c" colspan="4">加注</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                </tr>
+                <tr>
+                    <td><input type="text" class="layui-input" name="follow1" id="follow11"></td>
+                    <td><input type="text" class="layui-input" name="follow2-3" id="follow2-31"></td>
+                    <td><input type="text" class="layui-input" name="follow4-5" id="follow4-51"></td>
+                    <td><input type="text" class="layui-input" name="follow6-9" id="follow6-91"></td>
+                    <td><input type="text" class="layui-input" name="refuel1" id="refuel11"></td>
+                    <td><input type="text" class="layui-input" name="refuel2-3" id="refuel2-31"></td>
+                    <td><input type="text" class="layui-input" name="refuel4-5" id="refuel4-51"></td>
+                    <td><input type="text" class="layui-input" name="refuel6-9" id="refuel6-91"></td>
+                </tr>
+                </thead>
+            </table>
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th class="c" colspan="4">比牌</th>
+                    <th class="c" colspan="4">抢庄</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                </tr>
+                <tr>
+                    <td><input type="text" class="layui-input" name="comparison1" id="comparison11"></td>
+                    <td><input type="text" class="layui-input" name="comparison2-3" id="comparison2-31"></td>
+                    <td><input type="text" class="layui-input" name="comparison4-5" id="comparison4-51"></td>
+                    <td><input type="text" class="layui-input" name="comparison6-9" id="comparison6-91"></td>
+                    <td><input type="text" class="layui-input" name="knock1" id="knock11"></td>
+                    <td><input type="text" class="layui-input" name="knock2-3" id="knock2-31"></td>
+                    <td><input type="text" class="layui-input" name="knock4-5" id="knock4-51"></td>
+                    <td><input type="text" class="layui-input" name="knock6-9" id="knock6-91"></td>
+                </tr>
+                </thead>
+            </table>
+            <table class="layui-table" style="width: 50%">
+                <thead>
+                <tr> <th class="c" colspan="4">叫分</th></tr>
+                <tr>
+                    <th>1</th>
+                    <th>2-3</th>
+                    <th>4-5</th>
+                    <th>6-9</th>
+                </tr>
+                <td><input type="text" class="layui-input" name="callPoints1" id="callPoints11"></td>
+                <td><input type="text" class="layui-input" name="callPoints2-3" id="callPoints2-31"></td>
+                <td><input type="text" class="layui-input" name="callPoints4-5" id="callPoints4-51"></td>
+                <td><input type="text" class="layui-input" name="callPoints6-9" id="callPoints6-91"></td>
+                </thead>
+            </table>
+        </div>
+        <div class="layui-form-item" style="width: 150px;margin: 0 auto;">
+            <input type="submit" class="layui-btn" value="创建">
+            <button class="layui-btn">重置</button>
+        </div>
+
+    </form>
+</div>
+
+</div>
+<!--删除-->
+<div class="x-body" id="del"  style="display: none;text-align: center;padding-top:10%;">
+    <h2 class="center">确认删除机器人吗？</h2>
+</div>

@@ -1,0 +1,51 @@
+
+    <style>
+        .x-body .inform{
+            width:30%;
+            background-color: #2D93CA;
+            float:left;
+            margin:7px;
+            padding:5%;
+            box-sizing:border-box;
+        }
+        /*.x-body btn{*/
+            /*width:50%;*/
+
+        /*}*/
+        /*.btn button{*/
+            /*text-align: center;*/
+        /*}*/
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <div class="layui-form-item">
+        <div class="inform"><p>会员I111D</p><p>123456987</p></div>
+        <div class="inform"><p>IP地址</p><p>192.163.12.55</p></div>
+        <div class="inform"><p>设备号</p><p>12de45e5de8</p></div>
+    </div>
+
+    <div class="layui-form-item">
+        <button class="layui-btn layui-btn-sm">解封</button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger">封停</button>
+    </div>
+    <table class="layui-table" id="sealOff">
+    </table>
+</div>
+</body>
+<script>
+    layui.use('table',function () {
+        var table = layui.table;
+        table.render({
+            elem:'#sealOff'
+            ,url:'file/2sealOff/'
+            ,page:true
+            ,cols:[[
+                {field:'data',title:'操作时间'}
+                ,{field:'ID',title:'操作ID'}
+                ,{field:'status',title:'操作状态'}
+            ]]
+
+        })
+  })
+</script>

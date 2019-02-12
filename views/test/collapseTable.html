@@ -1,0 +1,74 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Title</title>-->
+    <!--<script src="../../web/static/js/jquery.js"></script>-->
+    <!--<link rel="stylesheet" href="../../web/static/lib/layui/css/layui.css">-->
+    <!--<script src="../../web/static/lib/layui/layui.js"></script>-->
+
+
+
+<!--</head>-->
+<body>
+<div class="x-body">
+    <table class="layui-table" id="test" lay-filter="test"></table>
+</div>
+
+<script type="text/html" id="barDemo">
+<button class="layui-btn layui-btn-sm" lay-event="detail">查看</button>
+</script>
+
+<script>
+
+    layui.use(['table','element'], function(){
+        var table = layui.table
+            ,form = layui.form;
+        var element = layui.element;
+        table.render({
+            elem: '#test'
+            ,url:'/test/t206/'
+            ,cellMinWidth: 80
+            ,cols: [[
+                {field:'id', title:'ID', width:100, unresize: true, sort: true}
+                ,{field:'typeT', title:'用户名', templet: '#usernameTpl'}
+                ,{field:'city', title:'城市'}
+                ,{field:'wealth', title: '财富', minWidth:120, sort: true}
+                ,{title: '操作',width:178, align:'center', toolbar: '#barDemo'}
+            ]]
+            ,page: true
+        });
+        table.on('tool(test)',function (obj) {
+            if (obj.event === 'detail'){
+                if ($(this).html() === '查看') {
+                    var frag = document.createDocumentFragment();
+                    var tr = document.createElement('tr');
+                    var td1 = document.createElement('td');
+                    var td2 = document.createElement('td');
+                    var td3= document.createElement('td');
+                    $(td1).css({padding:5});
+                    $(td2).css({padding:5});
+                    $(td3).css({padding:5});
+                    $(td3).attr('colspan',3);
+                    $(td1).html('啊啊啊啊啊啊');
+                    $(td2).html('哈哈哈哈哈哈哈');
+                    $(td3).html('呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵');
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(td3);
+                    frag.appendChild(tr);
+                    // this.parents().appendChild(frag)
+                    obj.tr[0].after(frag);
+                    $(this).html('收起')
+                }else if ($(this).html() === '收起'){
+                    $(obj.tr[0]).next().remove();
+                    $(this).html('查看')
+                }
+
+            }
+        })
+    });
+</script>
+
+</body>
+</html>

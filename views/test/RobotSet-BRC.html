@@ -1,0 +1,409 @@
+<!--机器人设置百人场-->
+<style>
+    .title1{text-align:center;line-height:60px;}
+    .title2{line-height:40px;padding-left: 30px;}
+    .title3{padding: 30px 20px;}
+    .r input{border:none}
+    .r tr th{width: 20%;}
+    .r tr td{padding:0;}
+    .subBtn{width:70px;margin:0 auto;line-height: 90px;}
+</style>
+
+
+<body>
+<h1 class="title1">机器人设置</h1>
+<h2 class="title2">机器人庄</h2>
+<hr>
+<div class="layui-row">
+    <form action="" class="layui-form r">
+        <div class="layui-col-sm2 title3">
+            <h2 style="text-align: center">百人推筒子</h2>
+        </div>
+        <div class="layui-col-sm6">
+            <table id="TTZ" lay-filter="TTZ" class="layui-table">
+                <thead>
+                <tr>
+                    <th>庄机器人ID</th>
+                    <th>庄机器人姓名</th>
+                    <th>庄机器人头像</th>
+                    <th>初始元宝数</th>
+                    <th>闲家机器人元宝区间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="text" class="layui-input" name="ZRobotID"></td>
+                    <td><input type="text" class="layui-input" name="ZRobotName"></td>
+                    <td><input type="text" class="layui-input" name="ZRobotHead"></td>
+                    <td><input type="text" class="layui-input" name="initYB"></td>
+                    <td >
+                        <div class="layui-row">
+                            <div class="layui-col-sm5">
+                                <input type="text" class="layui-input" name="minYB">
+                            </div>
+
+                            <div class="layui-col-sm1" style="margin-top:8px;">
+                                <span>~</span>
+                            </div>
+                            <div class="layui-col-sm6">
+                                <input type="text" class="layui-input" name="maxYB">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-col-sm2 ">
+            <div class="subBtn">
+                <button class="layui-btn " lay-submit="" lay-filter="submitTTZ">修改</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<div class="layui-row">
+    <form action="" class="layui-form">
+        <div class="layui-col-sm2 title3">
+            <h2 style="text-align: center">百人牛牛</h2>
+        </div>
+        <div class="layui-col-sm6">
+            <table id="NN" lay-filter="TTZ" class="layui-table r">
+                <thead>
+                <tr>
+                    <th>庄机器人ID</th>
+                    <th>庄机器人姓名</th>
+                    <th>庄机器人头像</th>
+                    <th>初始元宝数</th>
+                    <th>闲家机器人元宝区间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="text" class="layui-input" name="ZRobotID"></td>
+                    <td><input type="text" class="layui-input" name="ZRobotName"></td>
+                    <td><input type="text" class="layui-input" name="ZRobotHead"></td>
+                    <td><input type="text" class="layui-input" name="initYB"></td>
+                    <td >
+                        <div class="layui-row">
+                            <div class="layui-col-sm5">
+                                <input type="text" class="layui-input" name="minYB">
+                            </div>
+
+                            <div class="layui-col-sm1" style="margin-top:8px;">
+                                <span>~</span>
+                            </div>
+                            <div class="layui-col-sm6">
+                                <input type="text" class="layui-input" name="maxYB">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-col-sm2 ">
+            <div class="subBtn">
+                <button class="layui-btn " lay-submit="" lay-filter="submitNN">修改</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+<div class="layui-row">
+    <div class="layui-col-sm6">
+        <h2 class="title2">机器人闲</h2>
+    </div>
+    <div class="layui-col-sm5">
+        <button class="layui-btn" style="float: right;" data-type="createRobot" id="createRobot">机器人创建</button>
+    </div>
+</div>
+<hr>
+<table id="RobotX" class="layui-table" lay-filter="RobotX"></table>
+</body>
+
+<script type="text/html" id="RobotXOption">
+    <div class="layer">
+        <button class="layui-btn layui-btn-sm layui-btn-warm stop changeBtn"  lay-event="change">暂停</button>
+        <button class="layui-btn layui-btn-sm" lay-event="revise">修改</button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">删除</button>
+    </div>
+</script>
+<script>
+    layui.use(['table','form'],function () {
+        function robot(url){
+            var robotNum = $('#robotNum').val();
+            var robotID = $('#robotID').val();
+            var robotName = $('#robotName').val();
+            var robotHeadID = $('#robotHeadID').val();
+            var robotIP = $('#robotIP').val();
+            $.ajax({
+                url:url,
+                type:'POST',
+                data:{
+                    "robotNum":robotNum,
+                    "robotID":robotID,
+                    "robotName":robotName,
+                    "robotHeadID":robotHeadID,
+                    "robotIP":robotIP,
+                },
+                success:function (res) {
+                    console.log('success');
+                },
+                error:function (res) {
+                    console.log('false');
+                }
+            })
+        };
+
+        var form = layui.form;
+        var table = layui.table;
+        form.on('submit(submitTTZ)',function (data) {
+            $.ajax({
+                url:'',
+                data:{
+                    "ZRobotID":data.field.ZRobotID,
+                    "ZRobotName":data.field.ZRobotName,
+                    "ZRobotHead":data.field.ZRobotName,
+                    "initYB":data.field.initYB,
+                    "minYB":data.field.minYB,
+                    "maxYB":data.field.maxYB,
+                }
+            })
+            return false;
+        })
+
+
+        form.on('submit(submitNN)',function (data) {
+            $.ajax({
+                url:'',
+                data:{
+                    "ZRobotID":data.field.ZRobotID,
+                    "ZRobotName":data.field.ZRobotName,
+                    "ZRobotHead":data.field.ZRobotName,
+                    "initYB":data.field.initYB,
+                    "minYB":data.field.minYB,
+                    "maxYB":data.field.maxYB,
+                }
+            })
+            return false;
+        })
+
+
+        var active = {
+            createRobot:function () {
+                layer.open({
+                    type:1
+                    ,title:"创建机器人"
+                    ,closeBtn:1
+                    ,area:['90%','90%']
+                    ,id:'LAY_layuipro'
+                    ,btn:['确认','取消']
+                    ,btnAlign:'c'
+                    ,moveType:1
+                    ,content:$('#reviseRobot')
+                    ,yes:function (index,layero) {
+                        robot('/test/t206/');
+                        layer.close(index);
+                    }
+                });
+            }
+        };
+        $('#createRobot').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        table.render({
+            elem:'#RobotX'
+            ,url:'/test/t206'
+            ,page:true
+            ,cols:[[
+                {field:"num",title:"序号"}
+                ,{field:"ID",title:"机器人ID"}
+                ,{field:"title",title:"名称"}
+                ,{field:"content",title:"头像ID"}
+                ,{field:"receive_player",title:"机器人IP"}
+                ,{field:"send_time",title:"游戏场次"}
+                ,{field:"created_time",title:"赢场次"}
+                ,{field:"creator",title:"输场次"}
+                ,{field:"creator",title:"输赢比例"}
+                ,{field:"",title:"操作",toolbar:"#RobotXOption",width:250}
+            ]]
+        });
+
+
+        table.on('tool(RobotX)', function(obj){
+            var data = obj.data;
+            switch(obj.event){
+                case 'revise':
+                    var robotNum = data.num;
+                    var robotID = data.ID;
+                    // var $This = $(this);
+                    var originalPublic;
+                    data.public==="是"? originalPublic=1:originalPublic=0;
+                    var id = data.number;
+                    var  originalContent = data.content;
+                    var  originalStartTime = data.startTime;
+                    var  originalTerminalTime = data.terminalTime;
+                    console.log(originalContent,originalStartTime,originalTerminalTime,originalPublic);
+                    layer.open({
+                        type:1
+                        ,title:"修改机器人"
+                        ,closeBtn:1
+                        ,area:['50%','55%']
+                        ,id:'LAY_layuipro'
+                        ,btn:['确认','取消']
+                        ,btnAlign:'c'
+                        ,moveType:1
+                        ,content:$('#reviseRobot')
+                        ,success:function (layero,index) {
+                            $('#robotNum').val(robotNum);
+                            $('#robotID').val(robotID);
+                        }
+                        ,yes:function (index,layero) {
+                            // var robotNum = $('#robotNum').val();
+                            // var robotID = $('#robotID').val();
+                            // var robotName = $('#robotName').val();
+                            // var robotHeadID = $('#robotHeadID').val();
+                            // var robotIP = $('#robotIP').val();
+                            // console.log(robotNum)
+                            // $.ajax({
+                            //     url:'/test/t206/',
+                            //     data:{
+                            //         "robotNum":robotNum,
+                            //         "robotID":robotID,
+                            //         "robotName":robotName,
+                            //         "robotHeadID":robotHeadID,
+                            //         "robotIP":robotIP,
+                            //     }
+                            // })
+                            robot('/test/t206/');
+                            layer.close(index);
+                        }
+                    });
+
+                    break;
+                case 'change':
+                    //获取点击按钮对于的tr数据的唯一值
+                    var id = obj.data.number;
+                    //获取点击的按钮
+                    var $This = $(this);
+                    //声明变量保存
+                    var turn;
+
+
+                    // 判断是开启还是暂停
+                    $This.hasClass("stop")?turn = "start":turn = "stop";
+                    //向后端发送数据并修改按钮状态
+                    $.ajax({
+                        type: 'get'
+                        , data: {
+                            'id': id
+                            ,'turn': turn
+                        }
+                        , url: ''
+                        //,dataType:'JSON'
+                        , success: function (data) {
+                            console.log("chenggong");
+                            if (turn === "start") {
+                                $This.removeClass('stop');
+                                $This.removeClass('layui-btn-warm');
+                                $This.addClass('start');
+                                $This.html('开启');
+                            } else {
+                                $This.removeClass('start');
+                                $This.addClass('stop');
+                                $This.addClass('layui-btn-warm');
+                                $This.html('暂停');
+                            }
+                        }
+                        ,error:function () {
+
+                        }
+                    });
+                    break;
+                case 'del':
+                    var number = obj.data.number;
+                    var id = obj.data.number;
+                    layer.open({
+                        type:1
+                        ,title:false
+                        ,closeBtn:1
+                        ,area:['30%','25%']
+                        ,id:'LAY_layuipro'
+                        ,btn:['确认','取消']
+                        ,btnAlign:'c'
+                        ,moveType:1
+                        ,content:$('#del')
+                        ,success:function (layero,index) {
+                            //将删除的跑马灯编号显示在提示窗口
+                            $('#num').html(number);
+                        }
+                        ,yes:function (index,layero) {
+                            //向后端发送将要删除的跑马灯ID
+                            $.ajax({
+                                url:'',
+                                type:'POST',
+                                data:{
+                                    'id': id
+                                },
+                                success:function (data) {
+                                    console.log("成功");
+                                    //删除成功后重载表格
+                                    table.reload('RobotX', {
+                                        url:'/test/t205',
+                                    });
+                                },
+                                error:function () {
+                                    console.log("失败");
+
+                                }
+                            });
+                            layer.close(index);
+                        }
+                    });
+                    break;
+            }
+
+        });
+    })
+</script>
+
+<div class="x-body" id="reviseRobot" style="display: none;padding-left:20%;">
+    <form action="" class="layui-form" >
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">序号</label>
+            <div class="layui-input-inline">
+                <input id="robotNum" name="robotNum" type="text" class="layui-input" readonly >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人ID</label>
+            <div class="layui-input-inline">
+                <input id="robotID" name="robotID" type="text" class="layui-input" readonly >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">名称</label>
+            <div class="layui-input-inline">
+                <input id="robotName" name="robotName" type="text" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">头像ID</label>
+            <div class="layui-input-inline">
+                <input id="robotHeadID" name="robotHeadID" type="text" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">机器人IP</label>
+            <div class="layui-input-inline">
+                <input id="robotIP" name="robotIP" type="text" class="layui-input" >
+            </div>
+        </div>
+    </form>
+</div>
+<div class="x-body" id="del"  style="display: none;text-align: center;padding-top:10%;">
+    <h2 class="center">确认删除编号为<span id="num"></span>的机器人吗？</h2>
+</div>

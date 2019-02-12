@@ -1,0 +1,70 @@
+<body>
+<div class="x-body">
+
+    <form class="layui-form layui-inline layui-col-md2">
+        <!--<label class="layui-form-label">选择框</label>-->
+        <!--<div class="layui-input-block">-->
+        <select name="city" lay-verify="required" >
+            <option value="">全部游戏</option>
+            <option value="524803">三张牌</option>
+            <option value="524560">山西麻将</option>
+            <option value="524802">内蒙麻将</option>
+            <option value="524510">内蒙大A王</option>
+            <option value="524807">牛牛</option>
+            <option value="524899">跑得快</option>
+            <option value="524812">推筒子</option>
+            <option value="524813">三公</option>
+        </select>
+        <!--</div>-->
+    </form>
+    <form action="" class="layui-form layui-input-inline layui-col-md5 layui-col-md-offset5">
+        <!--<label class="layui-form-label">日期选择</label>-->
+        <div class="layui-inline">
+            <input type="text" class="layui-input" placeholder="开始日期" name="start" id="start">
+        </div>
+        <div class="layui-inline">
+            <input  class="layui-input" placeholder="结束日期" name="end" id="end">
+        </div>
+        <div class="layui-inline">
+            <input class="layui-input" placeholder="ID">
+        </div>
+        <button class="layui-btn ">查询</button>
+    </form>
+
+    <table class="layui-table" id="failSucctable" >
+        <caption><h2>用户输赢元宝详情</h2></caption>
+    </table>
+
+</div>
+</body>
+
+<script>
+    layui.use('laydate',function(){
+        var laydate = layui.laydate;
+        laydate.render({elem:'#start'});
+        laydate.render({elem:'#end'});
+    });
+    layui.use('table',function(){
+        var table = layui.table;
+        table.render({
+            elem:'#failSucctable'
+            ,height:400
+            ,url:'/file/3failureAndSuccess/'
+            ,page:true
+            ,cols:[[
+                {field: 'date1', title: '日期', sort: true}
+                ,{field: 'userID', title: '用户ID', sort: true}
+                ,{field: 'userName', title: '用户名称',  sort: true}
+                ,{field: 'current', title: '当前元宝', sort: true}
+                ,{field: 'count', title: '游戏局数',  sort: true}
+                ,{field: 'serviceCharge', title: '服务费', sort: true}
+                ,{field: 'win', title: '赢元宝数',  sort: true}
+                ,{field: 'fail', title: '输元宝数',  sort: true}
+                ,{field: 'grossroceeds', title: '毛收益', sort: true}
+                ,{field: 'winFail', title: '赢输比', sort: true}
+                ,{field: 'parentInfo', title: '上级信息'}
+                ,{field: 'grandInfo', title: '最上级信息'}
+            ]]
+        });
+    });
+</script>

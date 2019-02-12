@@ -1,0 +1,105 @@
+
+<body>
+<div class="x-body">
+    <div action="" class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <select name=""  id="gameName">
+                    <option value="">游戏名称</option>
+                    <option value="1">三张牌</option>
+                    <option value="2">内蒙打大A</option>
+                    <option value="3">山西麻将</option>
+                    <option value="4">内蒙麻将</option>
+                    <option value="5">牛牛</option>
+                    <option value="6">跑得快</option>
+                    <option value="7">推筒子</option>
+                    <option value="8">三公</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="玩家ID" id="ID">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="查询日期" id="date">
+            </div>
+            <button class="layui-btn" data-method="search" id="search" data-type="reload" id="search">查询</button>
+        </div>
+    </div>
+    <table class="layui-table " id="recordDetails" lay-filter="sort"></table>
+</div>
+<script>
+    //日期查询
+    // layui.use('laydate',function(){
+    //     var laydate = layui.laydate;
+    //     laydate.render({
+    //         elem:'#date'
+    //     });
+    // });
+    layui.use(['table','layer','laydate'],function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem:'#date'
+        });
+        var table = layui.table;
+        table.render({
+            elem:"#recordDetails"
+            ,url:"/test/t206"
+            ,page:true
+            // ,id:"rechargeReload"
+            ,cols:[[
+                {field:"date",title:'时间'}
+                ,{field:"roomNumber",title:'房间号',sort:true}
+                //,{field:"percentage",title:'用户ID'}
+                ,{field:"roomMode",title:'房间模式'}
+                ,{field:"roomNum",title:'房间人数'}
+                ,{field:"bottomPour",title:'底注'}
+                ,{field:"number",title:'序号'}
+                ,{field:"playerID",title:'玩家ID'}
+                ,{field:"playerName",title:'玩家姓名'}
+                ,{field:"frontFieldYB",title:'场前元宝'}
+                ,{field:"bunko ",title:'输赢'}
+                ,{field:"handPatterns",title:'玩家牌型'}
+            ]]
+        });
+        //排序
+        table.on('sort(sort)', function(obj){
+            table.reload('recordDetails', {
+                url:'/test/t205',
+                initSort: obj
+                ,where: {
+                    field: obj.field
+                    ,order: obj.type
+                }
+            });
+        });
+        //查询
+        var $ = layui.$, active = {
+            reload: function(){
+                var userID = $('#ID').val();
+                var gameName = $('#gameName').val();
+                var date = $('#date').val();
+
+                //执行重载
+                table.reload('recordDetails', {
+                    url:'/test/t204'
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        key: {
+                            id: userID,
+                            gameName: gameName,
+                            date: date
+                        }
+                    }
+                });
+            }
+        };
+        $('#search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    })
+</script>
+</body>
+
