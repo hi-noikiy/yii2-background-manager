@@ -1,0 +1,49 @@
+
+/*排序小三角*/
+.sortbox{
+    width:16px;
+    height:15px;
+    position:relative;
+    display: inline-block;
+}
+.sort{
+    display: inline-block;
+    position:absolute;
+}
+.sort1{
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #bbb;
+}
+.sort2{
+    top:10px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #bbb;
+}
+
+#daili_list>tbody>tr>th{
+    padding:8px 0px;
+}
+
+#myalert{
+    z-index:100000;
+}
+
+a{
+    cursor: pointer;
+}
+
+/* 申请审核  */
+#imgbox{
+    padding: 0px;
+    max-width: 300px;
+    box-sizing: content-box;
+}

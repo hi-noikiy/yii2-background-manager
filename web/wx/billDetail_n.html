@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="content-language" content="zh-CN" />
+    <meta name="format-detection" content="telephone=no" />   <!--禁用电话号码识别-->
+    <title>账单明细</title>
+
+    <link href="css/css/mui.min.css" rel="stylesheet" />
+    <link href="css/css/mui.picker.min.css" rel="stylesheet" />
+    <link href="css/css/mui.dtpicker.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/css/reset.css">
+    <link rel="stylesheet" href="css/css/public.css">
+
+    <style>
+        .mui-table-view:before{
+            height:0px;
+        }
+        .mui-table-view:after{
+            height:0px;
+        }
+        .mui-table-view-cell{
+            padding:5px 0;
+        }
+        .mui-table-view-cell button{
+            margin-bottom: 0px;
+            padding:0 10px;
+            height:30px;
+            width:100%;
+        }
+        .mui-table-view-cell input{
+            height:30px;
+            padding:0 10px;
+            font-size: 14px;
+            width:100%;
+        }
+        .mui-table-view-cell:after{
+            height:0px;
+        }
+        #memberBill , #dailiBill{
+            padding: 0 10px;
+        }
+    </style>
+</head>
+<body>
+<!-- 顶部标题  -->
+<header class="mui-bar mui-bar-nav">
+    <h1 class="mui-title" v-html="userData.web_daili_title"></h1>
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <p class="game_info">
+        <span v-html="userData.current_game"></span>
+        <span v-html="userData.play_name"></span>
+        <span v-html="userData.cur_level"></span>
+    </p>
+</header>
+
+<!--内容区域-->
+<div class="mui-content">
+    <!-- 跑马灯 -->
+    <div class="light">
+        <marquee  height="20" behavior="scroll" direction="left" scrollamount="2"  onMouseOut="this.start()">
+            <ul class="marquee">
+                <li></li>
+            </ul>
+        </marquee>
+    </div>
+    <div id="memberBill" class="mui-control-content mui-active timechoose">
+        <ul class="mui-table-view mui-text-center">
+            <li class="mui-table-view-cell">
+                <span class="mui-col-xs-3 mui-col-sm-3">起始时间：</span>
+                <button id='hy_bill_startTime' class="mui-col-xs-9 mui-col-sm-9 mui-text-left" v-html="hy_bill_startTime" style="width:75%"></button>
+            </li>
+            <li class="mui-table-view-cell">
+                <span class="mui-col-xs-3 mui-col-sm-3">终止时间：</span>
+                <button id='hy_bill_endTime' class="mui-col-xs-9 mui-col-sm-9 mui-text-left" v-html="hy_bill_endTime" style="width:75%"></button>
+            </li>
+            <li class="mui-table-view-cell">
+                <span class="mui-col-xs-3 mui-col-sm-3">I&nbsp;D&nbsp;&nbsp;搜索：</span>
+                <input type="tel" id="hy_bill_id" class="mui-col-xs-7 mui-col-sm-7 mui-text-left" style="width:57%">
+                <input type="button" class="mui-col-xs-2 mui-col-sm-2 mui-text-center" value="查询" v-on:tap="hy_bill_search()" style="width:18%;">
+            </li>
+            <li class="mui-table-view-cell" style="width:20%;position:absolute;right:15px;bottom:-30px;">
+                <input type="button" class="mui-col-xs-3 mui-col-sm-3 mui-text-center" v-model="hyTxt" v-on:tap="hy_change()" style="font-size:12px;padding:0;">
+            </li>
+        </ul>
+        <table class="mui-table">
+            <tr>
+                <th colspan="4">会员账单</th>
+            </tr>
+            <tr>
+                <td colspan="4" class="mui-text-right">会员贡献收入：<span v-html="hy_bill_all/100"></span>元</td>
+            </tr>
+            <tr>
+                <td>用户ID</td>
+                <td>昵称</td>
+                <!--<td>付费额度</td>-->
+                <td v-on:tap="sort_bill('tc_hy')">
+                    <span>提成(元)</span>
+                    <img src="img/sort.png" class="sortbox">
+                </td>
+                <td v-on:tap="sort_bill('time_hy')">
+                    <span>充值时间</span>
+                    <img src="img/sort.png" class="sortbox">
+                </td>
+            </tr>
+            <tr v-show="hyBillData.length==0">
+                <td colspan="4">暂无数据...</td>
+            </tr>
+            <tr v-for="hy in hyBillData" v-show="hyBillData.length!=0">
+                <td v-html="hy.member_index"></td>
+                <td v-html="hy.member_name"></td>
+                <!--<td>XXX</td>-->
+                <td v-html="hy.op_money/100"></td>
+                <td v-html="hy.bind_time?hy.bind_time:'/'"></td>
+            </tr>
+        </table>
+        <div class="mui-pagination" id="hy_bill_pager" v-show="hyBillData.length!=0">
+            <div class="mui-text-center">
+                <span class="mui-btn first" v-on:tap="hy_bill_showPage(1,$event)">
+                    首页
+                </span>
+                <span class="mui-btn previous" v-on:tap="hy_bill_showPage(hy_bill_pageCurrent-1,$event)">
+                    上一页
+                </span>
+                <input class="pageIndex" type="text" v-model="hy_bill_pageCurrent | onlyNumeric" v-on:blur="hy_bill_showPage(hy_bill_pageCurrent,$event,true)" />
+                <span class="mui-btn next" v-on:tap="hy_bill_showPage(hy_bill_pageCurrent+1,$event)">
+                    下一页
+                </span>
+                <span class="mui-btn last" v-on:tap="hy_bill_showPage(hy_bill_pageCount,$event)">
+                    尾页
+                </span>
+            </div>
+            <div class="mui-text-center">
+                <span>当前第{{hy_bill_pageCurrent}}页，共{{hy_bill_pageCount}}页</span>
+            </div>
+        </div>
+    </div>
+    <div id="dailiBill" class="mui-control-content timechoose">
+        <ul class="mui-table-view mui-text-center">
+            <li class="mui-table-view-cell">
+                <span class="mui-col-xs-3 mui-col-sm-3">起始时间：</span>
+                <button id='dl_bill_startTime' class="mui-col-xs-9 mui-col-sm-9 mui-text-left" v-html="dl_bill_startTime" style="width:75%"></button>
+            </li>
+            <li class="mui-table-view-cell">
+                <span class="mui-col-xs-3 mui-col-sm-3">终止时间：</span>
+                <button id='dl_bill_endTime' class="mui-col-xs-9 mui-col-sm-9 mui-text-left" v-html="dl_bill_endTime" style="width:75%"></button>
+            </li>
+            <li class="mui-table-view-cell">
+                <span class="mui-col-xs-3 mui-col-sm-3">I&nbsp;D&nbsp;&nbsp;搜索：</span>
+                <input type="tel" id="dl_bill_id" class="mui-col-xs-7 mui-col-sm-7 mui-text-left" style="width:57%">
+                <input type="button" class="mui-col-xs-2 mui-col-sm-2 mui-text-center" value="查询" v-on:tap="dl_bill_search()" style="width:18%;">
+            </li>
+            <li class="mui-table-view-cell" style="width:20%;position:absolute;right:15px;bottom:-30px;">
+                <input type="button" class="mui-col-xs-3 mui-col-sm-3 mui-text-center" v-model="dlTxt" v-on:tap="dl_change()" style="font-size:12px;padding:0;">
+            </li>
+        </ul>
+        <table class="mui-table">
+            <tr>
+                <th colspan="4">代理账单</th>
+            </tr>
+            <tr>
+                <td colspan="4" class="mui-text-right">代理贡献收入：<span v-html="dl_bill_all/100"></span>元</td>
+            </tr>
+            <tr>
+                <td>用户ID</td>
+                <td>昵称</td>
+                <!--<td>代理利润</td>-->
+                <td v-on:tap="sort_bill('tc_dl')">
+                    <span>提成(元)</span>
+                    <img src="img/sort.png" class="sortbox">
+                </td>
+                <td v-on:tap="sort_bill('time_dl')">
+                    <span>充值时间</span>
+                    <img src="img/sort.png" class="sortbox">
+                </td>
+            </tr>
+            <tr v-show="dlBillData.length==0">
+                <td colspan="4">暂无数据...</td>
+            </tr>
+            <tr v-for="dl in dlBillData" v-show="dlBillData.length!=0">
+                <td v-html="dl.member_index"></td>
+                <td v-html="dl.member_name"></td>
+                <!--<td></td>-->
+                <td v-html="dl.op_money/100"></td>
+                <td v-html="dl.bind_time?dl.bind_time:'/'"></td>
+            </tr>
+        </table>
+        <div class="mui-pagination" id="dl_bill_pager" v-show="dlBillData.length!=0">
+            <div class="mui-text-center">
+                <span class="mui-btn first" v-on:tap="dl_bill_showPage(1,$event)">
+                    首页
+                </span>
+                <span class="mui-btn previous" v-on:tap="dl_bill_showPage(dl_bill_pageCurrent-1,$event)">
+                    上一页
+                </span>
+                <input class="pageIndex" type="text" v-model="dl_bill_pageCurrent | onlyNumeric" v-on:blur="dl_bill_showPage(dl_bill_pageCurrent,$event,true)" />
+                <span class="mui-btn next" v-on:tap="dl_bill_showPage(dl_bill_pageCurrent+1,$event)">
+                    下一页
+                </span>
+                <span class="mui-btn last" v-on:tap="dl_bill_showPage(dl_bill_pageCount,$event)">
+                    尾页
+                </span>
+            </div>
+            <div class="mui-text-center">
+                <span>当前第{{dl_bill_pageCurrent}}页，共{{dl_bill_pageCount}}页</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 底部导航 -->
+<nav class="mui-bar mui-bar-tab">
+    <a class="mui-tab-item mui-active" href="#memberBill">
+        <span class="mui-tab-label">会员账单</span>
+    </a>
+    <a class="mui-tab-item" href="#dailiBill">
+        <span class="mui-tab-label">代理账单</span>
+    </a>
+</nav>
+
+<div class="loading">
+    <div class="loading_inner">
+        <img src="img/loading1.gif" style="width:30px;height:30px;">
+    </div>
+</div>
+
+<script type="text/javascript" src="js/js/mui.min.js?v=2"></script>
+<script type="text/javascript" src="js/js/mui.picker.min.js?v=2"></script>
+<script type="text/javascript" src="js/js/mui.dtpicker.js?v=2"></script>
+<script type="text/javascript" src="js/js/jquery-1.7.2.js?v=2"></script>
+<script type="text/javascript" src="js/js/vue.min.js?v=2"></script>
+<script type="text/javascript" src="js/js/md5.js?v=2"></script>
+<script type="text/javascript" src="js/js/public.js?v=2"></script>
+<script type="text/javascript" src="js/js/billDetail.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+@charset "utf-8";
+@media screen and (max-width:767px){
+	/*共用-go*/
+	.ad-box,.a-fuli,.a-introduce-box,.a-fuli-pic,.a-fuli-list,.explain{width: 100% !important}
+	.b-copyright div:nth-of-type(1),.b-copyright div:nth-of-type(2),.a-banner,.j-banner{display: none;}
+	.j-con-box,.a-introduce-box{margin-top: 0;}
+	.con2-box,.news-box .news-con,.news-box .news-con a,.news-title,.j-con-box,.j-left,.j-right,.j-left,.office-pic-box,.coo-company-name,.agreement
+	{width: 100% !important;}
+	/*共用-end*/
+	
+	/*导航-go*/
+	.navbar{min-height:60px !important;}
+	.navbar-header {height: 60px;}
+	.navbar-brand img{margin-top:0}
+	.nav > li > a{padding: 10px 0}
+	.carousel-control{width: 40px !important;}
+	.product-bg{display: none;}
+	.product-bg-m{background: #fff;height:100%;display: table-cell;}
+	.navbar-brand img{margin-top:10px !important;}
+	/*导航-end*/
+	
+	/*关于我们-go*/
+	.a-fuli-pic img{width: 100%;}
+	.news-box .news-con{padding: 0 15px;}
+	.a-introduce-box > div:nth-of-type(1){display: block;}
+	.a-fuli{min-height:80px !important;display: inline-table;}
+	.a-line{height:70px;}
+	.a-introduce-box{padding: 0 15px;}
+	.a-product-box{height:unset; width: 100%; display: table; text-align: center; color: #fff; font-size: 20px;}
+	.a-product-box > div{width: 100%;height: 100% !important;margin-bottom: 20px;}
+	.coo-company-contact{width: 100%;height: 100% !important;margin-bottom: 20px;display: inline-block;}
+	.a-product-box > div:last-child{margin-bottom:inherit;}
+	.a-introduce-box p{margin-bottom:40px;}
+	.office-pic-box > div{float:none;width: 100%;}
+	.office-pic-box > div img{width: 100%;}
+	/*关于我们-end*/
+	
+	/*商务合作-go*/
+	.coo-company-contact > div{width:100%;}
+	.coo-maps{width: 95%;margin: 0 auto;height:400px;}
+	.a-introduce-box h3:after{display: none;}
+	.coo-company-name{margin:10px auto;}
+	.coo-name-word{margin-top: 0; width: 100%; height: 0px; display: inline-table; padding: 20px;}
+	.coo-name-pic{display: none;}
+	.coo-name-pic-m{display: block;width: 100%;}
+	.coo-name-pic-m img{width: 100%;}
+	.coo-company-contact > div:nth-of-type(1):after{display: none;}
+	/*商务合作-end*/
+	
+	/*家长监护工程-go*/
+	.explain .nav-tabs > li{width: 50%;height: 46px;line-height: 46px;}
+	.explain .nav-tabs > li:last-child{border-right: none;}
+	.explain .tab-content > div:nth-of-type(2) img{width: 100%;}
+	.explain .tab-content,.agreement{padding: 0 20px 20px 20px;}
+	/*家长监护工程-end*/
+	/*首页-go*/
+	.con2{height: 100%;display: table-footer-group;}
+	.con2-box{margin-top: 0 !important;}
+	.ad-box{margin-top: 15px;}
+	.news-box{margin-top: 15px;}
+	.news-box{width: 100% !important;min-height:300px;float: none;}
+	/*首页-end*/
+	
+	/*底部-go*/
+	.bottom-box{width: 100% !important;display: block;height:100% !important;}
+	.b-contact,.b-gzh,.b-copyright{width: 100%;float: inherit;padding-left: 20px;margin-top:40px;height: 150px;}
+	.b-copyright{height: 80px !important;}
+	.b-contact{margin-top: 0 !important;}
+	.b-copyright{margin-top: 20px;}
+	.b-gzh > div:nth-of-type(1),.b-contact h4 {margin-top: 12px;}
+	/*底部-end*/
+	
+	/*诚聘英才-go*/
+	.j-left{float: inherit !important;}
+	.j-right{float: inherit !important;padding: 0 15px;}
+	/*诚聘英才-end*/
+	
+}
+ @media screen and (min-width:267px) and (max-width:387px){
+ 	.ad-box{height:220px;}
+ }
+  @media screen and (min-width:407px) and (max-width:486px){
+ 	.ad-box{height:280px;}
+ }
+ @media screen and (min-width:487px) and (max-width:507px){
+ 	.ad-box{height:300px;}
+ }
+   @media screen and (min-width:508px) and (max-width:607px){
+ 	.ad-box{height:340px;}
+ }
+
+   @media screen and (min-width:608px) and (max-width:697px){
+ 	.ad-box{height:380px;}
+ }
+   @media screen and (min-width:698px) and (max-width:767px){
+ 	.ad-box{height:440px ;}
+ }
+
+
+ 
+@media screen and (min-width:768px){
+	.product-bg-m{background: #fff;display:none;}
+}
+@media screen and (max-width:768px){
+	.j-left-title{display: none;}
+	.j-right h3{margin-bottom: 0 !important;margin-top: 10px;}
+	.j-right h4{height: 40px;line-height: 40px;}
+}

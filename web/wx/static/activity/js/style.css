@@ -1,0 +1,127 @@
+﻿body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div{margin:0;padding:0;border:0;}
+body{color:#333; font-size:12px;font-family:"Microsoft YaHei"}
+ul,ol{list-style-type:none;}
+select,input,img,select{vertical-align:middle;}
+input{ font-size:12px;}
+a{ text-decoration:none; color:#000;}
+a:hover{color:#c00; text-decoration:none;}
+.clear{clear:both;}
+
+/* 大转盘样式 */
+body{background:#e62d2d;overflow-x:hidden;}
+
+.banner{display:block;width:100%;padding:10px 20px;box-sizing: border-box;overflow: hidden;margin:0 auto;}
+.banner .turnplate{
+	display:inline-block;
+	width:55%;
+	float:left;
+	position:relative;
+	background-image:url(images/turnplate-bg.png);
+	background-size:100% 100%;
+}
+.banner .turnplate canvas.item{width:100%;}
+
+.banner .turnplate img.pointer {position:absolute;width:31.5%;height:42.5%;left:34.6%;top:23%;}
+
+
+/* 中奖提示弹出框 */
+.box{
+	position: fixed;
+ 	top: 0;
+ 	right: 0;
+ 	bottom: 0;
+ 	left: 0;
+ 	background: rgba(0,0,0,.7);
+ 	display: none;
+}
+ .content{
+ 	width: 50%;
+ 	height: 150px;
+ 	margin: 10% auto;
+ 	background: #fff;
+ 	border-radius: 10px;
+ 	padding: 30px 20px;
+ 	box-sizing: border-box;
+ 	text-align: center;
+ 	position: relative;
+ }
+.off{
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 26px;
+}
+.gift{
+	color: #ff6000;
+    font-size: 24px;
+    line-height: 30px;
+    
+}
+.gift img{
+	width: 60px;
+    height: 50px;
+}
+.func{
+	font-size: 20px;
+	padding-bottom: 20px;
+}
+
+/* 右侧中奖名单 */
+.txt{
+	display:inline-block;
+	color:#fff;
+	width:38%;
+	border:1px solid #fff;
+	margin-left:30px;
+	float:left;
+	overflow: hidden;
+}
+.txt h2{
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+#tabs {
+	overflow: hidden;
+	width: 100%;
+	list-style: none;
+}
+#tabs li {
+	float: left;
+	width: 48%;
+	margin:0 1%;
+
+}
+#tabs a {
+	position: relative;
+	padding: 5px 0;
+	float: left;
+	text-decoration: none;
+	color: #fff;
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	background: #FFBE04;
+}
+#content{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: scroll;
+	/* overflow: hidden; */
+}
+#content ul{
+	padding: 0 20px;
+/* 	position: absolute; */
+	
+}
+#content ul li{
+	height: 30px;
+	line-height: 30px;
+	border-bottom: 1px solid #aaa;
+}

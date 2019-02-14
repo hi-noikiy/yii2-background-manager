@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>抽奖大转盘</title>
+
+	<link href="static/activity/css/style.css" rel="stylesheet" type="css/text/css">
+
+	<script type="text/javascript" src="static/activity/js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="static/activity/awardRotate.js"></script>
+
+</head>
+<body>
+    <img src="static/activity/images/money.png" id="gold-img" style="display:none;"/>
+    <img src="static/activity/images/2.png" id="sorry-img" style="display:none;" />
+    <img src="static/activity/images/diamond.png" id="diamond-img" style="display:none;" />
+	<div class="banner">
+		<div class="turnplate">
+			<canvas class="item" id="wheelcanvas" width="422px" height="422px"></canvas>
+			<img class="pointer" src="static/activity/images/turnplate-pointer.png"/>
+		</div>
+		<div class="txt">
+			<h2>开奖区</h2>
+			<ul id="tabs">
+				<li><a href="#" title="tab1">中奖名单</a></li>
+				<li><a href="#" title="tab2">往期中奖</a></li>
+			</ul>
+			<div id="content">
+				<ul id="tab1">
+				    <li>
+				    	恭喜
+				    	<span>123456</span>
+				    	获得了
+				    	<span class="present">10钻石</span>
+				    </li>
+				</ul>
+				<ul id="tab2">
+				    <li>
+				    	恭喜
+				    	<span>654321</span>
+				    	获得了
+				    	<span>20钻石</span>
+				    </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="box">
+	    <div class="content">
+	    	<span class="off">&times;</span>
+	    	<div class="func">
+	        	<p>恭喜您获得</p>
+	    	</div>
+	    	<div class="gift">
+	        	<img src="">
+	        	x <span class="num"></span>
+	      	</div>
+	      	
+	    </div>
+	</div>
+	<script type="text/javascript" src="static/activity/js/my.js"></script>
+
+</body>
+</html>

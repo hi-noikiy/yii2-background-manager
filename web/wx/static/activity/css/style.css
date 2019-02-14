@@ -1,0 +1,225 @@
+body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div{margin:0;padding:0;border:0;}
+body{color:#333; font-size:12px;font-family:"Microsoft YaHei"}
+ul,ol{list-style-type:none;}
+select,input,img,select{vertical-align:middle;}
+input{ font-size:12px;}
+a{ text-decoration:none; color:#000;}
+a:hover{color:#c00; text-decoration:none;}
+.clear{clear:both;}
+
+html,body{
+	width:100%;
+	height:100%;
+}
+
+/* 大转盘样式 */
+body{background:#e62d2d;overflow-x:hidden;}
+
+.banner{
+	display:block;
+	width:100%;
+	padding:10px 20px;
+	box-sizing: border-box;
+	overflow: hidden;
+	margin:0 auto;
+}
+.banner .turnplate{
+	display:inline-block;
+	width:55%;
+	float:left;
+	position:relative;
+	background-image:url(../images/turnplate-bg.png);
+	background-size:100% 100%;
+}
+.banner .turnplate img.bg{
+	width:100%;
+	height:100%;
+}
+.banner .turnplate canvas.item{width:100%;}
+
+.banner .turnplate img.pointer {position:absolute;width:31.5%;height:42.5%;left:34.6%;top:23%;}
+
+
+/* 中奖提示弹出框 */
+.box{
+	position: fixed;
+ 	top: 0;
+ 	right: 0;
+ 	bottom: 0;
+ 	left: 0;
+ 	background: rgba(0,0,0,.7);
+ 	display: none;
+}
+ .content{
+ 	width: 50%;
+ 	height: 150px;
+ 	margin: 10% auto;
+ 	background: #fff;
+ 	border-radius: 10px;
+ 	padding: 30px 20px;
+ 	box-sizing: border-box;
+ 	text-align: center;
+ 	position: relative;
+ }
+.off{
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 26px;
+}
+.gift{
+	color: #ff6000;
+    font-size: 24px;
+    line-height: 30px;
+    
+}
+.gift img{
+	width: 60px;
+    height: 50px;
+}
+.func{
+	font-size: 20px;
+	padding-bottom: 20px;
+}
+
+/* 右侧中奖名单 */
+.txt{
+	display:inline-block;
+	color:#fff;
+	width:38%;
+	border:1px solid #fff;
+	margin-left:30px;
+	float:left;
+	overflow: hidden;
+	/*height: 300px;*/
+	/*margin-top: 20px;*/
+}
+.txt h2{
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+#tabs {
+	overflow: hidden;
+	width: 100%;
+	list-style: none;
+}
+#tabs li {
+	float: left;
+	width: 48%;
+	margin:0 1%;
+
+}
+#tabs a {
+	position: relative;
+	padding: 5px 0;
+	float: left;
+	text-decoration: none;
+	color: #fff;
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	background: #FFBE04;
+}
+#content{
+	width: 100%;
+	height: 80%;
+	position: relative;
+	overflow-y: scroll;
+	 /*overflow: hidden;*/
+}
+#content ul{
+	padding: 0 20px;
+/* 	position: absolute; */
+	
+}
+#content ul li {
+	/*height: 30px;*/
+	line-height: 20px;
+	border-bottom: 1px solid #aaa;
+}
+/*填写个人信息提示框*/
+.big .content{
+	height:250px;
+	padding: 5px 20px;
+}
+.big label{
+
+}
+.big input{
+	width:80%;
+	height:30px;
+	margin-bottom:10px;
+	border:1px solid #FFBE04;
+}
+.big input.submit{
+	width:40%;
+}
+/* 是否确认连抽 */
+.promot button{
+	width:48%;
+	margin-right:1%;
+	height:30px;
+}
+/*连抽进行时的蒙板遮罩*/
+.stop{
+	background: rgba(0,0,0,.2);
+}
+.stop .content{
+	height:100px;
+	background: rgba(255,255,255,.4);
+	margin:15% auto;
+}
+
+/*五连抽 十连抽*/
+.more{
+	position:absolute;
+	bottom:0%;
+	background: #FFBE04;
+	color:#fff;
+	display:inline-block;
+	padding:5px 10px;
+	border-radius: 10px;
+	font-size:20px;
+}
+.more.five{
+	left:-5%;
+}
+.more.ten{
+	right:-5%;
+}
+
+
+@media screen and (min-width: 1024px) {
+	.banner{
+		padding:10% 5%;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

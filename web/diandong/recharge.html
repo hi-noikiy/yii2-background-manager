@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-cmn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<link rel="shortcut icon" href="img/guozi.ico" type="image/x-icon">
+	<title>海南点动网络科技有限公司</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/mobile.css">
+	<link rel="stylesheet" href="css/animate.min.css">
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/stickUp.min.js"></script>
+	<script src="js/wow.min.js"></script>
+	<script src="js/wow-script.js"></script>
+	    <link href="css/StyleSheet.css" tppabs="http://www.duolagame.com
+/css/StyleSheet.css" rel="stylesheet" />
+    <link href="css/StyleSheet2.css" tppabs="http://www.duolagame.com
+/css/StyleSheet2.css" rel="stylesheet" />
+    <script src="js/jquery-3.0.0.js" tppabs="http://www.duolagame.com
+/js/jquery-3.0.0.js"></script>
+    <script src="js/JavaScript.js" tppabs="http://www.duolagame.com
+/js/JavaScript.js"></script>
+    <script type="text/javascript">
+        function login() {
+            var userName = document.getElementById("userName").value;
+            var password = document.getElementById("password").value;
+            if (userName == "") {
+                alert("请填写用户名！");
+                return;
+            }
+            if (password == "") {
+                alert("请填写密码！");
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: "login.action",
+                async: false,
+                data: { userName: $("#userName").val(), password: $("#password").val() },
+                success: function (data) {
+                    if (data == 'exist') {
+                        window.location = "http://www.duolagame.com
+/game_detail1.html;
+                    } else if (data == 'none') {
+                        alert("用户名或密码错误");
+                    }
+                }
+            });
+        }
+</script>
+</head>
+<body>
+	<!--导航-go-->
+	<nav class="container navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header "> <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
+            <span class="sr-only">切换导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button><ul><li>本网站仅限18岁(含18岁)以上玩家娱乐,未满18岁不能通过本站注册认证！</li></ul>
+				<a class="navbar-brand" href="#">
+					<img src="img/logo.png" style="width: 400px;"/> </a>
+			</div>
+			<div class="collapse navbar-collapse" id="example-navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="index.html">首页 </a>
+					</li>
+					<li>
+						<a href="game-guoziyx.html">游戏平台</a>
+					</li>
+					<li>
+						<a href="about.html">关于我们</a>
+					</li>
+					<li>
+						<a href="login.html">登录 </a>
+					</li>
+					<li>
+						<a href="signup.html">注册</a>
+					</li>
+					<li class="active">
+						<a href="recharge.html">充值</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!--导航-end-->
+	<div class="container">        
+	<div class="game-section">
+            <img src="img/2-banner.png" tppabs="http://xinianye.cn/picture/2-banner.png" />
+           
+        </div>
+        </div>
+	<div class="cont">
+			<div class="lo_title">账号及游戏</div>
+			<div class="rech_t">
+				<dl>
+					<dt>用户ID</dt>
+					<dd><input type="text" class="rech_input"></dd>
+				</dl>
+				<dl>
+					<dt class="f_m">手机号</dt>
+					<dd><input type="text" class="rech_input"></dd>
+					<dd class="tip" style="margin-left:10px;">建议填写您当前使用的手机号码，以便与您及时沟通</dd>
+				</dl>
+				<dl>
+					<dt>选择游戏</dt>
+					<dd>
+						<select class="select_cl">
+							<option value="xiaoxiaokan">口袋妖怪日月</option>
+						</select>
+					</dd>
+				</dl>
+			</div>
+			
+			<div class="lo_title">充值金额</div>
+			<div class="rech_t">
+				<div style="margin-bottom:10px;">兑换比例为：1元人民币兑换10口袋币</div>
+				<div class="rech_price">
+				    <dl class="sp">
+						<dt style="width:100px;">选择充值金额</dt>
+						<dd>
+							<select class="select_cl">
+								<option>20元</option>
+								<option>30元</option>
+								<option>50元</option>
+								<option>100元</option>
+								<option>200元</option>
+								<option>500元</option>
+							</select>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			
+			<div class="lo_title">选择银行</div>
+			<div class="bank">
+				<a href="#"><img src="img/bank1.png" tppabs="http://www.duolagame.com
+/img/bank1.png"></a>
+				<a href="#"><img src="img/bank2.png" tppabs="http://www.duolagame.com
+/img/bank2.png"></a>
+				<a href="#"><img src="img/bank3.png" tppabs="http://www.duolagame.com
+/img/bank3.png"></a>
+				<a href="#" class="hh"><img src="img/bank4.png" tppabs="http://www.duolagame.com
+/img/bank4.png"></a>
+				<a href="#"><img src="img/bank5.png" tppabs="http://www.duolagame.com
+/img/bank5.png"></a>
+				<a href="#"><img src="img/bank6.png" tppabs="http://www.duolagame.com
+/img/bank6.png"></a>
+				<a href="#"><img src="img/bank7.png" tppabs="http://www.duolagame.com
+/img/bank7.png"></a>
+				<a href="#"><img src="img/bank8.png" tppabs="http://www.duolagame.com
+/img/bank8.png"></a>
+				<a href="#"><img src="img/bank9.png" tppabs="http://www.duolagame.com
+/img/bank9.png"></a>
+			</div>
+			<input type="submit" class="btn_cl" value="下一步"/>
+			
+	</div>
+	<!--底部-go-->
+		<div class="bottom">
+			<div class="bottom-box">
+				<div class="b-contact">
+					<h3>联系我们</h3>
+					<h4>海南点动网络科技有限公司</h4>
+					<div><i></i>0898-36500108</div>
+					<div><i></i>ygc888@foxmail.com</div>
+					<div><i></i>海南省老城高新技术产业示范区海南生态软件园A17幢一层4001</div>
+				</div>
+				<div class="b-gzh">
+					<h3>一拳娱乐</h3>
+					<div>
+						<img src="img/b-gzh.jpg" /> </div>
+				</div>
+				<div class="b-copyright">
+					<div>抵制不良游戏，拒绝盗版游戏。 注意自我保护，谨防受骗上当。<br />适度游戏益脑，沉迷游戏伤身。 合理安排时间，享受健康生活。</div>
+					<div><span><a href="agreement.html">用户协议</a></span><i>|</i> <span><a href="explain.html">监护工程</a></span><i>|</i> <span><a href="signup.html">注册</a></span><i>|</i><span><a href="indulge.html">防沉迷系统</a></span><i>|</i><span><a href="yinsi.html">隐私政策</a></span></div>
+					<p></p>
+					<p>Copyright(©) 2018 海南点动网络科技有限公司 版权所有 琼ICP备17005403号-2</p>
+				</div>
+			</div>
+		</div>
+		<!--底部-end-->
+	<script type="text/javascript">
+		//initiating jQuery
+		jQuery(function($) {
+			$(document).ready(function() {
+				//enabling stickUp on the '.navbar-wrapper' class
+				$('.j-left').stickUp();
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <!--<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>百万棋牌室代理平台 </title>
+    <link rel="stylesheet" href="static/mobile/agent/css/common.min.css">
+    <link rel="stylesheet" href="static/mobile/agent/css/index.min.css">
+    <script type="text/javascript" src="static/mobile/agent/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="static/mobile/agent/js/sky.min.js"></script>
+</head>
+<body>
+
+<div class="panel panel-index">
+    
+    <div class="nav-wrap">
+        <div class="nav">
+            <h1>百万棋牌室代理平台</h1>
+        </div>
+    </div>
+    <!-- 跑马灯 -->
+    <?php include 'base_run.php' ?>
+    <!-- 头部信息 -->
+    <?php include 'base_head.php' ?>
+
+    <div class="index-wrap">
+        <div class="list">
+            <?php
+                if ($user_info['daili_level'] == 1) {
+                    ?>
+                    <div class="item">
+                        <a  onclick="urlto('wx/route&url=nw_daili_expend')">
+                            <span class="icon icon-invite" style="background-image:url(/static/mobile/agent/images/index/icon-list.png);"></span>
+                            <span class="txt">渠道合伙人</span>
+                            <span class="float-r"></span>
+                        </a>
+                    </div>
+                    <?php
+                }
+            ?>
+            <div class="item">
+                <a onclick="urlto('wx/route&url=nw_draw')">
+                    <span class="icon icon-count-charge"></span>
+                    <span class="txt">提现</span>
+                </a>
+            </div>
+            <div class="item">
+                <a  onclick="urlto('wx/route&url=nw_playerlist')">
+                    <span class="icon icon-agency"></span>
+                    <span class="txt">我的玩家</span>
+                    <span class="float-r">玩家总数：<span class="red"><?php  echo $user_info['member_num'] ?></span></span>
+                </a>
+            </div>
+            <div class="item">
+                <a  onclick="urlto('wx/route&url=nw_agent')">
+                    <span class="icon icon-invite"></span>
+                    <span class="txt">我的代理</span>
+                    <span class="float-r">代理总数：<span class="red"><?php  echo $user_info['daili_num'] ?></span></span>
+                </a>
+            </div>
+
+            <div class="item">
+	        <style type="text/css">
+                .index-wrap .list .item .icon.icon-qrcode {
+                    background-image: url(/static/mobile/agent/images/index/icon-qrcode.jpg);
+                }</style>
+                <a  onclick="urlto('wx/route&url=nw_qrcode')">
+                    <span class="icon icon-qrcode"></span>
+                    <span class="txt">推广二维码</span>
+                    <span class="float-r red">返利：我的玩家桌费35%</span>
+                </a>
+            </div>
+            <div class="item">
+                <a onclick="urlto('wx/yesterday-ranking')">
+                    <span class="icon icon-invite"></span>
+                    <span class="txt">昨日收入排行榜</span>
+                </a>
+            </div>
+            <div class="item">
+                <a onclick="urlto('wx/route&url=nw_manageplayer')">
+                    <span class="icon icon-invite"></span>
+                    <span class="txt">开通代理</span>
+                    <span class="float-r red">返利：下级代理玩家桌费的10%</span>
+                </a>
+            </div>
+            <!--<div class="item">
+                <a  onclick="urlto('wx/route&url=nw_question')">
+                    <span class="icon icon-qu"></span>
+                    <span class="txt">举报/反馈</span>
+                </a>
+            </div>-->
+            <div class="item">
+                <a  onclick="urlto('wx/route&url=nw_info')">
+                    <span class="icon icon-account"></span>
+                    <span class="txt">我的信息</span>
+                    </a>
+            </div>
+            <div class="item">
+                <a onclick="urlto('wx/route&url=nw_school')">
+                    <span class="icon icon-rules"></span>
+                    <span class="txt">代理学堂</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="index-wrap">
+        <div class="footer-note">
+            <p style="text-align:center"><span>百万棋牌室代理平台</span></p>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="static/mobile/agent/js/common.js"></script>
+
+
+</html>

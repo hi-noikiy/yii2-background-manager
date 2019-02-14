@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>提现</title>
+    <link rel="stylesheet" href="../static/lib/layui/css/layui.css">
+    <script src="../static/lib/layui/layui.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<style>
+    /*.layui-table-cell{padding:0!important;}*/
+    .notice{color:red;text-align: center;}
+    .layui-form-label{width: 90px!important;}
+    .layui-tab-brief>.layui-tab-title .layui-this{color:#3574E5;}
+    .layui-table-cell{
+        height:auto;
+        overflow:visible;
+        text-overflow:inherit;
+        white-space:normal;
+    }
+</style>
+<body>
+<div style="background-color: #F4900F;color:#fff;height:50px;width:100%;"><a href="index.html" style="color:#fff;"><i class="layui-icon layui-icon-return" style="float:left;position: relative;left:15px;top:17px;"></i></a><h2 style="line-height: 50px;text-align: center;">提现</h2></div>
+<iframe align="center" width="100%" height="160" src="agentInfo.html"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+<div class="layui-container" style="margin-top:10px;" >
+    <!--tab标签-->
+    <div class="layui-tab layui-tab-card" lay-filter="tabs">
+       <ul class="layui-tab-title" >
+           <li class="layui-this" lay-id="withdrawCash">提现</li>
+           <li lay-id="search">提现查询</li>
+       </ul>
+       <div class="layui-tab-content">
+           <!--提现标签下的内容-->
+           <div class="layui-tab-item layui-show">
+               <p class="notice">可提现时间为每日2:00至22:00</p>
+               <hr>
+               <form action="" class="layui-form">
+                   <div class="layui-form-item">
+                       <label for="" class="layui-form-label">可提现金额：</label>
+                       <div class="layui-input-inline">
+                           <p style="color:red;font-weight: 600;padding:9px;">￥0.00</p>
+                       </div>
+                   </div>
+                   <hr>
+                   <!--<div class="layui-form-item">-->
+                       <label for="" class="layui-form-label ">提现金额：</label>
+                       <div class="layui-input-inline" style="width: 100px;">
+                           <input type="text" class="layui-input " placeholder="0.00" name="cashAmount " >
+                       </div>
+                       <button class="layui-btn layui-btn-warm layui-btn-xs ">全部</button>
+                   <!--</div>-->
+                   <hr>
+                   <!--<div class="layui-form-item">-->
+                       <label for="" class="layui-form-label">真实姓名：</label>
+                       <div class="layui-input-inline" style="width: 100px;">
+                           <input type="text" class="layui-input" placeholder="宸辰" name="realName">
+                       </div>
+                   <!--</div>-->
+                   <hr>
+                   <p class="notice" >注：请您务必正确填写真实姓名，否则提现会失败</p>
+                   <button class="layui-btn layui-btn-warm layui-btn-fluid" style="margin-top:10px;">提现</button>
+               </form>
+
+
+           </div>
+           <!--提现查询标签下的内容-->
+           <div class="layui-tab-item ">
+               <div class="layui-row" >
+                   <form action="" class="layui-form">
+                       <div class="layui-input-inline layui-col-xs4" style="margin:5px;">
+                           <input type="text" class="layui-input" placeholder="开始时间" id="startTime" name="startTime">
+                       </div>
+                       <div class="layui-input-inline layui-col-xs4" style="margin:5px;">
+                           <input type="text" class="layui-input" placeholder="结束时间" id="endTime" name="endTime">
+                       </div>
+                       <button class="layui-btn layui-btn-warm layui-col-xs2" style="margin:5px;" layui-submit="" lay-filter="search1">查询</button>
+                   </form>
+               </div>
+               <div class="main">
+                   <table class="layui-table" id="player"lay-even lay-skin="line" lay-size="lg">
+                       <caption>所选日期总收益：<span id="total" style="color:red;">0</span></caption>
+
+                   </table>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+</body>
+<script>
+ layui.use(['table','form','laydate','element'],function () {
+     var element = layui.element;
+     var laydate = layui.laydate;
+     var table = layui.table;
+     var form = layui.form;
+     var $ = layui.$;
+
+     //日期
+     laydate.render({elem:"#startTime"});
+     laydate.render({elem:"#endTime"});
+    //表格数据渲染
+     table.render({
+         elem:"#player"
+         ,url:""
+         ,page:true
+         ,cols:[[
+             {field:"cashAmount",title:'提现金额',align:'center'}
+             ,{field:"cashStatus",title:'提现状态',align:'center'}
+             ,{field:"cashTime",title:'提现时间',align:'center'}
+         ]]
+     });
+ })
+</script>
+</html>

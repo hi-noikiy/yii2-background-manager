@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh" class="feedback">
+<head>
+    <meta charset="UTF-8">
+    <title>绑定推荐人</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="content-language" content="zh-CN" />
+    <meta name="format-detection" content="telephone=no" />   <!--禁用电话号码识别-->
+    <link href="css/css/mui.min.css" rel="stylesheet" />
+    <style>
+        body , .mui-content{
+            background: #fff;
+        }
+        input[type=tel]{
+            margin-bottom: 0px;
+            padding: 5px 15px;
+            height: 30px;
+            width:70%;
+        }
+        input[type=button]{
+            color: #fff;
+            border: 1px solid #007aff;
+            background-color: #007aff;
+            width:100%;
+        }
+        span{
+            width:30%;float:left;display:inline-block;height:30px;line-height:30px;
+        }
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">绑定推荐人</h1>
+</header>
+<div id="apply-content" class="mui-content">
+    <ul class="mui-table-view mui-text-center">
+        <li class="mui-table-view-cell">
+            <span>推荐人ID：</span>
+            <input type="tel" id="id" v-show="!id">
+            <span v-show="id" v-html="id"></span>
+        </li>
+        <li class="mui-table-view-cell" v-show="!id">
+            <input type="button" value="提交" v-on:tap="submit()">
+        </li>
+    </ul>
+</div>
+    <div>绑定代理，立即获得钻石</div>
+
+<div class="loading">
+    <div class="loading_inner">
+        <img src="img/loading1.gif" style="width:30px;height:30px;">
+    </div>
+</div>
+
+
+<script type="text/javascript" src="js/js/mui.min.js?v=2"></script>
+<script type="text/javascript" src="js/js/vue.min.js?v=2"></script>
+<script type="text/javascript" src="js/js/jquery-1.7.2.js?v=2"></script>
+<script type="text/javascript" src="js/js/md5.js?v=2"></script>
+<script type="text/javascript" src="js/js/public.js?v=2"></script>
+<script type="text/javascript" src="js/js/bind.js?v=2"></script>
+</body>
+</html>

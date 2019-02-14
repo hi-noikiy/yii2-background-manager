@@ -1,0 +1,263 @@
+/*Reset*/
+
+.clearfix:after {visibility: hidden;display: block;font-size: 0;content: " ";clear: both;height: 0;}
+* html .clearfix{ zoom: 1; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+.clear{ clear:both; font-size:0; height:0; overflow:hidden;}
+
+/*general*/
+
+a{color:#666;text-decoration:none;}
+a:hover {text-decoration: none;color: #186DC3;}
+.wrap_w{ width:1260px; margin:0 auto; padding-left:80px; padding-top:50px;}
+
+
+
+/*sub style*/
+.sub_focus{ height:180px;background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-游爱之光－专注专业高端玩家精品游戏发行平台_files/images/sub_bg.png") no-repeat center 0;}
+.sub_focus .wrap_w{}
+.sub_focus .title{padding:96px 0 0 0;color:#fff;}
+.sub_focus .title span{border-bottom:4px solid #FB591C;display:inline-block;height:60px;font-size:34px; padding:20px 0 0 0;}
+
+
+
+.pay{}
+.pay_left{ float:left; width:300px;}
+.pay_left dl{padding:40px 20px 40px 0;}
+.pay_left dt{border-bottom:1px solid #ddd; font-size:18px; padding-bottom:15px; margin-bottom:15px;}
+.pay_left dd p{ text-align:left; color:#666; font-size:14px; margin-bottom:15px; padding-left:15px; position:relative; line-height:1.6;}
+.pay_left dd i{ position:absolute; width:6px; height:6px; background:#ddd;left:0;top:5px;}
+
+.pay_right{float:left; width:600px; border-left:1px solid #e5e5e5; padding:50px 60px 200px 60px;}
+.pay_right li{ float:left; width:100%; font-size:16px; padding:15px 0; line-height:1.6;}
+.pay_right li .l{ float:left;width:100px;}
+.pay_right li .l label{}
+.pay_right li .r{ float:left; width:480px;}
+.pay_right li .r input.txts{width:338px;height:20px;padding:9px 6px;background-color: #fff;border: 1px solid #d4d4d4;-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}
+.pay_right li.num{ padding-bottom:0;}
+.pay_right li.num .r .selection{}
+.pay_right li.num .r .selection span, .pay_right li .r .selection input{float:left;display:block;width:105px; height:50px; line-height:50px; text-align:center;border:1px solid #FB591C; cursor:pointer; margin:0 15px 15px 0; position:relative;}
+.pay_right li.num  .r .selection input{border:1px solid #ccc;}
+.pay_right li.num .r .selection span i{position: absolute;bottom: 0;right: 0;display: none;}
+.pay_right li.num .r .selection span.on i{width:26px;height:26px;display: inline-block;font-size: 0;background:url(pay_on.png) no-repeat 0 0;}
+
+.pay_right li.total{}
+.pay_right li.total .r{ margin-top:-15px;}
+.pay_right li.total .r span{ color:#FB591C; font-size:36px;}
+.pay_right li.pay_type{}
+.pay_right li.pay_type .type a{ display:block; width:168px; height:60px; display:block; float:left; border:1px solid #ddd; margin-right:10px; position:relative;}
+.pay_right li.pay_type .type a.on{background: #fff;border:1px solid #FB591C;text-decoration: none;}
+.pay_right li.pay_type .type a.zfb{background:url(pay_ico1.jpg) no-repeat center;}
+.pay_right li.pay_type .type a.wx{background:url(pay_ico2.jpg) no-repeat center;}
+.pay_right li.pay_type .type a i {position: absolute;bottom: 0;right: 0;display: none;}
+.pay_right li.pay_type .type a.on i{width:26px;height:26px;display: inline-block;font-size: 0;background:url(pay_on.png)  no-repeat 0 0;}
+.pay_right .rules{ padding-left:100px;}
+.pay_right .pay_btn{ padding-left:0px; margin-top:30px;}
+.pay_right .pay_btn input{height: 45px;background:#FB591C;color: #fff;display:block;line-height: 45px;width:352px;font-size:16px; text-align:center; border:none;}
+
+.service_main{border-bottom: 1px solid #eee;}
+.service_main h3{ font-size:18px;border-bottom:1px solid #ddd;padding-bottom:10px; padding-top:15px; margin-bottom:10px;}
+.service_main ul{ padding:30px 0 50px 0;}
+.service_main li{ width:150px; float:left; margin:0 40px;}
+.service_main li a{ display:block; margin-right:10px; height:100px; width:100px;text-align:center;border-radius: 50%; position:relative;}
+.service_main li a span{ position:absolute; width:100px; bottom:-25px; left:0; text-align:center;}
+.service_main li a:hover{color:#333;}
+.service_main .q_01 a{background:#eee url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/s_ico_01.png") center 20px no-repeat;}
+.service_main .q_01 a:hover{background:#ddd url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/s_ico_01.png") center 20px no-repeat;}
+.service_main .q_02 a{background:#eee url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/s_ico_02.png") center 20px no-repeat;}
+.service_main .q_02 a:hover{background:#ddd url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/s_ico_02.png") center 20px no-repeat;}
+.service_main .q_03 a{background:#eee url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/s_ico_03.png") center 20px no-repeat;}
+.service_main .q_03 a:hover{background:#ddd url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/s_ico_03.png") center 20px no-repeat;}
+.service_main .q_04 a{background:#eee url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/s_ico_04.png") center 20px no-repeat;}
+.service_main .q_04 a:hover{background:#ddd url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/s_ico_04.png") center 20px no-repeat;}
+.service_main .q_05 a{background:#eee url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/s_ico_05.png") center 20px no-repeat; color:#F00;}
+.service_main .q_05 a:hover{background:#ddd url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/s_ico_05.png") center 20px no-repeat;color:#F00;}
+.service_main .q_05{ position:relative;}
+.service_main .q_05 em{ background:#F00; border-radius:15px; text-align:center; position:absolute; width:45px; height:25px; line-height:25px; color:#fff; right:20px;top:0;}
+
+.service_bot{ padding:0 0 50px 0;}
+.service_bot .left{ float:left; width:900px;}
+.service_bot .left .left_t{border-bottom: 1px solid #eee; padding:20px 0 15px 0;}
+.service_bot .left .left_t .l{ float:left; font-size:18px;}
+.service_bot .left .left_t .r{ float:right; width:200px;}
+.service_bot .left .left_t .r input{ display:block; float:left;}
+.service_bot .left .left_t .r .txt{ border:1px solid #ddd; width:120px; height:25px}
+.service_bot .left .left_t .r .sub{ background:#eee; border:none;height:27px; width:50px;}
+.service_bot .left .left_ms{}
+.service_bot .left .left_ms li{border-bottom: 1px solid #eee;line-height:55px; overflow:hidden;}
+
+.service_bot .right{ float:right; width:270px; padding-top:15px;}
+.service_bot .right .right_each h2{font-size:18px;margin-bottom: 16px; font-weight:blod;}
+.service_bot .right .right_each .con{height:80px;padding-bottom:15px;margin-bottom: 20px;border-bottom: 1px solid #eee; padding-left:78px;}
+.service_bot .right .right_01{background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/ico_people.png") 0 40px no-repeat;}
+.service_bot .right .right_01 a{ display:block; width:85px; height:25px; line-height:25px; text-align:center; background:#F82800; color:#FFF; margin-bottom:7px;}
+.service_bot .right .right_02{background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/ico_tell.png") 0 40px no-repeat;}
+.service_bot .right .right_02 span{ font-size:22px;}
+.service_bot .right .right_03{background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/erwm.jpg") 0 40px no-repeat;}
+.service_bot .right .right_03 p{ padding-top:25px;}
+
+
+.game_top{width:100%; height: 470px;}
+.game_top .wrap_w{ padding-top:302px;}
+.game_info{}
+.game_logo{float: left;}
+.game_logo img{ width:144px; height:144px;}
+.game_intro{ width:532px; height:154px;line-height:22px; padding:0 16px 3px 16px; color: #b7b7b7; margin-top:31px; position:relative; float:left;}
+.game_intro .tit{height:52px;line-height:52px;font-size:32px;font-weight:400;color:#fff}
+.game_down{width:178px;height:136px;margin:31px 0 0 120px;float:right}
+.game_down a{display:block;width:178px;height:53px}
+.game_down .a_down_android{margin-top:40px;background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/csp-game.png") no-repeat 0 0}
+.game_down .a_down_android:hover{background-position:0 -57px}
+.game_qr{width:115px;height:136px;margin:31px 0 0 40px;padding-top:20px;float:right}
+.game_qr .game_qr_pic{width:90px;height:90px;float:left}
+.game_qr p{width:16px;height:90px;line-height:18px;color:#fff;float:right}
+
+.game_main{}
+
+.game_left{float:left;width:890px}
+.jt_box,.news_box{background:#f1f3f4;margin-bottom:20px;padding:0 30px}
+.tit{height:52px;line-height:52px;position:relative}
+.tit i{width:30px;height:30px;position:absolute;top:18px;left:0;background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/csp-game.png") no-repeat}
+.tit .i_news{background-position:-86px -188px}
+.tit .i_jt{background-position:-86px -188px}
+.tit h2{font-size:20px;color:#272a2c;margin-left:32px;float:left}
+.news_box .intro{padding-bottom:30px;line-height:1.8}
+.jt_box{ padding-bottom:40px;}
+
+.slide-jt{width:100%;height:270px;margin-top:10px;overflow:hidden;position:relative}
+.slide-jt .slide-bd{position:relative}
+.slide-jt .slide-bd li{width:180px;height:270px;margin-right:13px;float:left;display:inline}
+.slide-opt a{width:52px;height:52px;position:absolute;top:86px;background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/csp-game.png") no-repeat}
+.slide-opt .slide-prev{left:0;background-position:0 -114px}
+.slide-opt .slide-next{right:0;background-position:-52px -114px}
+
+.game_right{float:right;width:340px}
+.news_list li{height:40px;line-height:40px;padding-left:14px;overflow:hidden;border-bottom:1px dotted #cecece;position:relative;vertical-align:top}
+.news_list .i-diam{position:absolute;top:15px;left:0;width:12px;height:12px;background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/csp-game.png") no-repeat;background-position:-166px -188px}
+.news_list li a{height:40px;width:273px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;float:left}
+
+
+.page{width:auto; text-align:center;height:26px;padding:20px 0;display:block; overflow:hidden; line-height:26px;}
+.page a,.page a:visited,.page a:active{ display:inline-block;height:26px; line-height:26px; font-size:12px; color:#666; padding:0 10px; font-family:Tahoma, Arial, Helvetica, sans-serif; background:#d8d8d8; text-decoration:none;overflow:auto; vertical-align:top; margin:0 2px;}
+.page a:hover{ background:#FB591C;color:#fff;}
+.page span{ background:#FB591C; color:#fff; font-weight:bold;height:24px; line-height:24px; font-size:12px; font-style:normal; display:inline-block;padding:0 10px 2px 10px; font-family:Tahoma, Arial, Helvetica, sans-serif; vertical-align:top; margin-right:4px !important;}
+.page .pager-dot {background:none; color:#CCC;}
+
+
+
+#ser_sub{}
+#ser_sub #l{ float:left; width:140px; height:300px; background:#fff; padding:20px;-webkit-border-radius: 5px;
+    border-radius: 5px;}
+#ser_sub #l ul{ padding:0px 0 0 0;}
+#ser_sub #l li{ font-size:14px; line-height:40px; height:40px;}
+#ser_sub #l li a{ display:block; line-height:40px; height:40px;}
+
+
+#ser_sub #r{ float:right; width:760px; background:#fff; padding:0 20px;-webkit-border-radius: 5px;
+    border-radius: 5px;}
+#ser_sub #r h4{ font-size:24px; line-height:55px;border-bottom:1px solid #ebebeb;}
+#ser_sub #r ul{ font-size:14px;}
+#ser_sub #r ul li{border-bottom: 1px solid #e1e1e1}
+#ser_sub #r ul li .q{background: #f4f4f4;font:14px/40px "\5FAE\8F6F\96C5\9ED1";color: #262626;padding: 0 10px 0 5px;height: 40px; font-weight:bold;}
+#ser_sub #r ul li .q em {color: #cbcbcb;padding-right: 5px;}
+#ser_sub #r ul li .a{color:#666; line-height:1.7; padding:15px;}
+
+#sbox{ background:#fff; font-size:14px;}
+#sbox button{ cursor:pointer;}
+.info_fill { width:100%; padding:43px 0; font-size:1em; }
+.info_fill div:before, .info_fill div:after { content:''; display:table; }
+.info_fill div:after { clear:both; }
+.info_fill div label { width:110px; text-align:right; display:inline-block; height:30px; line-height:30px; }
+.info_fill div input { width:262px; height:16px; border:1px solid #ddd;margin:0; padding:7px 0; text-indent:6px; color:#6a6a6a; margin-left:8px; }
+.info_fill div em { font-style:normal; color:#FF6501; margin-left:10px; margin-top:6px; }
+.info_fill div span { white-space:nowrap; }
+.info_fill div.verify input { width:152px; }
+.info_fill div label.verify_img { width:84px; }
+.info_fill div label.verify_img img { width:100%; height:100%; }
+.info_fill div.verify span { height:30px; line-height:30px; margin-left:4px; }
+.info_fill div.verify span a { color:#458CCA; cursor:pointer; margin-left:4px; }
+.info_fill div.checkbox label { width:auto; height:30px; margin-left:80px; }
+.info_fill div.checkbox input { width:auto; height:auto; background:none; margin-right:4px; outline:none; }
+.info_fill div.checkbox a { color:#458CCA; }
+.info_fill div.checkbox span.error { float:none; }
+.info_fill div.button { height:55px; margin-top:20px }
+.info_fill div.button button { width:157px; height:55px; display:block; margin-left:140px; border:none; text-indent:-999999px; }
+
+.appeal_div{width:435px; margin:10px auto 0;}
+.appeal_div label{width:130px; vertical-align:top;}
+.appeal .pro-head{padding-bottom:20px;}
+.appeal_div{height:auto !important; white-space:nowrap}
+.appeal_textarea{margin-left:8px; padding:4px;border-radius:3px;border:1px solid #ccc;width:252px;height:100px;color:#6A6A6A;resize:none}
+.appeal_div em{margin-right:4px;}
+.appeal_div.ap_btn_next{margin-top:40px;}
+.appeal_div.ap_btn_next button{width:260px;height:40px;display:block; background:#F82800; color:#fff; font-size:16px;border:none;margin-left:93px;}
+.appeal_div.prev_next{margin-top:50px;}
+.appeal_div.prev_next button.prev{background:#F82800;margin-left:122px;}
+.appeal_div.prev_next button{width:125px;height:40px;display:block;background:#F82800;border:none;float:left;margin-right:10px; font-size:16px; color:#fff; margin-bottom:10px;}
+.appeal_div.prev_next button.final_sub{background:#F82800;}
+.appeal_div label.rd{width:auto !important;}
+.appeal_div label.rd input{width:auto; vertical-align:middle;}
+.appeal #step3 .upload input{background:none;border-radius:3px;border:1px solid #ccc;}
+.appeal #step3 .upload input.file{border:0 none;height:30px;padding:0;text-indent:0;}
+.appeal #step3 .upload input.sub{width:48px;padding:0;height:30px;margin:0;padding-right:10px;}
+.appeal_div div span{color:#f00;}
+.appeal_div b{font-weight:normal;color:#999}
+.appeal_div div b b{font-weight:normal;color:#f00}
+.appeal_div.description{margin:0 0 0 92px;}
+.appeal_div.description em{margin:0;}
+.appeal_div a.orange{color:#FF6501}
+.appeal .red{color:#f00; font-weight:bold;}
+
+.pro-head { height:48px; }
+.pro-head span { width:168px; height:48px; display:block; float:left; line-height:48px; text-align:center; color:#3c3c3c; background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/pro-a-bg.png") no-repeat -168px -48px; font-size:16px; }
+.pro-head span.current { background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/pro-a-bg.png") no-repeat -168px 0px; color:#012349 }
+.pro-head span.first { background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/pro-a-bg.png") no-repeat 0 -48px; }
+.pro-head span.second { background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/pro-a-bg.png") no-repeat 0 -0px; }
+.pro-head span.third { background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/pro-a-bg.png") no-repeat 0 -0px; }
+.pro-head span:first-child.current { background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/pro-a-bg.png") no-repeat 0 0px; color:#012349 }
+
+.upload_ar{float:left;width:262px;margin-left:12px}
+.uinfo{margin-bottom:10px;}
+.uinfo img{background-color:#fff;border:1px solid #ddd;border-radius:4px;padding:10px;}
+.btnok{display:block;border-radius:3px;-webkit-border-radius:3px;text-align:center;font-size:1em;color:#fff;background:#FE9D00;line-height:44px;padding:0 15px}
+
+
+.payok{ background:#fff; padding:120px 0 200px 0;}
+.payok h2{background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/pay_success.png") 0 0 no-repeat; font-size:36px; width:300px; height:100px; line-height:100px; padding-left:110px; margin:0 auto;}
+.payok p{padding:30px 0 40px 0; font-size:14px; width:410px; margin:0 auto; line-height:1.8; font-size:16px;}
+.infos_other{ text-align:center;}
+.infos_other a{ display:inline-block; width:110px; height:40px; line-height:40px; background:#FB591C; text-align:center; color:#FFF; }
+.infos_other a.btn01{margin-right:25px;}
+.login_1{
+	width: 300px;
+	position: absolute;
+	left: 50%;
+	top: 228px;
+	background-color:rgba(211,228,172,0.9);
+	height: 250px;
+	z-index: 1000;
+	margin-left: 175px;
+	
+}
+#login_1 a {
+	width:200px;
+	height:30px;
+	margin:10px auto;
+	display:block;
+	overflow:hidden;
+	background:url(file:///E|/work/1707%E5%8C%97%E4%BA%AC%E5%BB%BA%E7%AB%99%E4%BF%A1%E6%81%AF%E8%A1%A8/upload/cover_middle/201703/602indexImg.png) no-repeat 0 -239px
+
+}
+
+.login_1 #login_2 {
+	width:260px;
+	height:170px;
+	margin:auto; 
+	position:relative;
+	margin-top:20px;
+	
+}
+
+.payerror{ background:#fff; padding:120px 0 200px 0;}
+.payerror h2{background:url("file:///E|/work/1707广州建站信息表/03上海侠璐网络科技有限公司/充值中心-侠璐网络之光－专注专业高端玩家精品游戏发行平台_files/images/pay_fail.png") 0 0 no-repeat; font-size:36px; width:300px; height:100px; line-height:100px; padding-left:110px; margin:0 auto;}
+.payerror p{padding:30px 0 40px 0; font-size:14px; width:410px; margin:0 auto; line-height:1.8; font-size:16px;}

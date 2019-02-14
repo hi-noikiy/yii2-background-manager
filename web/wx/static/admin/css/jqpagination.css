@@ -1,0 +1,57 @@
+.pagination {
+    display: inline-block;
+    border: 1px solid #CDCDCD;
+    border-radius: 3px; }
+
+.pagination a {
+    display: block;
+    float: left;
+    width: 20px;
+    height: 20px;
+    outline: none;
+    color: #555555;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: Times, 'Times New Roman', Georgia, Palatino;
+    /* ATTN: need a better font stack */
+    background-color: #f3f3f3;
+}
+.pagination a:hover, .pagination a:focus, .pagination a:active {
+    background-color: #cecece;
+}
+.pagination a.disabled, .pagination a.disabled:hover, .pagination a.disabled:focus, .pagination a.disabled:active {
+    background-color: #f3f3f3;
+
+    color: #A8A8A8;
+    cursor: default; }
+
+
+.pagination input {
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 120px;
+    height: 20px;
+    outline: none;
+    border: none;
+    vertical-align: middle;
+    text-align: center; }
+
+/* gigantic class for demo purposes */
+.gigantic.pagination {
+    margin: 10px 0; }
+
+.gigantic.pagination a {
+    height: 30px;
+    width: 30px;
+    font-size: 25px;
+    line-height: 25px; }
+
+.gigantic.pagination input {
+    width: 150px;
+    height: 30px;
+    font-size: 15px;
+}

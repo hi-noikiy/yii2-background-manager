@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>我的玩家</title>
+    <link rel="stylesheet" href="../static/lib/layui/css/layui.css">
+    <script src="../static/lib/layui/layui.js"></script>
+    <!--<link rel="stylesheet" href="static/bootstrap-4.1.1-dist/css/bootstrap.css">-->
+    <!--<script src="static/bootstrap-4.1.1-dist/js/bootstrap.js"></script>-->
+    <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <!--<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>-->
+    <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+</head>
+<style>
+    .layui-table-cell{padding:0!important;}
+</style>
+<body>
+<div style="background-color: #F4900F;color:#fff;height:50px;width:100%;">
+    <a href="index.html" style="color:#fff;"><i class="layui-icon layui-icon-return" style="float:left;position: relative;left:15px;top:17px;"></i></a>
+    <h2 style="line-height: 50px;text-align: center;">我的玩家</h2>
+</div>
+
+<div class="layui-container" style="margin-top:10px;" >
+    <p style="text-align: center;font-weight: 550">我的玩家</p>
+    <hr>
+
+    <div class="layui-row" >
+        <form action="" class="layui-form">
+            <div class="layui-input-inline layui-col-xs4" style="margin:5px;">
+                <input type="text" class="layui-input" placeholder="开始时间" id="startTime" name="startTime">
+            </div>
+            <div class="layui-input-inline layui-col-xs4" style="margin:5px;">
+                <input type="text" class="layui-input" placeholder="结束时间" id="endTime" name="endTime">
+            </div>
+            <button class="layui-btn layui-btn-warm layui-col-xs2" style="margin:5px;" lay-submit="" lay-filter="search1">查询</button>
+        </form>
+    </div>
+    <div class="layui-row" >
+        <form action="" class="layui-form">
+            <div class="layui-input-inline layui-col-xs4" style="margin:5px;">
+                <input type="text" class="layui-input" placeholder="玩家id" id="playerID" name="playerID">
+            </div>
+            <button class="layui-btn layui-btn-warm layui-col-xs2" style="margin:5px;" lay-submit="" lay-filter="search2">查询</button>
+        </form>
+    </div>
+
+    <div class="main">
+        <table class="layui-table" id="player"lay-even lay-skin="line" lay-size="lg">
+            <caption>所选日期总收益：<span id="total" style="color:red;"></span></caption>
+        </table>
+    </div>
+</div>
+</body>
+<script>
+    layui.use(['table','form','laydate'],function () {
+        var laydate = layui.laydate;
+        var table = layui.table;
+        var form = layui.form;
+        laydate.render({elem:"#startTime"});
+        laydate.render({elem:"#endTime"});
+
+        table.render({
+            elem:"#player"
+            ,url:"/test/t206"
+            ,page:true
+            ,cols:[[
+                {field:"playerID",title:'玩家ID',align:'center'}
+                ,{field:"playerNick",title:'玩家昵称',align:'center'}
+                ,{field:"player",title:'返利',align:'center'}
+                ,{field:"surplusYB",title:'剩余元宝',align:'center'}
+                ,{field:"lastLogin",title:'最后登录',align:'center'}
+            ]]
+        });
+        form.on('submit(search1)',function (data) {
+            var startTime = data.field.startTime;
+            var endTime = data.field.endTime;
+            table.reload('player',{
+                url:'/test/t204'
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+                ,where: {
+                    "startTime": startTime,
+                    "endTime":endTime
+                }
+            })
+        });
+        form.on('submit(search1)',function (data) {
+            var agentID = data.field.agentID;
+            table.reload('player',{
+                url:'/test/t204'
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+                ,where: {
+                    "agentID":agentID
+                }
+            })
+        });
+    })
+</script>
+</html>

@@ -1,0 +1,1 @@
+!function(){function t(){var t=new Date,a=t.getFullYear()+"-"+(t.getMonth()+1)+"-"+t.getDate();e.val(a),n.val(a),l.html(a),d.html(a)}function a(a){$("#"+a).val()||t(),"sdate"==a&&l.html($("#"+a).val()),"edate"==a&&d.html($("#"+a).val())}var e=$("#sdate"),n=$("#edate"),l=$("#sdate_mask"),d=$("#edate_mask");t(),e.change(function(){a("sdate")}),n.change(function(){a("edate")})}();

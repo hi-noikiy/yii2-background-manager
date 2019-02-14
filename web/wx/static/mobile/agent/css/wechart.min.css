@@ -1,0 +1,33 @@
+.wechart-box {
+	padding: .3rem;
+	height:700px;
+	text-align: center;
+	background: #fff
+}
+
+.wechart-box .header {
+	font-size: .3rem
+}
+
+.wechart-box .detail {
+	text-align: left;
+	line-height: .4rem;
+	padding-top: .2rem;
+	font-weight: 700;
+	font-size: .25rem
+}
+
+.wechart-box .wechart-img-box {
+	margin: 0 auto;
+	width: 90%;
+	height: 700px;
+	position: relative;
+	-webkit-background-size: contain;
+	background-size: contain
+}
+
+.wechart-box .wechart-img-box .img {
+	width: 100%;
+	height: auto;
+
+}

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>百万棋牌室代理平台</title>
+    <link rel="stylesheet" href="static/mobile/agent/css/common.min.css">
+    <link rel="stylesheet" href="static/mobile/agent/css/search.min.css">
+    <script type="text/javascript" src="static/mobile/agent/js/jquery.min.js"></script>
+    <script type="text/javascript" src="static/mobile/agent/js/sky.min.js"></script>
+    <script type="text/javascript" src="static/mobile/agent/js/common.js"></script>
+    <script src="static/admin/js/vue.js"></script>
+</head>
+<body>
+<div class="g-loading" id="g_loading">
+    <div class="loading-bd">
+        <div class='loader'><div class='loader-inner line-scale'><div></div><div></div><div></div><div></div><div></div></div></div>
+    </div>
+</div>
+<div class="panel panel-index">
+    <div class="nav-wrap">
+        <div class="nav">
+            <a onclick="urlto('wx/route&url=index_all')"></a>
+            <h1>代理管理</h1>
+        </div>
+    </div>
+
+    <!-- 跑马灯 -->
+    <?php include 'base_run.php' ?>
+    <!-- 头部信息 -->
+    <?php include 'base_head.php' ?>
+
+    <div class="search-wrap">
+        <div class="tab-container">
+            <div class="tab-nav" style="border:none;">
+                <a onclick="urlto('wx/route&url=nw_manageplayer')" class="first">开通下级代理</a>
+                <a href="javascript:;" class="on last">下级代理管理</a> 
+	   </div>
+        </div>
+        <div class="search-condition">
+            <div class="item" style="min-height: 6rem;padding:0.3rem 0;">
+                <table class="table table-bd">
+                    <tr>
+                         <td colspan="8" style="font-weight: bold;font-size: 13px;text-align: left;padding: .24rem;">可开通代理个数：<span id="open_total" class="red"></span> (已开通：<span id="open_used" class="red"></span>)， 增加下级代理数量请添加客服微信：<span class="red">BWDLKF01</span></td>
+                    <tr>
+                        <th>代理ID</th>
+                        <th>姓名</th>
+                        <th>总收入</th>
+                        <th>未提现收入</th>
+                        <th>操作</th>
+                    </tr>
+                </table>
+                <!--没有数据时展示-->
+                <div class="red result-tip" style="text-align: center;padding-top: 0.4rem;font-weight: 600;display: none">查询结果为零</div>
+                <div class="container body-content">
+                    <div id="test" class="form-group">
+                        <my-component v-on:show-page="getPageData" v-bind:pager-data="pagerData"></my-component>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="index-wrap">
+        <div class="footer-note">
+            <p style="text-align:center"><span>百万棋牌室代理平台</span></p>
+        </div>
+    </div>
+</div>
+<!--alert弹框-->
+<div class="alert-mask popup-mask" id="alerttip" style="display: none;z-index: 1001;"></div>
+<div class="alert-box popup popup-agency-confirm" id="alertbody" style="display: none;z-index: 1002;">
+    <div class="main">
+        <div class="alert-tip" style="text-align: center;line-height: 0.5rem;padding:0.2rem;"></div>
+        <p class="red" style="text-align: center;margin-bottom: 10px;"><span class="red alerttitle"></span></p>
+        <div class="dbtn alert-btn"><input type="button" value="确定"></div>
+    </div>
+</div>
+<!---->
+<!--confirm弹框-->
+<div class="alert-mask popup-mask" id="confirm_tip" style="display: none;z-index: 1001;"></div>
+<div class="alert-box popup popup-agency-confirm" id="confirm_body" style="display: none;z-index: 1002;">
+    <div class="main">
+        <h1 class="confirm-title">是否取消代理</h1>
+        <div class="confirm-info" style="text-align: center;line-height: 0.5rem;padding:0.2rem;"></div>
+        <div class="dbtn confirm-btn cancel-btn"><input type="button" value="取消"></div>
+        <div class="dbtn confirm-btn ensure-btn"><input type="button" value="确定"></div>
+    </div>
+</div>
+<!---->
+<script>
+  $(function () {
+    $("#g_loading").fadeOut();
+    //    alert弹框出现
+    function showalert($msg) {
+      $(".alerttitle").html($msg);
+      $('#alerttip').fadeIn();
+      $('#alertbody').fadeIn();
+    }
+    //    关闭alert弹框
+    function closealert() {
+      $('#alerttip').fadeOut();
+      $('#alertbody').fadeOut();
+    }
+    //    confirm弹框出现
+    function showconfirm(info) {
+      $('.confirm-info').html(info);
+      $('#confirm_tip').fadeIn();
+      $('#confirm_body').fadeIn();
+    }
+    //    confirm弹框出现
+    function closeconfirm() {
+      $('#confirm_tip').fadeOut();
+      $('#confirm_body').fadeOut();
+    }
+    $('.cancel-btn').click(function () {
+      closeconfirm();
+    });
+    $('.ensure-btn').click(function () {
+      ajaxDel();
+    });
+    $('.alert-btn').click(function () {
+      closealert();
+    });
+    //ajax  获取数据代理
+    var openBox = $('.table-bd');
+    var dataArray = [];
+    var html;
+    var attrId;
+    var thatArray;
+    function getData () {
+      $.ajax({
+        url: base_url +'&r=wxdaili/manage-daili-list'+sign,
+        type: 'post',
+        dataType: 'json'
+      })
+        .success(function(data) {
+
+          var open_num  = data.data.used+'/'+data.data.total;
+          $("#open_total").html(data.data.over);
+          $("#open_used").html(data.data.used);
+
+          if (data.ret_code === 0) {
+
+            $(".table-td").remove();
+            var result = data.data
+            console.log(result.data);
+            if (result.data == null  ) {
+              $('.result-tip').show();
+              return false;
+            } else {
+              $('.result-tip').hide();
+            }
+            dataArray.push(result.data);
+            for(var i=0;i<result.data.length;i++){
+
+              var html = '<tr class="table-td"><td>'+result.data[i]['PLAYER_INDEX']+'</td><td>'+result.data[i]['NAME']+'</td><td>'+result.data[i]['ALL_PAY_BACK_MONEY']+'</td><td>'+result.data[i]['PAY_BACK_MONEY']+'</td>';
+              if(result.data[i]['ACTION'] == 1 ){
+                 html+='<td data-id='+result.data[i]["PLAYER_INDEX"]+' class="red del"> <button type="button"  >移除</button></td></tr>';
+              }else{
+                 html+='<td data-id='+result.data[i]["PLAYER_INDEX"]+' class="red "> <button type="button" disabled >移除</button></td></tr>';
+              }
+              var $row = $(html);
+              $('.table-bd').append($row);
+            }
+          }
+        })
+    }
+    getData();
+    // 开通按钮事件
+    openBox.delegate('.del','click',function () {
+
+      attrId = $(this).attr('data-id');
+      console.log(dataArray);
+      dataArray.forEach(function (ele, idx) {
+        ele.forEach(function (e, i) {
+          if (e.PLAYER_INDEX == attrId) {
+            thatArray = e;
+          }
+        })
+      });
+      showconfirm('ID：<span class="red">'+ thatArray["PLAYER_INDEX"]+'</span></br>昵称：<span class="red">'+ thatArray['NAME']+'</span>')
+    });
+    function ajaxDel() {
+      $.ajax({
+        url: base_url +'&r=wxdaili/del-daili'+sign,
+        type: 'post',
+        dataType: 'json',
+        data:{user_id:thatArray['PLAYER_INDEX']}
+      })
+      .success(function(data) {
+          closeconfirm();
+          showalert(data.ret_msg);
+          if (data.ret_code === 0) {
+              getData();
+          }
+      })
+      .error(function(){
+          closeconfirm();
+          showalert('网络错误！');
+      })
+    }
+  })
+</script>
+<script src="com.js"></script>
+<script>
+    //模拟获取数据
+    var getData=function(){
+        var result = [];
+        for (var i = 0; i < 205; i++) {
+            result[i] ={name:'test'+i,id:i,age:(Math.random()*100).toFixed()};
+        }
+        return result;
+    }
+
+    var vue = new Vue({
+        el: "#test",
+        ready:function(){
+            this.dataAll = getData();
+            this.pagerData.page.totalCount = this.dataAll.length;
+            this.getPageData(this.pagerData.page);
+        },
+        methods: {
+            getPageData: function (page) {
+                this.pagerData.page.pagesize = page.pagesize;
+                this.pagerData.page.pageCurrent = page.pageCurrent;
+                this.pagerData.page.pageCount = Math.ceil(this.pagerData.page.totalCount / page.pagesize);// 修改分页信息
+                var newPageInfo = [];
+                for (var i = 0; i < page.pagesize; i++) {
+                    var index =i+(page.pageCurrent-1)*page.pagesize;
+                    if(index>this.pagerData.page.totalCount-1)break;
+                    newPageInfo[newPageInfo.length] = this.dataAll[index];
+                }
+                this.pagerData.data = newPageInfo; // 修改分页数据
+            }
+        },
+        components: {
+            'my-component': pager
+        },
+        data: {
+            //所有数据，分页数据从这里取
+            dataAll:[],
+            pagerData:{
+                data:[],
+                rows:[{label:"ID",name:"id"},
+                    {label:"名字",name:"name"},
+                    {label:"年龄",name:"age"}
+                ],
+                page:{
+                    arrPageSize:[10,20,30,40],
+                    pagesize:10,
+                    pageCount:1,
+                    pageCurrent:1,
+                    totalCount:1
+                }
+
+            }
+
+        },
+
+    });
+    var pager = {
+        props: {
+            pagerData:{
+                type: Object,
+                default:function(){
+                    return{
+                        data:[],
+                        rows:[],
+                        page:{
+                            //分页大小
+                            pagesize:20,
+                            //分页数
+                            arrPageSize:[10,20,30,40],
+                            //当前页面
+                            pageCurrent:1,
+                            //总分页数
+                            pageCount:1,
+                            //总数
+                            totalCount:10
+                        }
+                    }
+                }
+
+            }
+        },
+        template: '<table class="table table-bordered table-responsive table-striped">\
+                    <tr>\
+                        <th v-for="item in pagerData.rows" v-on:click="sortBy(item.name)">{{item.label}}</th>\
+                    </tr>\
+                    <tr v-for="dataItem in pagerData.data | orderBy sortparam sorttype">\
+                        <td v-for="item in pagerData.rows">{{dataItem[item.name]}}</td>\
+                    </tr>\
+                </table>\
+                <div class="pager" id="pager">\
+                    <span class="form-inline">\
+                        <select class="form-control" v-model="pagesize" v-on:change="showPage(pageCurrent,$event)" number>\
+                            <option v-for="item in pagerData.page.arrPageSize" value="{{item}}">{{item}}</option>\
+                        </select>\
+                    </span>\
+                    <span class="btn btn-default" v-on:click="showPage(1,$event)">首页</span>\
+                    <span class="btn btn-default" v-on:click="showPage(pageCurrent-1,$event)">上一页</span>\
+                    <span class="form-inline">\
+                    <input class="form-control" style="width:60px;text-align:center" type="text" v-model="pageCurrent" v-on:keyup.enter="showPage(mypageCurrent,$event,true)" />\
+                    </span>\
+                    <span>共{{pagerData.page.pageCount}}页</span>\
+                    <span class="btn btn-default" v-on:click="showPage(pageCurrent+1,$event)">下一页</span>\
+                    <span class="btn btn-default" v-on:click="showPage(pagerData.page.pageCount,$event)">尾页</span>\
+                    <span>共{{pagerData.page.totalCount}}条数据，当前显示第{{startData}}-{{endData}}条记录</span>\
+                </div>',
+        data:function(){return{
+            mypagesize:10,
+            mypageCurrent:1,
+            sortparam:"",
+            sorttype:1,
+        }},
+        //计算属性
+        computed:{
+            // 分页大小 获取的时候显示父级传入的，修改的时候修改自身的。子组件不能修改父元素的值
+            pagesize:{
+                get:function(){
+                    return this.pagerData.page.pagesize;
+                },
+                set:function(value){
+                    this.mypagesize = value;
+                }
+            },
+            pageCurrent:{
+                get:function(){
+                    return this.pagerData.page.pageCurrent;
+                },
+                set:function(value){
+                    this.mypageCurrent = value;
+                }
+            },
+            startData:function(){
+                return this.pagerData.page.pagesize*(this.pagerData.page.pageCurrent-1)+1;
+            },
+            endData:function(){
+                var max =this.pagerData.page.pagesize*this.pagerData.page.pageCurrent;
+                return max>this.pagerData.page.totalCount?this.pagerData.page.totalCount:max;
+            }
+        },
+        methods:{
+            showPage: function (pageIndex, $event) {
+                if (pageIndex > 0) {
+                    if(pageIndex>this.pagerData.page.pageCount) pageIndex = this.page.pageCount;
+                    this.$emit('show-page',{pageCurrent:pageIndex,pagesize:this.mypagesize});//事件
+                }
+            },sortBy: function (sortparam) {
+                this.sortparam = sortparam;
+                this.sorttype = this.sorttype == -1 ? 1 : -1;
+            }
+        }
+
+    }
+
+</script>
+</body>
+</html>
+

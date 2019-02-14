@@ -1,0 +1,55 @@
+
+.header,.footer{position: fixed;left: 0;right: 0;text-align: center;height: 44px;line-height: 44px;z-index: 1;}
+.header{border-bottom: 1px solid #e73068;top:0;}
+.footer{border-top: 1px solid #e73068;bottom: 0;}
+.header .btn-slide-bar{width: 44px;height: 44px;float:right;cursor: pointer;line-height: 2.8;}
+.header .btn-slide-bar::before{content: "";width: 20px;height: 2px;background-color: #999;display: inline-block;box-shadow: 0 7px 0 #999, 0 -7px 0 #999;}
+.wraper-page{position: absolute;top:44px;right: 0;bottom: 44px;left: 0;overflow: hidden;}
+
+.slide-bar{
+	position: fixed;
+	top:0;
+	bottom:0;
+	background:rgba(0,0,0,.8);
+	width: 200px;
+	left: 0;
+	z-index:2;
+	display:none;
+} 
+.slide-bar li{padding-left: 10px;height: 40px;line-height: 40px;text-align: left;color: #fff;border-bottom: 1px solid #222;}
+
+.slide-bar.active{
+	display: block;
+}
+
+.tabWrap{
+	height: 100%;
+}
+
+.wraper-page p{
+	width: 90%;
+    margin: 5% auto;
+    text-indent: 2em;
+}
+.slide-bar ul{
+	height: 100%;
+}
+.slide-bar ul li{
+	height: 7%;
+}
+
+.tabContBox .tabCont{display:none;}
+.tabContBox .on.tabCont{display:block;}
+
+.tabContBox{
+	overflow: scroll;
+}
+
+.tabBtn.on{
+	color: #F186A7;
+}
+
+p.title{
+	font-size: 1.6rem;
+	font-weight: bold;
+}

@@ -1,0 +1,90 @@
+{
+  "ret_code": 0,
+  "ret_msg": "",
+  "data": {
+    "data": [
+      {
+        "ID": "69",
+        "PLAYER_INDEX": "123456",
+        "MEMBER_INDEX": "128578",
+        "BIND_TIME": "2016-12-06 15:44:21",
+        "PLAYER_NAME": "冬",
+        "TRUE_NAME": "1111"
+      },
+      {
+        "ID": "70",
+        "PLAYER_INDEX": "128579",
+        "MEMBER_INDEX": "128577",
+        "BIND_TIME": "1970-01-01 08:00:00",
+        "PLAYER_NAME": "（王智）",
+        "TRUE_NAME": "1"
+      },
+      {
+        "ID": "71",
+        "PLAYER_INDEX": "128577",
+        "MEMBER_INDEX": "128579",
+        "BIND_TIME": "1970-01-01 08:00:00",
+        "PLAYER_NAME": "华sen",
+        "TRUE_NAME": "1"
+      },
+      {
+        "ID": "72",
+        "PLAYER_INDEX": "128577",
+        "MEMBER_INDEX": "128579",
+        "BIND_TIME": "2016-12-06 16:57:48",
+        "PLAYER_NAME": "华sen",
+        "TRUE_NAME": "1"
+      },
+      {
+        "ID": "73",
+        "PLAYER_INDEX": "128577",
+        "MEMBER_INDEX": "128580",
+        "BIND_TIME": "2016-12-06 16:59:03",
+        "PLAYER_NAME": "岚。",
+        "TRUE_NAME": "1"
+      },
+      {
+        "ID": "74",
+        "PLAYER_INDEX": "123456",
+        "MEMBER_INDEX": "128587",
+        "BIND_TIME": "2016-12-07 12:10:28",
+        "PLAYER_NAME": "旺旺（未来客服）",
+        "TRUE_NAME": "1111"
+      },
+      {
+        "ID": "75",
+        "PLAYER_INDEX": "123456",
+        "MEMBER_INDEX": "128576",
+        "BIND_TIME": "2016-12-07 12:12:07",
+        "PLAYER_NAME": "笑话",
+        "TRUE_NAME": "1111"
+      },
+      {
+        "ID": "76",
+        "PLAYER_INDEX": "123456",
+        "MEMBER_INDEX": "128583",
+        "BIND_TIME": "2016-12-07 13:49:06",
+        "PLAYER_NAME": "刺客",
+        "TRUE_NAME": "1111"
+      },
+      {
+        "ID": "77",
+        "PLAYER_INDEX": "123456",
+        "MEMBER_INDEX": "128585",
+        "BIND_TIME": "2016-12-07 13:50:31",
+        "PLAYER_NAME": "涛涛。❗️",
+        "TRUE_NAME": "1111"
+      },
+      {
+        "ID": "78",
+        "PLAYER_INDEX": "123456",
+        "MEMBER_INDEX": "128597",
+        "BIND_TIME": "2016-12-07 13:51:48",
+        "PLAYER_NAME": "、忐忑",
+        "TRUE_NAME": "1111"
+      }
+    ],
+    "page_count": 1902,
+    "count": "19018"
+  }
+}

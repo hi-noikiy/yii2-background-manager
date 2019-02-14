@@ -1,0 +1,741 @@
+/* CSS Document */
+body{
+font-family: 'Microsoft Yahei'!important;
+margin:0;
+padding:0;
+}
+
+img{border:0;}
+
+.fl{float:left;}
+
+.clear_b{
+clear:both;
+overflow:hidden;
+}
+
+.top_leader{
+width:100%;
+background:#f2f2f2;
+}
+
+.t_center{
+width:1000px;
+height:34px;
+line-height:34px;
+color:#808080;
+font-size:12px;
+margin:0 auto;
+overflow:hidden;
+clear:both;
+}
+
+.t_center .left_l{
+float:left;
+}
+
+.t_center .right_l{
+float:right;
+}
+
+.t_center .right_l ul{
+margin:0;
+padding:0;
+list-style:none;
+}
+
+.t_center .right_l ul li{
+float:left;
+}
+
+.t_center .right_l ul li.line{
+width:1px;
+height:34px;
+background:url("../Image/t_line.gif")/*tpa=http://www.duolagame.com
+/Image/t_line.gif*/ no-repeat;
+}
+
+.t_center .right_l ul li a{
+text-decoration:none;
+color:#808080;
+margin:0 20px;
+}
+
+.t_center .right_l ul li a:hover{
+color:#dd4441;
+}
+
+/* .nav{
+width:1000px;
+height:82px;
+line-height:82px;
+margin:0 auto;
+clear:both;
+} */
+
+.nav .lg{
+margin:auto;
+float:left;
+height:82px;
+}
+
+.nav .menu{
+float:right;
+font-size:16px;
+}
+
+.menu ul{
+list-style:none;
+padding:0;
+margin:0;
+}
+
+.menu ul li{
+float:left;
+height:82px;
+line-height:82px;
+}
+
+.menu ul li a{
+display:block;
+color:#414141;
+text-decoration:none;
+padding:0 20px;
+}
+
+.menu ul li a:hover{
+background:#dd4341;
+color:#fff;
+}
+
+.menu ul li a.hh{
+background:#dd4341;
+color:#fff;
+}
+
+.banner{
+width:100%;
+height:363px;
+background:#000;
+margin:0;
+}
+
+.banner .midmage{
+position:relative;
+width:100%;
+left:0;
+margin:0 0 0;
+height:363px;
+background:url("../img/daohang.jpg")/*tpa=http://www.duolagame.com
+/img/daohang.jpg*/ no-repeat;
+overflow:hidden;
+}
+.pathandmenu{
+position:relative;
+z-index:1;
+margin:10px 0 20px 0;
+padding:0;
+width:100%;
+height:50px;
+line-height:50px;
+border-bottom:1px solid #e7e4e4;
+}
+
+.p_center{
+width:1000px;
+height:50px;
+margin:0 auto;
+font-size:14px;
+color:#999;
+background:url("../Image/l.gif")/*tpa=http://www.duolagame.com
+/Image/l.gif*/ left no-repeat;
+clear:both;
+overflow:hidden;}
+
+.p_center .path{
+float:left;
+margin:0 0 0 10px;
+padding:0;
+}
+
+.p_center .path ul{
+margin:0;
+padding:0;
+list-style:none;
+}
+.p_center .path ul li{
+float:left;
+margin-right:10px;
+}
+
+.p_center .path ul li.line{
+font-family:"宋体";
+margin-top:2px;
+color:#CCCCCC;
+}
+
+.p_center .path ul li a{
+text-decoration:none;
+color:#444;}
+
+.p_center .path ul li a:hover{
+color:#999999;}
+
+.p_center .listmenu{
+float:right;
+margin:0;
+padding:0;
+}
+
+.p_center .listmenu ul{
+margin:0;
+padding:0;
+list-style:none;
+}
+
+.p_center .listmenu ul li{
+float:left;
+margin:0 15px;
+}
+
+.p_center .listmenu ul li a{
+display:block;
+height:48px;
+text-decoration:none;
+color:#444;}
+
+.p_center .listmenu ul li a:hover{
+border-bottom:2px solid #dd4441;
+font-weight:bold;}
+
+.p_center .listmenu ul li a.hh{
+border-bottom:2px solid #dd4441;
+font-weight:bold;}
+
+.listbanner{
+width:100%;
+height:92px;
+background:#000000;
+margin:0;
+}
+
+.listbanner .midmage{
+position:relative;
+z-index:2;
+width:1382px;
+left:50%;
+margin:0 0 0 -500px;
+height:92px;
+background:url("../Image/listbanner.jpg")/*tpa=http://www.duolagame.com
+/Image/listbanner.jpg*/ no-repeat;
+overflow:hidden;
+}
+
+.subnav{
+position:relative;
+top:0;
+z-index:100;
+display:none;
+overflow:hidden;}
+
+.subnav ul{
+list-style:none;
+margin:0;
+padding:0;
+overflow:hidden;
+clear:both;}
+
+.subnav ul li{
+float:left;}
+
+.subnav ul li a{
+display:block;
+text-align:center; 
+padding:15px 20px;
+text-decoration:none;
+color:#FFFFFF;
+font-size:14px;
+background:#dd4341;
+}
+
+.subnav ul li a:hover{
+background:#ca3e3b;}
+
+.info{
+width:1000px;
+height:180px;
+margin:20px auto;
+padding:0;
+clear:both;
+}
+
+.hot{
+float:left;
+width:510px;
+height:180px;}
+
+.hot ul{
+list-style:none;
+margin:20px 0 0 0;
+padding:0;
+}
+
+.hot ul li{
+float:left;
+margin-right:15px;}
+
+.hot ul li a:hover{
+filter:Alpha(opacity=60); 
+-moz-opacity:.6; 
+opacity:0.6;
+}
+
+.tit{
+height:18px;
+font-size:16px;
+color:#444;}
+
+.tit h1{
+padding:0 0 0 10px;
+margin:0;
+height:18px;
+font-size:16px;
+font-weight:lighter;
+background:url("../Image/l.gif")/*tpa=http://www.duolagame.com
+/Image/l.gif*/0px 5px no-repeat;
+}
+
+.tit span{
+font-family:Arial, Helvetica, sans-serif;
+color:#CCCCCC;
+margin-left:2px;}
+
+.news{
+float:right;
+width:475px;}
+
+.news ul{
+margin:16px 0 0 2px;
+padding:0;
+font-size:12px;
+clear:both;
+color:#797979;
+}
+
+.news ul li{
+height:24px;
+line-height:24px;
+list-style:inside url("../Image/newsico.gif")/*tpa=http://www.duolagame.com
+/Image/newsico.gif*/
+}
+
+.news ul li a{
+width:300px;
+text-decoration:none;
+color:#797979;
+font-size:12px;}
+
+.news ul li a:hover{
+color:#232323;
+}
+
+.news ul li span{
+display:block;
+float:right;
+margin-right:10px;
+color:#CCCCCC;
+}
+
+.footer{
+width:100%;
+padding:20px 0;
+margin:0;
+border-top:1px solid #e7e4e4;
+font-size:12px;
+color:#7f7f7f;
+}
+
+.footer .ftinfo{
+width:1000px;
+margin:0 auto;
+text-align:center;
+}
+
+.footer .ftinfo p{
+height:14px;
+line-height:14px;}
+
+.footer .ftinfo p a{
+color:#7f7f7f;
+margin:0 10px;
+text-decoration:none;}
+
+.footer .ftinfo p a:hover{
+color:#232323;}
+
+
+.cont{
+width:1000px;
+margin:30px auto;
+font-size:14px;
+color:#797979;
+overflow:hidden;}
+
+.cont img.intro{
+margin-bottom:20px;}
+
+.cont p{
+margin:10px 0 0 0;
+padding:0;
+line-height:30px;}
+
+.cont p.s{
+padding-bottom:10px;
+border-bottom:1px dashed #e7e4e4;}
+
+.red_c{
+color:red;}
+
+.cont ol{
+list-style:none;
+padding:0;
+margin:0;}
+
+.cont ol li{
+padding-left:15px;
+margin-bottom:5px;
+background:url("../Image/newsico.gif")/*tpa=http://www.duolagame.com
+/Image/newsico.gif*/ left 6px no-repeat
+}
+
+.cont h3{
+margin:0;
+padding:0;}
+
+.cont h4{
+margin:15px 0 6px 0;
+padding:0;
+}
+
+.cont ul{
+list-style:none;
+margin:0;
+padding:0;}
+
+.cont ul a{
+color:#3569b0;
+font-weight:bold;
+}
+
+.listclass{
+width:1000px;
+margin:20px 0 0 0;
+padding:0 0 0 0;
+border-bottom:1px solid #e7e4e4;
+overflow:hidden;
+clear:both;
+text-align:left;}
+
+.listclass .listimg{
+width:200px;
+float:left;
+margin-bottom:20px;
+}
+
+.listclass .listimg a:hover{
+filter:Alpha(opacity=60); 
+-moz-opacity:.6; 
+opacity:0.6;
+}
+.listclass .listcont{
+float:left;
+width:700px;
+padding:0;
+margin:2px 0 20px 20px;
+}
+
+.listclass .listcont dl{
+padding:0;
+margin:0;
+}
+
+.listclass .listcont dl dt{
+font-size:16px;
+font-weight:bold;
+}
+
+.listclass .listcont dl dd{
+padding:0;
+margin:10px 0 0 0;
+overflow:hidden;
+}
+
+.listclass .listcont dl dd a{
+display:block;
+padding:7px 30px;
+width:65px;
+background:#dd4441;
+color:#FFFFFF;
+text-decoration:none;
+font-size:16px;
+}
+
+.myfirst{
+display:block;
+padding:7px 30px;
+width:65px;
+background:#dd4441;
+color:#FFFFFF;
+text-decoration:none;
+font-size:16px;
+	
+}
+
+.listclass .listcont dl dd a:hover{
+background:#ca3e3b;}
+
+.listclass .listimg_c{
+width:260px;
+float:left;
+margin-bottom:20px;
+}
+
+.listclass .listcont_c{
+float:left;
+width:670px;
+padding:0;
+margin:2px 0 20px 40px;
+}
+
+.listclass .listcont_c h2{
+padding:0;
+margin:0;
+font-size:18px;}
+
+.listclass .listcont_c dl{
+padding:0;
+margin:20px 0 0 0;}
+
+.listclass .listcont_c dl dt{
+font-weight:bold;
+margin:5px 0;}
+
+.listclass .listcont_c dl dd{
+padding:0;
+margin:0;
+line-height:22px;}
+
+.gameplay{
+width:900px;
+margin:0 auto 30px auto;}
+
+.gamecont dl{
+margin:0 0 15px;
+padding:0;}
+
+.gamecont dl dt{
+font-weight:bold;
+margin:5px 0;}
+
+.lo_title{
+padding:0;
+height:30px;
+line-height:30px;
+margin:0 0 20px 0;
+font-size:18px;
+color:#555555;
+font-weight:bold;
+}
+
+.lo_title span.c{
+color:#CCCCCC;
+margin-left:5px;
+font-weight:normal;
+font-family:Arial, Helvetica, sans-serif
+}
+
+.signup{
+float:left;
+width:590px;
+border-right:1px solid #f2f2f2;}
+
+.login{
+float:right;
+width:380px;
+}
+
+.text_cl{
+margin:0 0 20px 0;
+padding:0;
+clear:both;
+overflow:hidden;
+}
+
+
+.text_cl dt{
+float:left;
+width:70px;
+height:30px;
+line-height:30px;
+}
+
+.text_cl dd{
+float:left;
+margin:0;
+padding:0;}
+
+dd .inputext{
+height:30px;
+width:270px;
+border:1px solid #dcdbdb;}
+
+.btn_cl{
+padding:10px 30px;
+background:#dd4441;
+border:1px solid #dd4441;
+color:#ffffff;
+font-size:14px;
+cursor:pointer;}
+
+.a_btn{
+margin:20px 0 0 0;
+}
+
+.a_btn a{
+display:block;
+text-decoration:none;
+width:80px;
+height:38px;
+line-height:38px;
+text-align:center;
+background:#dd4441;
+color:#ffffff;
+font-size:14px;
+}
+
+dd .error_text{
+height:30px;
+width:270px;
+border:1px solid #dd4441;}
+
+dd.tip{
+font-size:11px;
+color:#b3b3b3;
+height:30px;
+line-height:32px;
+margin-left:8px;}
+
+.text_cl dd.ll{
+margin-top:15px;
+}
+
+.text_cl dd a{
+font-size:12px;
+color:#808080;
+margin:0 0 0 15px;
+}
+
+.rech_t{
+width:1000px;
+padding-bottom:20px;
+margin-bottom:20px;
+border-bottom:1px solid #f2f2f2;
+clear:both;
+overflow:hidden;
+}
+
+.rech_price{
+float:left;
+padding:25px 45px;
+background:#f9f9f9;
+border:1px solid #e8e8e8;
+margin-bottom:20px;}
+
+.rech_t dl{
+float:left;
+margin:0 20px 20px 0;
+padding:0;
+height:30px;
+line-height:30px;
+}
+.rech_t dl.sp{
+margin:0;
+padding:0;
+}
+
+.rech_t dl dt{
+float:left;
+width:70px;
+}
+
+.rech_t dl dd{
+float:left;
+margin:0;
+padding:0;
+}
+
+.select_cl{
+border:1px solid #dcdbdb;
+height:33px;
+line-height:33px;
+width:202px;
+margin:0;
+padding:3px;
+}
+
+.f_m{
+margin-left:40px;
+}
+
+.rech_input{
+height:30px;
+width:200px;
+border:1px solid #dcdbdb;
+}
+
+.error_tip{
+height:16px;
+line-height:16px;
+color:#dd4441;
+}
+
+.tip_i{
+background:url("../Image/tip.gif")/*tpa=http://www.duolagame.com
+/Image/tip.gif*/ left no-repeat;
+}
+
+.tip_i span{
+margin-left:20px;}
+
+.bank{
+width:1000px;
+
+padding-bottom:40px;
+margin-bottom:20px;
+border-bottom:1px solid #f2f2f2;
+clear:both;
+overflow:hidden;
+}
+
+.bank a{
+display:block;
+float:left;
+width:156px;
+height:40px;
+border:1px solid #dcdbdb;
+}
+
+.bank a:hover{
+width:154px;
+height:38px;
+border:2px solid #dd4441;
+background:url("../Image/sle.gif")/*tpa=http://www.duolagame.com
+/Image/sle.gif*/ right bottom no-repeat;
+}
+
+.bank a.hh{
+width:154px;
+height:38px;
+border:2px solid #dd4441;
+background:url(../Image/sle.gif right bottom no-repeat;
+}

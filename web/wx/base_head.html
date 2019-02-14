@@ -1,0 +1,73 @@
+<div class="welcome-wrap">
+        <div class="brief">
+            <p class="username" style="border-bottom:1px solid #aaa;padding-bottom: 0.2rem;">
+                <span class="name"><?php echo $user_info['play_name']; ?><span class="red" style="margin:0 10px;font-size:0.25rem">(<?php echo $user_info['user_id']; ?>)</span></span>
+                <span class="txt" style="margin-top:10px;">返利比例：<i class="red">35%</i></span>
+                <span class="txt" style="position:absolute; float:right;margin-top:0px;" onclick="open_wx_ais();"><img src="/static/mobile/agent/images/help.png" width="21" height="21"/> </span>
+            </p>
+            <p class="txt" style="margin-top:10px;">
+                <span class="left">总收益：<i class="red"><?php echo number_format($user_info['all_pay_back_money'],2); ?></i></span>
+                <span class="right">今日收益：<i class="red"><?php echo  number_format($user_info['today_new_profit_num'],2); ?></i></span>
+            </p>
+            <p class="txt" style="margin-top:10px;">
+                <span class="left">可提现金额：<i class="red"><?php echo  number_format($user_info['pay_back_money'],2); ?></i></span>
+                <span class="right">日增玩家：<i class="red"><?php echo $user_info['today_new_member_num']; ?></i></span>
+            </p>
+            <?php
+            /**
+             * 如果是超级大代理，则显示Ta的:
+             * 一、当月旗下总消耗：单位：元；值 = 元宝消耗 / 110
+             * 二、今日总消耗：实时统计今日消耗：单位：元
+             */
+            /*$is_super_agent = ($user_info['daili_level'] == 1) ? true : false;
+            if ($is_super_agent) {
+                */?><!--
+                <p class="txt" style="margin-top:10px;">
+                    <span class="left">当月旗下总消耗：<i class="red"><?php /*echo $cost_of_month; */?></i></span>
+                    <span class="right">今日总消耗：<i class="red"><?php /*echo $cost_of_day; */?></i></span>
+                </p>
+                --><?php
+/*            }*/
+            ?>
+        </div>
+</div>
+<!-- 代理收益说明 开始 -->
+<div class="popup-mask" id="wx_ais_f" style="display: none;z-index:1201"></div>
+<div class="popup popup-agency-confirm" id="wx_ais_s" style="display: none;z-index: 1202;">
+    <a href="javascript:void(0);" class="popup-btn-close" onclick="close_wx_ais();"></a>
+    <div class="main">
+        <div class="tip">
+            <div class="mipt">
+                <h5 class="title graya" style="font-size: 0.3rem;color: #4D4D4D;">代理收益说明</h5>
+                <p style="font-size: 0.25rem;color: #636363;">
+                    亲爱的<?php echo $user_info['play_name']; ?>代理，恭喜您开启躺赚之路！
+                    <br /><br />
+                </p>
+                <p style="font-size: 0.23rem;color: #636363;">
+                    <span style="font-size: 0.3rem;font-weight:600;color: #515151;">代理链条共分三级:</span><br /><br />
+                    如A代理发展了B代理，B代理发展了C代理，则C是B的下级代理，同时是A的下下级代理。<br />
+                </p>
+                <br />
+                <p style="font-size: 0.23rem;color: #636363;">
+                    <span style="font-size: 0.3rem;font-weight:600;color:#515151;">代理收入明细:</span><br /><br />
+                    A代理的总收入 = A代理所有玩家服务费的35% + B代理所有玩家服务费的10% + C代理所有玩家服务费的5%<br /><br />
+                    B代理的收入 = B代理所有玩家服务费的35% + C代理所有玩家服务费的10%<br /><br />
+                    C代理的收入 = C代理所有玩家服务费的35%<br /><br />
+                    所以越早加入代理越早赚钱，发展玩家和代理越多，收入越高哟！<br /><br />
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 代理收益说明 结束 -->
+<script type="text/javascript">
+    // 打开、关闭代理说明
+    function open_wx_ais() {
+        $('#wx_ais_f').fadeIn();
+        $('#wx_ais_s').fadeIn();
+    }
+    function close_wx_ais() {
+        $('#wx_ais_f').fadeOut();
+        $('#wx_ais_s').fadeOut();
+    }
+</script>
